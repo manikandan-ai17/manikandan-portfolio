@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#020818"/><stop offset="100%" stop-color="#010408"/></linearGradient>
+    <radialGradient id="gl" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#2563EB" stop-opacity="0.1"/><stop offset="100%" stop-color="#2563EB" stop-opacity="0"/></radialGradient>
+    <pattern id="gr" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#fff" stroke-width="0.3" stroke-opacity="0.03"/></pattern>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/><rect width="1200" height="675" fill="url(#gl)"/><rect width="1200" height="675" fill="url(#gr)"/>
+  <rect width="1200" height="44" fill="#030A18" fill-opacity="0.95"/>
+  <circle cx="28" cy="22" r="5.5" fill="#EF4444" fill-opacity="0.85"/><circle cx="46" cy="22" r="5.5" fill="#F59E0B" fill-opacity="0.85"/><circle cx="64" cy="22" r="5.5" fill="#10B981" fill-opacity="0.85"/>
+  <text x="88" y="26" font-family="'SF Mono',monospace" font-size="11" fill="#1A2A50">adm-retail-platform · Output Example</text>
+  <text x="60" y="98" font-family="'SF Pro Display',system-ui,sans-serif" font-size="12" font-weight="600" fill="#2563EB" letter-spacing="3">OUTPUT EXAMPLE</text>
+  <text x="60" y="130" font-family="'SF Pro Display',system-ui,sans-serif" font-size="28" font-weight="800" fill="#F1F5F9">Enriched Product Record</text>
+  <text x="60" y="156" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13" fill="#1A2A50">Validated JSON output before Shopify publish · all fields schema-verified</text>
+
+  <!-- JSON output block -->
+  <rect x="60" y="180" width="640" height="430" rx="12" fill="#0d1117" stroke="#2563EB" stroke-width="0.8" stroke-opacity="0.3"/>
+  <rect x="60" y="180" width="640" height="36" rx="12" fill="#0F1823"/>
+  <rect x="60" y="202" width="640" height="14" fill="#0F1823"/>
+  <text x="80" y="202" font-family="'SF Mono',monospace" font-size="9" fill="#60a5fa" font-weight="700">enriched_product.json · schema_valid: true</text>
+  <text x="80" y="232" font-family="'SF Mono',monospace" font-size="10" fill="#c9d1d9">&#123;</text>
+  <text x="96" y="252" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"sku":</text><text x="160" y="252" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">"SKU-40192",</text>
+  <text x="96" y="270" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"name":</text><text x="167" y="270" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">"Blue Denim Jacket — Slim Fit",</text>
+  <text x="96" y="288" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"description":</text><text x="227" y="288" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">"Classic 5-pocket slim-fit blue denim jacket...</text>
+  <text x="96" y="306" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"material":</text><text x="200" y="306" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">"100% Cotton Denim",</text>
+  <text x="96" y="324" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"category":</text><text x="200" y="324" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">"Clothing &gt; Jackets &gt; Denim",</text>
+  <text x="96" y="342" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"taxonomy_path":</text><text x="246" y="342" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">["Clothing", "Outerwear", "Denim"],</text>
+  <text x="96" y="360" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"price":</text><text x="167" y="360" font-family="'SF Mono',monospace" font-size="10" fill="#f0883e">89.99,</text>
+  <text x="96" y="378" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"sizes":</text><text x="167" y="378" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">["XS", "S", "M", "L", "XL", "XXL"],</text>
+  <text x="96" y="396" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"gender":</text><text x="175" y="396" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">"Unisex",</text>
+  <text x="96" y="414" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"care_instructions":</text><text x="278" y="414" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">"Machine wash cold, tumble dry low",</text>
+  <text x="96" y="432" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"enrichment_source":</text><text x="286" y="432" font-family="'SF Mono',monospace" font-size="10" fill="#3fb950">"llm_enriched",</text>
+  <text x="96" y="450" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"schema_valid":</text><text x="236" y="450" font-family="'SF Mono',monospace" font-size="10" fill="#3fb950">true,</text>
+  <text x="96" y="468" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"enrichment_attempts":</text><text x="296" y="468" font-family="'SF Mono',monospace" font-size="10" fill="#f0883e">1,</text>
+  <text x="96" y="486" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"shopify_status":</text><text x="251" y="486" font-family="'SF Mono',monospace" font-size="10" fill="#3fb950">"published",</text>
+  <text x="96" y="504" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"shopify_id":</text><text x="205" y="504" font-family="'SF Mono',monospace" font-size="10" fill="#f0883e">7834921045132,</text>
+  <text x="80" y="522" font-family="'SF Mono',monospace" font-size="10" fill="#c9d1d9">&#125;</text>
+  <!-- Validation badge -->
+  <rect x="80" y="544" width="200" height="28" rx="6" fill="#041810" stroke="#10B981" stroke-width="0.8" stroke-opacity="0.6"/>
+  <text x="180" y="562" font-family="'SF Mono',monospace" font-size="9" fill="#34d399" text-anchor="middle">✓ All required fields present</text>
+  <rect x="296" y="544" width="180" height="28" rx="6" fill="#041810" stroke="#10B981" stroke-width="0.8" stroke-opacity="0.6"/>
+  <text x="386" y="562" font-family="'SF Mono',monospace" font-size="9" fill="#34d399" text-anchor="middle">✓ Types validated</text>
+
+  <!-- Right side: Shopify product preview -->
+  <rect x="730" y="180" width="420" height="430" rx="12" fill="#0d1117" stroke="#10B981" stroke-width="0.8" stroke-opacity="0.3"/>
+  <rect x="730" y="180" width="420" height="36" rx="12" fill="#0F1823"/>
+  <rect x="730" y="202" width="420" height="14" fill="#0F1823"/>
+  <text x="750" y="202" font-family="'SF Mono',monospace" font-size="9" fill="#34d399" font-weight="700">Shopify Admin · Published Product</text>
+  <!-- Product card mockup -->
+  <rect x="750" y="228" width="380" height="180" rx="8" fill="#040D14"/>
+  <!-- Product image placeholder -->
+  <rect x="760" y="238" width="100" height="120" rx="6" fill="#0A1A28" stroke="#1A3A5A" stroke-width="0.8"/>
+  <text x="810" y="302" font-family="'SF Mono',monospace" font-size="8" fill="#1A3A5A" text-anchor="middle">product</text>
+  <text x="810" y="314" font-family="'SF Mono',monospace" font-size="8" fill="#1A3A5A" text-anchor="middle">image</text>
+  <!-- Product info -->
+  <text x="876" y="252" font-family="'SF Pro Display',system-ui,sans-serif" font-size="11" font-weight="700" fill="#F1F5F9">Blue Denim Jacket — Slim Fit</text>
+  <text x="876" y="268" font-family="'SF Mono',monospace" font-size="8.5" fill="#60a5fa">Clothing &gt; Outerwear &gt; Denim</text>
+  <rect x="876" y="278" width="60" height="18" rx="4" fill="#041810" stroke="#10B981" stroke-width="0.6"/>
+  <text x="906" y="291" font-family="'SF Mono',monospace" font-size="8" fill="#34d399" text-anchor="middle">Active</text>
+  <text x="876" y="316" font-family="'SF Pro Display',system-ui,sans-serif" font-size="18" font-weight="800" fill="#F1F5F9">$89.99</text>
+  <text x="876" y="334" font-family="'SF Mono',monospace" font-size="8" fill="#475569">SKU: SKU-40192</text>
+  <text x="876" y="348" font-family="'SF Mono',monospace" font-size="8" fill="#475569">6 variants · Metafields populated</text>
+  <!-- Batch stats -->
+  <text x="750" y="432" font-family="'SF Mono',monospace" font-size="8.5" fill="#60a5fa" font-weight="700">BATCH RESULT</text>
+  <rect x="750" y="440" width="380" height="60" rx="6" fill="#040D14"/>
+  <text x="762" y="458" font-family="'SF Mono',monospace" font-size="8.5" fill="#34d399">✓ published:  480</text>
+  <text x="762" y="474" font-family="'SF Mono',monospace" font-size="8.5" fill="#EF4444">✗ rejected:     20  (in re-queue)</text>
+  <text x="762" y="490" font-family="'SF Mono',monospace" font-size="8.5" fill="#475569">  total:       500  rows processed</text>
+
+  <text x="60" y="640" font-family="'SF Mono',monospace" font-size="10" fill="#1A2A50" font-weight="600" letter-spacing="2">ADM RETAIL PLATFORM · Enriched JSON Output</text>
+</svg>

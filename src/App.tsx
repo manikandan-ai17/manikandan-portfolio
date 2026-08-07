@@ -8,6 +8,7 @@ import { Proficiency } from '@/components/sections/Proficiency'
 import { Education } from '@/components/sections/Education'
 import { WorkExperience } from '@/components/sections/WorkExperience'
 import { OpenSource } from '@/components/sections/OpenSource'
+import { GitHubProfile } from '@/components/sections/GitHubProfile'
 import { BigProjects } from '@/components/sections/BigProjects'
 import { Achievements } from '@/components/sections/Achievements'
 import { Blogs } from '@/components/sections/Blogs'
@@ -74,6 +75,7 @@ function PortfolioApp() {
             <Education />
             <WorkExperience />
             <OpenSource />
+            <GitHubProfile />
             <BigProjects />
             <Achievements />
             <Blogs />

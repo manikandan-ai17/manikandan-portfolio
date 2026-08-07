@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#020C08"/><stop offset="100%" stop-color="#010403"/></linearGradient>
+    <radialGradient id="gl" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#059669" stop-opacity="0.1"/><stop offset="100%" stop-color="#059669" stop-opacity="0"/></radialGradient>
+    <pattern id="gr" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#fff" stroke-width="0.3" stroke-opacity="0.03"/></pattern>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/><rect width="1200" height="675" fill="url(#gl)"/><rect width="1200" height="675" fill="url(#gr)"/>
+  <rect width="1200" height="44" fill="#030A06" fill-opacity="0.95"/>
+  <circle cx="28" cy="22" r="5.5" fill="#EF4444" fill-opacity="0.85"/><circle cx="46" cy="22" r="5.5" fill="#F59E0B" fill-opacity="0.85"/><circle cx="64" cy="22" r="5.5" fill="#10B981" fill-opacity="0.85"/>
+  <text x="88" y="26" font-family="'SF Mono',monospace" font-size="11" fill="#0A2A18">ai-trading-extension · Analysis Output</text>
+  <text x="60" y="98" font-family="'SF Pro Display',system-ui,sans-serif" font-size="12" font-weight="600" fill="#059669" letter-spacing="3">ANALYSIS OUTPUT</text>
+  <text x="60" y="130" font-family="'SF Pro Display',system-ui,sans-serif" font-size="28" font-weight="800" fill="#F1F5F9">Flask API Response</text>
+  <text x="60" y="156" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13" fill="#0A2A18">Pattern detections + AI signal · JSON from localhost:5000/analyze</text>
+
+  <!-- Left: JSON response -->
+  <rect x="60" y="180" width="580" height="440" rx="12" fill="#0d1117" stroke="#059669" stroke-width="0.8" stroke-opacity="0.3"/>
+  <rect x="60" y="180" width="580" height="36" rx="12" fill="#050E08"/>
+  <rect x="60" y="202" width="580" height="14" fill="#050E08"/>
+  <text x="80" y="202" font-family="'SF Mono',monospace" font-size="9" fill="#34d399" font-weight="700">GET localhost:5000/analyze · 200 OK · 142ms</text>
+  <text x="80" y="234" font-family="'SF Mono',monospace" font-size="10" fill="#c9d1d9">&#123;</text>
+  <text x="96" y="252" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"symbol":</text><text x="184" y="252" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">"BTCUSDT",</text>
+  <text x="96" y="270" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"interval":</text><text x="193" y="270" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">"1h",</text>
+  <text x="96" y="288" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"signal":</text><text x="176" y="288" font-family="'SF Mono',monospace" font-size="10" fill="#3fb950">"BUY",</text>
+  <text x="96" y="306" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"confidence":</text><text x="208" y="306" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">"HIGH",</text>
+  <text x="96" y="324" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"patterns_detected":</text><text x="285" y="324" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">[</text>
+  <text x="112" y="342" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">&#123;</text>
+  <text x="128" y="360" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"pattern":</text><text x="210" y="360" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">"Bullish Engulfing",</text>
+  <text x="128" y="378" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"confidence":</text><text x="225" y="378" font-family="'SF Mono',monospace" font-size="10" fill="#f0883e">0.87,</text>
+  <text x="128" y="396" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"candle_idx":</text><text x="222" y="396" font-family="'SF Mono',monospace" font-size="10" fill="#f0883e">-1</text>
+  <text x="112" y="414" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">&#125;,</text>
+  <text x="112" y="432" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">&#123;</text>
+  <text x="128" y="450" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"pattern":</text><text x="210" y="450" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">"Hammer",</text>
+  <text x="128" y="468" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"confidence":</text><text x="225" y="468" font-family="'SF Mono',monospace" font-size="10" fill="#f0883e">0.74,</text>
+  <text x="128" y="486" font-family="'SF Mono',monospace" font-size="10" fill="#79c0ff">"candle_idx":</text><text x="222" y="486" font-family="'SF Mono',monospace" font-size="10" fill="#f0883e">-2</text>
+  <text x="112" y="504" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">&#125;</text>
+  <text x="96" y="522" font-family="'SF Mono',monospace" font-size="10" fill="#a5d6ff">],</text>
+  <text x="80" y="540" font-family="'SF Mono',monospace" font-size="10" fill="#c9d1d9">&#125;</text>
+  <!-- Timing badge -->
+  <rect x="80" y="560" width="200" height="26" rx="6" fill="#041810" stroke="#10B981" stroke-width="0.6" stroke-opacity="0.5"/>
+  <text x="180" y="577" font-family="'SF Mono',monospace" font-size="8.5" fill="#34d399" text-anchor="middle">Cached 30s TTL</text>
+
+  <!-- Right: Overlay UI mockup -->
+  <rect x="680" y="180" width="480" height="440" rx="12" fill="#0d1117" stroke="#059669" stroke-width="0.8" stroke-opacity="0.3"/>
+  <rect x="680" y="180" width="480" height="36" rx="12" fill="#050E08"/>
+  <rect x="680" y="202" width="480" height="14" fill="#050E08"/>
+  <text x="700" y="202" font-family="'SF Mono',monospace" font-size="9" fill="#34d399" font-weight="700">Browser Overlay Panel · Injected Signal</text>
+  <!-- Signal display -->
+  <rect x="700" y="228" width="440" height="120" rx="8" fill="#030A04" stroke="#10B981" stroke-width="1"/>
+  <text x="700" y="216" font-family="'SF Mono',monospace" font-size="8.5" fill="#1A4028">BTCUSDT · 1H · Live Analysis</text>
+  <text x="720" y="270" font-family="'SF Pro Display',system-ui,sans-serif" font-size="54" font-weight="900" fill="#10B981">BUY</text>
+  <text x="720" y="302" font-family="'SF Mono',monospace" font-size="9" fill="#1A4028">HIGH CONFIDENCE · 87%</text>
+  <text x="720" y="320" font-family="'SF Mono',monospace" font-size="9" fill="#1A4028">Bullish Engulfing confirmed at support</text>
+  <text x="720" y="334" font-family="'SF Mono',monospace" font-size="9" fill="#1A4028">Volume above 20-period average</text>
+  <!-- Confidence bars -->
+  <text x="700" y="374" font-family="'SF Mono',monospace" font-size="8.5" fill="#34d399" font-weight="700">PATTERN DETAILS</text>
+  <rect x="700" y="384" width="440" height="30" rx="4" fill="#030A04"/>
+  <text x="712" y="402" font-family="'SF Mono',monospace" font-size="8.5" fill="#94a3b8">Bullish Engulfing</text>
+  <rect x="880" y="390" width="240" height="8" rx="4" fill="#0A1808"/>
+  <rect x="880" y="390" width="209" height="8" rx="4" fill="#10B981"/>
+  <text x="1100" y="400" font-family="'SF Mono',monospace" font-size="8" fill="#34d399" text-anchor="end">87%</text>
+  <rect x="700" y="418" width="440" height="30" rx="4" fill="#030A04"/>
+  <text x="712" y="436" font-family="'SF Mono',monospace" font-size="8.5" fill="#94a3b8">Hammer</text>
+  <rect x="880" y="424" width="240" height="8" rx="4" fill="#0A1808"/>
+  <rect x="880" y="424" width="178" height="8" rx="4" fill="#10B981" fill-opacity="0.7"/>
+  <text x="1100" y="434" font-family="'SF Mono',monospace" font-size="8" fill="#34d399" text-anchor="end">74%</text>
+  <!-- AI rationale -->
+  <rect x="700" y="464" width="440" height="100" rx="8" fill="#030A04" stroke="#059669" stroke-width="0.6" stroke-opacity="0.4"/>
+  <text x="720" y="484" font-family="'SF Mono',monospace" font-size="8.5" fill="#34d399" font-weight="700">AI RATIONALE</text>
+  <text x="720" y="500" font-family="'SF Mono',monospace" font-size="8.5" fill="#94a3b8">"Bullish Engulfing at key support level with</text>
+  <text x="720" y="514" font-family="'SF Mono',monospace" font-size="8.5" fill="#94a3b8">elevated volume. Hammer on prior candle adds</text>
+  <text x="720" y="528" font-family="'SF Mono',monospace" font-size="8.5" fill="#94a3b8">confluence. Consider long entry above the high</text>
+  <text x="720" y="542" font-family="'SF Mono',monospace" font-size="8.5" fill="#94a3b8">of the engulfing candle ($69,420)."</text>
+  <text x="720" y="558" font-family="'SF Mono',monospace" font-size="8.5" fill="#1A4028">— AI recommendation engine</text>
+
+  <text x="60" y="640" font-family="'SF Mono',monospace" font-size="10" fill="#0A2A18" font-weight="600" letter-spacing="2">AI TRADING EXTENSION · Analysis Output + Overlay Signal</text>
+</svg>

@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#020C08"/><stop offset="100%" stop-color="#010403"/></linearGradient>
+    <radialGradient id="gl" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#059669" stop-opacity="0.1"/><stop offset="100%" stop-color="#059669" stop-opacity="0"/></radialGradient>
+    <pattern id="gr" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#fff" stroke-width="0.3" stroke-opacity="0.03"/></pattern>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/><rect width="1200" height="675" fill="url(#gl)"/><rect width="1200" height="675" fill="url(#gr)"/>
+  <rect width="1200" height="44" fill="#030A06" fill-opacity="0.95"/>
+  <circle cx="28" cy="22" r="5.5" fill="#EF4444" fill-opacity="0.85"/><circle cx="46" cy="22" r="5.5" fill="#F59E0B" fill-opacity="0.85"/><circle cx="64" cy="22" r="5.5" fill="#10B981" fill-opacity="0.85"/>
+  <text x="88" y="26" font-family="'SF Mono',monospace" font-size="11" fill="#0A2A18">ai-trading-extension · System Architecture</text>
+  <text x="60" y="98" font-family="'SF Pro Display',system-ui,sans-serif" font-size="12" font-weight="600" fill="#059669" letter-spacing="3">SYSTEM ARCHITECTURE</text>
+  <text x="60" y="130" font-family="'SF Pro Display',system-ui,sans-serif" font-size="28" font-weight="800" fill="#F1F5F9">Local-First Two-Part System</text>
+  <text x="60" y="156" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13" fill="#0A2A18">Chrome Extension (MV3) + Flask Backend (localhost:5000) · No remote server</text>
+
+  <!-- Local machine zone -->
+  <rect x="60" y="190" width="1120" height="420" rx="12" fill="#030B06" stroke="#059669" stroke-width="1" stroke-opacity="0.2" stroke-dasharray="5,3"/>
+  <text x="80" y="212" font-family="'SF Mono',monospace" font-size="9" fill="#059669" font-weight="700" letter-spacing="1">USER'S LOCAL MACHINE — No trading data leaves this machine</text>
+
+  <!-- Chrome Extension zone -->
+  <rect x="80" y="222" width="460" height="370" rx="10" fill="#040D08" stroke="#38d399" stroke-width="0.8" stroke-opacity="0.4" stroke-dasharray="4,3"/>
+  <text x="100" y="244" font-family="'SF Mono',monospace" font-size="8.5" fill="#34d399" font-weight="700">CHROME EXTENSION (Manifest V3)</text>
+
+  <!-- Charting page + overlay -->
+  <rect x="100" y="256" width="420" height="100" rx="8" fill="#050E06"/>
+  <text x="110" y="276" font-family="'SF Mono',monospace" font-size="8.5" fill="#86efac" font-weight="700">Charting Website + Injected Overlay</text>
+  <!-- Chart lines mockup -->
+  <polyline points="120,316 140,308 160,320 180,298 200,310 220,294 240,286 260,298 280,280 300,272 320,280" stroke="#10B981" stroke-width="1.5" fill="none" stroke-opacity="0.6"/>
+  <!-- Overlay panel -->
+  <rect x="400" y="262" width="110" height="84" rx="4" fill="#030A06" stroke="#34d399" stroke-width="0.8"/>
+  <text x="455" y="278" font-family="'SF Mono',monospace" font-size="7.5" fill="#34d399" text-anchor="middle" font-weight="700">OVERLAY</text>
+  <text x="455" y="292" font-family="'SF Pro Display',system-ui,sans-serif" font-size="16" font-weight="900" fill="#10B981" text-anchor="middle">BUY</text>
+  <text x="455" y="308" font-family="'SF Mono',monospace" font-size="7" fill="#1A4028" text-anchor="middle">87%</text>
+  <text x="455" y="320" font-family="'SF Mono',monospace" font-size="7" fill="#1A4028" text-anchor="middle">Engulfing</text>
+  <text x="455" y="334" font-family="'SF Mono',monospace" font-size="7" fill="#1A4028" text-anchor="middle">draggable</text>
+
+  <!-- Content script -->
+  <rect x="100" y="374" width="196" height="50" rx="6" fill="#050E06" stroke="#34d399" stroke-width="0.6" stroke-opacity="0.5"/>
+  <text x="198" y="396" font-family="'SF Mono',monospace" font-size="9" fill="#86efac" text-anchor="middle" font-weight="700">overlay.js</text>
+  <text x="198" y="412" font-family="'SF Mono',monospace" font-size="8" fill="#1A4028" text-anchor="middle">injects panel · displays signal</text>
+
+  <!-- Service Worker -->
+  <rect x="316" y="374" width="196" height="50" rx="6" fill="#050E06" stroke="#34d399" stroke-width="0.6" stroke-opacity="0.5"/>
+  <text x="414" y="396" font-family="'SF Mono',monospace" font-size="9" fill="#86efac" text-anchor="middle" font-weight="700">service-worker.js</text>
+  <text x="414" y="412" font-family="'SF Mono',monospace" font-size="8" fill="#1A4028" text-anchor="middle">fetches → localhost:5000</text>
+
+  <!-- Arrow overlay to SW -->
+  <line x1="296" y1="399" x2="316" y2="399" stroke="#34d399" stroke-width="1" stroke-opacity="0.4"/>
+  <polygon points="315,395 323,399 315,403" fill="#34d399" fill-opacity="0.4"/>
+  <text x="306" y="392" font-family="'SF Mono',monospace" font-size="7" fill="#34d399" text-anchor="middle">msg</text>
+
+  <!-- Popup -->
+  <rect x="100" y="444" width="412" height="40" rx="6" fill="#050E06" stroke="#34d399" stroke-width="0.6" stroke-opacity="0.4"/>
+  <text x="306" y="462" font-family="'SF Mono',monospace" font-size="9" fill="#86efac" text-anchor="middle" font-weight="700">popup.html · Symbol + Timeframe Selector</text>
+  <text x="306" y="476" font-family="'SF Mono',monospace" font-size="8" fill="#1A4028" text-anchor="middle">user selects BTCUSDT · 1H · triggers analysis</text>
+
+  <!-- Arrow from SW to Flask -->
+  <line x1="540" y1="399" x2="620" y2="399" stroke="#34d399" stroke-width="1.5" stroke-opacity="0.5"/>
+  <polygon points="619,395 627,399 619,403" fill="#34d399" fill-opacity="0.5"/>
+  <text x="580" y="392" font-family="'SF Mono',monospace" font-size="7.5" fill="#34d399" text-anchor="middle">HTTP</text>
+  <text x="580" y="406" font-family="'SF Mono',monospace" font-size="7.5" fill="#34d399" text-anchor="middle">localhost</text>
+
+  <!-- Flask Backend zone -->
+  <rect x="630" y="222" width="520" height="370" rx="10" fill="#040D08" stroke="#f59e0b" stroke-width="0.8" stroke-opacity="0.4" stroke-dasharray="4,3"/>
+  <text x="650" y="244" font-family="'SF Mono',monospace" font-size="8.5" fill="#fbbf24" font-weight="700">FLASK BACKEND (localhost:5000)</text>
+
+  <!-- Flask app -->
+  <rect x="650" y="256" width="480" height="50" rx="8" fill="#050E06" stroke="#f59e0b" stroke-width="0.8"/>
+  <text x="890" y="278" font-family="'SF Mono',monospace" font-size="9.5" fill="#fbbf24" text-anchor="middle" font-weight="700">Flask Application · GET /analyze</text>
+  <text x="890" y="294" font-family="'SF Mono',monospace" font-size="8" fill="#5A3A00" text-anchor="middle">binds to 127.0.0.1:5000 only · not exposed to LAN</text>
+
+  <!-- Binance client -->
+  <rect x="650" y="326" width="220" height="70" rx="8" fill="#050E06" stroke="#34d399" stroke-width="0.8"/>
+  <text x="760" y="348" font-family="'SF Mono',monospace" font-size="9" fill="#86efac" text-anchor="middle" font-weight="700">binance_client.py</text>
+  <text x="760" y="364" font-family="'SF Mono',monospace" font-size="8" fill="#1A4028" text-anchor="middle">GET /api/v3/klines</text>
+  <text x="760" y="378" font-family="'SF Mono',monospace" font-size="8" fill="#1A4028" text-anchor="middle">public endpoint · no auth key</text>
+
+  <!-- Pattern detector -->
+  <rect x="900" y="326" width="220" height="70" rx="8" fill="#050E06" stroke="#34d399" stroke-width="0.8"/>
+  <text x="1010" y="348" font-family="'SF Mono',monospace" font-size="9" fill="#86efac" text-anchor="middle" font-weight="700">pattern_detector.py</text>
+  <text x="1010" y="364" font-family="'SF Mono',monospace" font-size="8" fill="#1A4028" text-anchor="middle">14 deterministic</text>
+  <text x="1010" y="378" font-family="'SF Mono',monospace" font-size="8" fill="#1A4028" text-anchor="middle">ratio check functions</text>
+
+  <!-- AI recommender -->
+  <rect x="650" y="416" width="220" height="60" rx="8" fill="#050E06" stroke="#10B981" stroke-width="0.8"/>
+  <text x="760" y="438" font-family="'SF Mono',monospace" font-size="9" fill="#34d399" text-anchor="middle" font-weight="700">ai_recommender.py</text>
+  <text x="760" y="454" font-family="'SF Mono',monospace" font-size="8" fill="#1A4028" text-anchor="middle">patterns + context → signal</text>
+  <text x="760" y="467" font-family="'SF Mono',monospace" font-size="8" fill="#1A4028" text-anchor="middle">dir · confidence · rationale</text>
+
+  <!-- Rate limiter -->
+  <rect x="900" y="416" width="220" height="60" rx="8" fill="#050E06" stroke="#F59E0B" stroke-width="0.8" stroke-opacity="0.6"/>
+  <text x="1010" y="438" font-family="'SF Mono',monospace" font-size="9" fill="#fbbf24" text-anchor="middle" font-weight="700">rate_limiter.py</text>
+  <text x="1010" y="454" font-family="'SF Mono',monospace" font-size="8" fill="#5A3A00" text-anchor="middle">300ms debounce</text>
+  <text x="1010" y="467" font-family="'SF Mono',monospace" font-size="8" fill="#5A3A00" text-anchor="middle">30s cache TTL</text>
+
+  <!-- Arrow Flask to Binance (external) -->
+  <line x1="760" y1="326" x2="760" y2="310" stroke="#34d399" stroke-width="1" stroke-opacity="0.4"/>
+  <line x1="760" y1="310" x2="890" y2="310" stroke="#34d399" stroke-width="1" stroke-opacity="0.4"/>
+  <line x1="890" y1="310" x2="890" y2="306" stroke="#34d399" stroke-width="1" stroke-opacity="0.4"/>
+
+  <!-- External: Binance -->
+  <rect x="730" y="555" width="320" height="40" rx="8" fill="#020806" stroke="#34d399" stroke-width="0.8" stroke-opacity="0.5"/>
+  <text x="890" y="575" font-family="'SF Mono',monospace" font-size="9.5" fill="#86efac" text-anchor="middle" font-weight="700">Binance REST API (public market data)</text>
+  <text x="890" y="589" font-family="'SF Mono',monospace" font-size="8" fill="#1A4028" text-anchor="middle">https://api.binance.com · public endpoint · no credentials</text>
+  <!-- Arrow to external -->
+  <line x1="760" y1="416" x2="760" y2="595" stroke="#34d399" stroke-width="1" stroke-opacity="0.3" stroke-dasharray="3,3"/>
+  <polygon points="756,594 760,602 764,594" fill="#34d399" fill-opacity="0.3"/>
+
+  <text x="60" y="640" font-family="'SF Mono',monospace" font-size="10" fill="#0A2A18" font-weight="600" letter-spacing="2">AI TRADING EXTENSION · Local-First Architecture</text>
+</svg>

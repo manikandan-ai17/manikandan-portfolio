@@ -58,6 +58,7 @@ interface ProjectData {
   futureRoadmap: string[]
   gradient: string
   image?: string
+  gallery?: string[]
   github: string
   demo: string
   tech: string[]
@@ -71,7 +72,13 @@ const PROJECT_DETAILS: Record<string, ProjectData> = {
     name: 'ADM Retail Platform',
     tagline: 'Full-stack retail data platform that automates the entire product lifecycle — from raw supplier Excel to live Shopify store — using AI enrichment, taxonomy classification, and an AWS-hosted batch pipeline.',
     gradient: 'linear-gradient(135deg, #1565C0 0%, #2563eb 100%)',
-    image: '/images/project-1.png',
+    image: '/images/project-1.svg',
+    gallery: [
+      '/images/project-1.svg',
+      '/images/project-1-workflow.svg',
+      '/images/project-1-arch.svg',
+      '/images/project-1-output.svg',
+    ],
     status: 'Shipped',
     llm: 'LLM enrichment engine',
     github: 'https://github.com/monkey-d-luffy9888888',
@@ -326,7 +333,13 @@ const PROJECT_DETAILS: Record<string, ProjectData> = {
     name: 'DTLP Data Extraction Extension',
     tagline: 'Chrome extension that extracts structured product attributes from any product page using a dual-LLM pipeline — Perplexity sonar-pro as primary, Google Gemini as verifier — with JSON schema validation and IndexedDB local storage.',
     gradient: 'linear-gradient(135deg, #3730a3 0%, #2563eb 100%)',
-    image: '/images/project-2.png',
+    image: '/images/project-2.svg',
+    gallery: [
+      '/images/project-2.svg',
+      '/images/project-2-workflow.svg',
+      '/images/project-2-arch.svg',
+      '/images/project-2-output.svg',
+    ],
     status: 'Shipped',
     llm: 'Perplexity sonar-pro + Gemini',
     github: 'https://github.com/monkey-d-luffy9888888',
@@ -564,7 +577,13 @@ const PROJECT_DETAILS: Record<string, ProjectData> = {
     name: 'AI Trading Extension',
     tagline: 'Chrome extension with a local Flask backend that pulls real-time OHLCV data from Binance, runs deterministic candlestick pattern detection, and delivers AI trade recommendations directly into the browser overlaid on the chart.',
     gradient: 'linear-gradient(135deg, #065f46 0%, #0d9488 100%)',
-    image: '/images/project-3.png',
+    image: '/images/project-3.svg',
+    gallery: [
+      '/images/project-3.svg',
+      '/images/project-3-workflow.svg',
+      '/images/project-3-arch.svg',
+      '/images/project-3-output.svg',
+    ],
     status: 'Shipped',
     llm: 'AI recommendation engine',
     github: 'https://github.com/monkey-d-luffy9888888',
@@ -961,6 +980,56 @@ export const ProjectDetail = () => {
 
       {/* ── Content ── */}
       <div style={{ maxWidth: '960px', margin: '0 auto', padding: '3rem 2rem 6rem' }}>
+
+        {/* 0. Visual Gallery */}
+        {project.gallery && project.gallery.length > 0 && (
+          <motion.section
+            custom={-1} variants={fadeUp} initial="hidden" animate="visible"
+            style={{ marginBottom: '3rem' }}
+          >
+            <div style={{ marginBottom: '1.25rem' }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', fontWeight: 700, color: '#2563eb', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '4px' }}>
+                00 — Visual Gallery
+              </div>
+              <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text)', borderBottom: '1px solid rgba(128,128,128,0.15)', paddingBottom: '0.6rem' }}>
+                Project Visuals
+              </h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: '12px' }}>
+              {project.gallery.map((src, i) => {
+                const labels = ['Hero Overview', 'AI Workflow', 'Architecture', 'Output Example']
+                return (
+                  <motion.div
+                    key={i}
+                    whileHover={{ scale: 1.015 }}
+                    style={{
+                      borderRadius: '12px', overflow: 'hidden',
+                      border: '1px solid rgba(255,255,255,0.07)',
+                      background: '#0d1117', cursor: 'pointer',
+                    }}
+                  >
+                    <img
+                      src={src}
+                      alt={`${project.name} — ${labels[i] ?? `Visual ${i + 1}`}`}
+                      style={{ width: '100%', height: 'auto', display: 'block' }}
+                    />
+                    <div style={{
+                      padding: '8px 14px',
+                      background: 'rgba(0,0,0,0.4)',
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: '0.72rem',
+                      color: 'rgba(255,255,255,0.45)',
+                      fontWeight: 600,
+                      letterSpacing: '0.5px',
+                    }}>
+                      {labels[i] ?? `Visual ${i + 1}`}
+                    </div>
+                  </motion.div>
+                )
+              })}
+            </div>
+          </motion.section>
+        )}
 
         {/* 1. Executive Summary */}
         <Section idx={0} label="01 — Overview" title="Executive Summary">

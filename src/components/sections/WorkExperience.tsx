@@ -13,7 +13,7 @@ export const WorkExperience = () => {
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
         <ScrollReveal direction="left">
           <h2 className="section-heading">Experience</h2>
-          <p className="section-subheading">PRODUCTION AI SYSTEMS SHIPPED FOR ENTERPRISE CLIENTS</p>
+          <p className="section-subheading">EMPLOYMENT HISTORY &amp; PRODUCTION AI SYSTEMS SHIPPED</p>
         </ScrollReveal>
 
         <StaggerContainer
@@ -57,9 +57,12 @@ export const WorkExperience = () => {
 
                   {/* Body */}
                   <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                    <h3 style={{ color: 'var(--text)', fontWeight: 800, fontSize: '1rem', marginBottom: '10px' }}>
+                    <h3 style={{ color: 'var(--text)', fontWeight: 800, fontSize: '1rem', marginBottom: '4px' }}>
                       {exp.role}
                     </h3>
+                    <p style={{ color: 'var(--primary)', fontSize: '0.78rem', fontWeight: 600, marginBottom: '10px', letterSpacing: '0.01em' }}>
+                      {exp.company} &nbsp;·&nbsp; {exp.date}
+                    </p>
                     <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: 1.7, marginBottom: '12px', flex: 1 }}>
                       {exp.desc}
                     </p>

@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#020818"/><stop offset="100%" stop-color="#010408"/></linearGradient>
+    <radialGradient id="gl" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#0891B2" stop-opacity="0.12"/><stop offset="100%" stop-color="#0891B2" stop-opacity="0"/></radialGradient>
+    <pattern id="gr" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#fff" stroke-width="0.3" stroke-opacity="0.03"/></pattern>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/><rect width="1200" height="675" fill="url(#gl)"/><rect width="1200" height="675" fill="url(#gr)"/>
+  <rect width="1200" height="44" fill="#030A18" fill-opacity="0.95"/>
+  <circle cx="28" cy="22" r="5.5" fill="#EF4444" fill-opacity="0.85"/><circle cx="46" cy="22" r="5.5" fill="#F59E0B" fill-opacity="0.85"/><circle cx="64" cy="22" r="5.5" fill="#10B981" fill-opacity="0.85"/>
+  <text x="88" y="26" font-family="'SF Mono',monospace" font-size="11" fill="#0A2A3A">dtlp-data-extraction · Dual-LLM Workflow</text>
+  <text x="60" y="98" font-family="'SF Pro Display',system-ui,sans-serif" font-size="12" font-weight="600" fill="#0891B2" letter-spacing="3">DUAL-LLM WORKFLOW</text>
+  <text x="60" y="130" font-family="'SF Pro Display',system-ui,sans-serif" font-size="28" font-weight="800" fill="#F1F5F9">Extract → Verify → Validate → Store</text>
+  <text x="60" y="156" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13" fill="#0A2A3A">Perplexity sonar-pro primary · Google Gemini verifier · JSON Schema · IndexedDB</text>
+
+  <!-- Left: Page capture -->
+  <rect x="60" y="192" width="180" height="380" rx="12" fill="#07101A" stroke="#0891B2" stroke-width="0.8" stroke-opacity="0.4"/>
+  <text x="150" y="216" font-family="'SF Mono',monospace" font-size="9" fill="#0891B2" text-anchor="middle" font-weight="700">PAGE CAPTURE</text>
+  <!-- Browser mockup -->
+  <rect x="80" y="228" width="140" height="100" rx="6" fill="#040D18"/>
+  <rect x="80" y="228" width="140" height="18" rx="6" fill="#071828"/>
+  <circle cx="92" cy="237" r="3" fill="#EF4444" fill-opacity="0.5"/>
+  <circle cx="102" cy="237" r="3" fill="#F59E0B" fill-opacity="0.5"/>
+  <circle cx="112" cy="237" r="3" fill="#10B981" fill-opacity="0.5"/>
+  <!-- Page content lines -->
+  <rect x="88" y="252" width="100" height="6" rx="2" fill="#0A1A28"/>
+  <rect x="88" y="262" width="80" height="5" rx="2" fill="#0A1A28"/>
+  <rect x="88" y="271" width="90" height="5" rx="2" fill="#0A1A28"/>
+  <rect x="88" y="284" width="120" height="4" rx="2" fill="#0F2838"/>
+  <rect x="88" y="292" width="100" height="4" rx="2" fill="#0F2838"/>
+  <rect x="88" y="300" width="110" height="4" rx="2" fill="#0F2838"/>
+  <text x="150" y="354" font-family="'SF Pro Display',system-ui,sans-serif" font-size="10" font-weight="700" fill="#F1F5F9" text-anchor="middle">content.js</text>
+  <text x="150" y="370" font-family="'SF Mono',monospace" font-size="8.5" fill="#0A2A3A" text-anchor="middle">DOM capture</text>
+  <text x="150" y="384" font-family="'SF Mono',monospace" font-size="8.5" fill="#0A2A3A" text-anchor="middle">headings + tables</text>
+  <text x="150" y="398" font-family="'SF Mono',monospace" font-size="8.5" fill="#0A2A3A" text-anchor="middle">spec sections</text>
+  <text x="150" y="424" font-family="'SF Mono',monospace" font-size="8.5" fill="#0891B2" text-anchor="middle">→ msg to SW</text>
+
+  <!-- Fork arrows -->
+  <line x1="240" y1="382" x2="270" y2="382" stroke="#0891B2" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="270" y1="382" x2="270" y2="292" stroke="#7c3aed" stroke-width="1.2" stroke-opacity="0.5"/>
+  <polygon points="266,293 270,285 274,293" fill="#7c3aed" fill-opacity="0.5"/>
+  <line x1="270" y1="382" x2="270" y2="472" stroke="#0284c7" stroke-width="1.2" stroke-opacity="0.5"/>
+  <polygon points="266,471 270,479 274,471" fill="#0284c7" fill-opacity="0.5"/>
+
+  <!-- Perplexity card -->
+  <rect x="280" y="240" width="230" height="100" rx="10" fill="#0C0618" stroke="#7c3aed" stroke-width="1.2"/>
+  <rect x="280" y="240" width="230" height="3" rx="1" fill="#7c3aed"/>
+  <text x="395" y="260" font-family="'SF Mono',monospace" font-size="9.5" fill="#a78bfa" text-anchor="middle" font-weight="700">PERPLEXITY SONAR-PRO</text>
+  <text x="395" y="276" font-family="'SF Mono',monospace" font-size="8" fill="#3A1A6A" text-anchor="middle">primary extraction model</text>
+  <text x="295" y="298" font-family="'SF Mono',monospace" font-size="8.5" fill="#86efac">brand: "Samsung"</text>
+  <text x="295" y="312" font-family="'SF Mono',monospace" font-size="8.5" fill="#86efac">ram_gb: 12</text>
+  <text x="295" y="326" font-family="'SF Mono',monospace" font-size="8.5" fill="#86efac">storage_gb: 256</text>
+
+  <!-- Gemini card -->
+  <rect x="280" y="420" width="230" height="100" rx="10" fill="#020C18" stroke="#0284c7" stroke-width="1.2"/>
+  <rect x="280" y="420" width="230" height="3" rx="1" fill="#0284c7"/>
+  <text x="395" y="440" font-family="'SF Mono',monospace" font-size="9.5" fill="#38bdf8" text-anchor="middle" font-weight="700">GOOGLE GEMINI</text>
+  <text x="395" y="456" font-family="'SF Mono',monospace" font-size="8" fill="#0A2A3A" text-anchor="middle">verification + gap-fill</text>
+  <text x="295" y="478" font-family="'SF Mono',monospace" font-size="8.5" fill="#86efac">brand: "Samsung"  ✓</text>
+  <text x="295" y="492" font-family="'SF Mono',monospace" font-size="8.5" fill="#86efac">ram_gb: 12  ✓</text>
+  <text x="295" y="506" font-family="'SF Mono',monospace" font-size="8.5" fill="#fbbf24">battery_mah: 4000  (fill)</text>
+
+  <!-- Merge arrow -->
+  <line x1="510" y1="290" x2="580" y2="382" stroke="#7c3aed" stroke-width="1.2" stroke-opacity="0.5"/>
+  <line x1="510" y1="470" x2="580" y2="382" stroke="#0284c7" stroke-width="1.2" stroke-opacity="0.5"/>
+  <polygon points="576,378 584,382 576,386" fill="#8B5CF6" fill-opacity="0.5"/>
+
+  <!-- Reconcile -->
+  <rect x="590" y="332" width="180" height="100" rx="10" fill="#0C0814" stroke="#8B5CF6" stroke-width="1.5"/>
+  <rect x="590" y="332" width="180" height="3" rx="1" fill="#8B5CF6"/>
+  <text x="680" y="352" font-family="'SF Mono',monospace" font-size="9.5" fill="#c4b5fd" text-anchor="middle" font-weight="700">RECONCILE</text>
+  <text x="680" y="368" font-family="'SF Mono',monospace" font-size="8" fill="#3A1A6A" text-anchor="middle">merge priority: sonar-pro</text>
+  <text x="600" y="392" font-family="'SF Mono',monospace" font-size="8" fill="#a78bfa">match → ✓ confirmed</text>
+  <text x="600" y="406" font-family="'SF Mono',monospace" font-size="8" fill="#fbbf24">differ → sonar flag</text>
+  <text x="600" y="420" font-family="'SF Mono',monospace" font-size="8" fill="#60a5fa">empty → gemini fill</text>
+  <!-- Arrow to schema -->
+  <line x1="770" y1="382" x2="810" y2="382" stroke="#8B5CF6" stroke-width="1.5" stroke-opacity="0.5"/>
+  <polygon points="809,378 817,382 809,386" fill="#8B5CF6" fill-opacity="0.5"/>
+
+  <!-- Schema validate -->
+  <rect x="820" y="332" width="180" height="100" rx="10" fill="#041810" stroke="#10B981" stroke-width="1.2"/>
+  <rect x="820" y="332" width="180" height="3" rx="1" fill="#10B981"/>
+  <text x="910" y="352" font-family="'SF Mono',monospace" font-size="9.5" fill="#34d399" text-anchor="middle" font-weight="700">JSON SCHEMA</text>
+  <text x="910" y="368" font-family="'SF Mono',monospace" font-size="8" fill="#1A5030" text-anchor="middle">Pydantic v2 validation</text>
+  <text x="830" y="392" font-family="'SF Mono',monospace" font-size="8" fill="#34d399">pass → store to IndexedDB</text>
+  <text x="830" y="406" font-family="'SF Mono',monospace" font-size="8" fill="#EF4444">fail → corrective retry</text>
+  <text x="830" y="420" font-family="'SF Mono',monospace" font-size="8" fill="#475569">max 3 retries</text>
+  <!-- Arrow to IndexedDB -->
+  <line x1="1000" y1="382" x2="1040" y2="382" stroke="#10B981" stroke-width="1.5" stroke-opacity="0.5"/>
+  <polygon points="1039,378 1047,382 1039,386" fill="#10B981" fill-opacity="0.5"/>
+
+  <!-- IndexedDB -->
+  <rect x="1050" y="332" width="130" height="100" rx="10" fill="#041810" stroke="#10B981" stroke-width="1"/>
+  <text x="1115" y="358" font-family="'SF Mono',monospace" font-size="9.5" fill="#34d399" text-anchor="middle" font-weight="700">IndexedDB</text>
+  <text x="1115" y="374" font-family="'SF Mono',monospace" font-size="8" fill="#1A5030" text-anchor="middle">browser-local</text>
+  <text x="1115" y="390" font-family="'SF Mono',monospace" font-size="8" fill="#1A5030" text-anchor="middle">no server</text>
+  <text x="1115" y="410" font-family="'SF Mono',monospace" font-size="8" fill="#475569" text-anchor="middle">CSV / JSON</text>
+  <text x="1115" y="422" font-family="'SF Mono',monospace" font-size="8" fill="#475569" text-anchor="middle">export</text>
+
+  <text x="60" y="630" font-family="'SF Mono',monospace" font-size="10" fill="#0A2A3A" font-weight="600" letter-spacing="2">DTLP EXTENSION · Dual-LLM Extraction Workflow</text>
+</svg>

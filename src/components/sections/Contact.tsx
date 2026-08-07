@@ -16,7 +16,7 @@ export const Contact = () => {
           style={{ marginBottom: '3rem' }}
         >
           <h2 className="section-heading">Let's Connect</h2>
-          <p className="section-subheading">OPEN TO ROLES IN AI ENGINEERING, LLM SYSTEMS, AND BACKEND AI</p>
+          <p className="section-subheading">AI DEVELOPER · PYTHON DEVELOPER · FULL-STACK DEVELOPER</p>
         </motion.div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'start' }} className="max-md:grid-cols-1">
@@ -28,7 +28,7 @@ export const Contact = () => {
             viewport={{ once: true }}
           >
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.75, marginBottom: '2rem' }}>
-              I'm currently looking for full-time roles in AI engineering. If you're building systems that involve LLMs, document AI, fine-tuning, or real-time data pipelines — I'd like to talk.
+              I'm open to roles as an AI Developer, Python Developer, or Full-Stack Developer. If you're building LLM-powered tools, document AI systems, Python backends, or AI-integrated web apps — I'd like to talk.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '2rem' }}>

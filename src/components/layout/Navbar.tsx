@@ -6,6 +6,7 @@ const navLinks = [
   { label: 'Experience', href: '#experience' },
   { label: 'Projects', href: '#projects' },
   { label: 'Open Source', href: '#opensource' },
+  { label: 'GitHub', href: '#github' },
   { label: 'Education', href: '#education' },
   { label: 'Writing', href: '#blogs' },
   { label: 'Resume', href: '/resume.html' },
