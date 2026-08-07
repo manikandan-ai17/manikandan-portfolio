@@ -282,7 +282,7 @@ export const GitHubProfile = () => {
               <div key={c} style={{ width: '11px', height: '11px', borderRadius: '50%', background: c, opacity: 0.85 }} />
             ))}
             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '11px', color: '#8b949e', marginLeft: '10px' }}>
-              manikandan-santhosh / README.md
+              manikandan-ai17 / README.md
             </span>
           </div>
 
@@ -302,7 +302,7 @@ export const GitHubProfile = () => {
                 AI Developer · Python Developer · Full-Stack Developer from India 🇮🇳
               </p>
               <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <img src="https://komarev.com/ghpvc/?username=manikandan-santhosh&color=0891b2&style=flat-square&label=Profile+Views" alt="views" style={{ height: '20px' }} />
+                <img src="https://komarev.com/ghpvc/?username=manikandan-ai17&color=0891b2&style=flat-square&label=Profile+Views" alt="views" style={{ height: '20px' }} />
                 <a href={linkedinLink} target="_blank" rel="noopener noreferrer">
                   <img src="https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=flat-square&logo=linkedin" alt="LinkedIn" style={{ height: '20px' }} />
                 </a>

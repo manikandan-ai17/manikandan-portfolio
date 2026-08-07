@@ -9,11 +9,11 @@ export const portfolioData = {
   contactEmail: 'maniappu7777@gmail.com',
   location: 'India',
   openToOpportunities: true,
-  githubLink: 'https://github.com/manikandan-santhosh',
+  githubLink: 'https://github.com/manikandan-ai17',
   linkedinLink: 'https://www.linkedin.com/in/manikandan-s-032518285/',
 
   socialLinks: [
-    { label: 'GitHub', href: 'https://github.com/manikandan-santhosh', bg: '#181717', icon: 'github' },
+    { label: 'GitHub', href: 'https://github.com/manikandan-ai17', bg: '#181717', icon: 'github' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/manikandan-s-032518285/', bg: '#0077B5', icon: 'linkedin' },
     { label: 'Email', href: 'mailto:maniappu7777@gmail.com', bg: '#D44638', icon: 'mail' },
   ],
@@ -265,7 +265,7 @@ export const portfolioData = {
       lang: 'TypeScript',
       stars: 0,
       forks: 0,
-      url: 'https://github.com/manikandan-santhosh',
+      url: 'https://github.com/manikandan-ai17',
     },
     {
       name: 'ocr-pdf-analyzer',
@@ -273,7 +273,7 @@ export const portfolioData = {
       lang: 'JavaScript',
       stars: 0,
       forks: 0,
-      url: 'https://github.com/manikandan-santhosh',
+      url: 'https://github.com/manikandan-ai17',
     },
     {
       name: 'ai-trading-extension',
@@ -281,7 +281,7 @@ export const portfolioData = {
       lang: 'Python',
       stars: 0,
       forks: 0,
-      url: 'https://github.com/manikandan-santhosh',
+      url: 'https://github.com/manikandan-ai17',
     },
     {
       name: 'dtlp-data-extraction-extension',
@@ -289,7 +289,7 @@ export const portfolioData = {
       lang: 'JavaScript',
       stars: 0,
       forks: 0,
-      url: 'https://github.com/manikandan-santhosh',
+      url: 'https://github.com/manikandan-ai17',
     },
   ],
 
@@ -305,7 +305,7 @@ export const portfolioData = {
       link: '#',
       color: 'from-blue-500 to-blue-700',
       image: '/images/project-1.svg',
-      github: 'https://github.com/manikandan-santhosh',
+      github: 'https://github.com/manikandan-ai17',
     },
     {
       id: 'dtlp-data-extraction-extension',
@@ -318,7 +318,7 @@ export const portfolioData = {
       link: '#',
       color: 'from-indigo-500 to-blue-600',
       image: '/images/project-2.svg',
-      github: 'https://github.com/manikandan-santhosh',
+      github: 'https://github.com/manikandan-ai17',
     },
     {
       id: 'ai-trading-extension',
@@ -331,7 +331,7 @@ export const portfolioData = {
       link: '#',
       color: 'from-emerald-500 to-teal-600',
       image: '/images/project-3.svg',
-      github: 'https://github.com/manikandan-santhosh',
+      github: 'https://github.com/manikandan-ai17',
     },
   ],
 

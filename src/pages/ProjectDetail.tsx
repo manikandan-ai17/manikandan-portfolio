@@ -81,7 +81,7 @@ const PROJECT_DETAILS: Record<string, ProjectData> = {
     ],
     status: 'Shipped',
     llm: 'LLM enrichment engine',
-    github: 'https://github.com/manikandan-santhosh',
+    github: 'https://github.com/manikandan-ai17',
     demo: '#',
     tech: ['Python', 'FastAPI', 'React', 'TypeScript', 'PostgreSQL', 'AWS S3', 'AWS Lambda', 'Shopify Admin API', 'Docker', 'OpenPyXL'],
 
@@ -342,7 +342,7 @@ const PROJECT_DETAILS: Record<string, ProjectData> = {
     ],
     status: 'Shipped',
     llm: 'Perplexity sonar-pro + Gemini',
-    github: 'https://github.com/manikandan-santhosh',
+    github: 'https://github.com/manikandan-ai17',
     demo: '#',
     tech: ['JavaScript', 'Chrome Extension API', 'Manifest V3', 'Perplexity sonar-pro', 'Google Gemini', 'IndexedDB', 'JSON Schema'],
 
@@ -586,7 +586,7 @@ const PROJECT_DETAILS: Record<string, ProjectData> = {
     ],
     status: 'Shipped',
     llm: 'AI recommendation engine',
-    github: 'https://github.com/manikandan-santhosh',
+    github: 'https://github.com/manikandan-ai17',
     demo: '#',
     tech: ['Python', 'Flask', 'JavaScript', 'Chrome Extension API', 'Manifest V3', 'Binance API', 'Candlestick Pattern Detection'],
 
