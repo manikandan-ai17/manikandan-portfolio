@@ -121,7 +121,7 @@ export const portfolioData = {
     {
       role: 'Junior Software Developer',
       company: 'AltiusNxt Technologies',
-      date: 'Aug 2026 – Present',
+      date: 'Present',
       desc: 'Building and shipping production software features in Python; integrating LLM and AI capabilities into internal product workflows. Contributing to code reviews, system architecture discussions, and delivery cycles.',
       descBullets: [
         'Developing production features in Python and full-stack web technologies; contributing to sprint delivery and code quality',
