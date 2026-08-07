@@ -121,7 +121,7 @@ export const portfolioData = {
     {
       role: 'Junior Software Developer',
       company: 'AltiusNxt Technologies',
-      date: 'Aug 2026 – Present',
+      date: 'Present',
       desc: 'Maintaining and extending production AI systems for enterprise clients at AltiusNxt; responsible for LLM feature development, backend engineering, and cloud deployments on AWS and GCP.',
       descBullets: [
         'Maintain and extend production AI systems serving enterprise clients; ship new LLM-powered features in Python/FastAPI with prompt engineering, output validation, and deployment on AWS and GCP',
