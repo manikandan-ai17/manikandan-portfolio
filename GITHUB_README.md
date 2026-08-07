@@ -11,7 +11,7 @@
 
 ## About
 
-AI Engineer with production experience in LLM integration, RAG pipelines, document intelligence, and model fine-tuning. At AltiusNxt Technologies, building and shipping LLM-integrated features and RAG-backed services in Python/FastAPI; responsible for prompt engineering, output validation, and AWS deployment for production users.
+AI Engineer with production experience in LLM integration, document intelligence, and model fine-tuning. At AltiusNxt Technologies, building and shipping LLM-integrated features in Python/FastAPI; responsible for prompt engineering, output validation, and production deployment on AWS.
 
 Previously designed and delivered 6 AI systems end-to-end at Deep Tech Launchpad — including a hallucination-resistant dual-LLM verification pipeline for enterprise document extraction, an enterprise audit automation system, and a complete LoRA fine-tuning workflow for Gemma (A100 + Hugging Face Hub).
 
@@ -24,8 +24,13 @@ Previously designed and delivered 6 AI systems end-to-end at Deep Tech Launchpad
 **AI / ML**
 ```
 Python · PyTorch · Hugging Face Transformers · PEFT · LoRA Fine-Tuning
-RAG · LangChain · ChromaDB · OpenAI API · Gemini API
-Prompt Engineering · Tesseract OCR · YOLO · NumPy
+OpenAI API · Gemini API · Prompt Engineering
+Tesseract OCR · YOLO · NumPy
+```
+
+**Currently Learning**
+```
+RAG · Vector Databases · LangChain · LLM Evaluation Frameworks
 ```
 
 **Backend**
