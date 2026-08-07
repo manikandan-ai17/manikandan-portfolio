@@ -16,7 +16,7 @@ export const Contact = () => {
           style={{ marginBottom: '3rem' }}
         >
           <h2 className="section-heading">Let's Connect</h2>
-          <p className="section-subheading">AI DEVELOPER · PYTHON DEVELOPER · FULL-STACK DEVELOPER</p>
+          <p className="section-subheading">AI ENGINEER · LLM SYSTEMS · BACKEND ENGINEERING</p>
         </motion.div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'start' }} className="max-md:grid-cols-1">
@@ -28,7 +28,7 @@ export const Contact = () => {
             viewport={{ once: true }}
           >
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.75, marginBottom: '2rem' }}>
-              I'm open to roles as an AI Developer, Python Developer, or Full-Stack Developer. If you're building LLM-powered tools, document AI systems, Python backends, or AI-integrated web apps — I'd like to talk.
+              I'm an AI Engineer with hands-on experience in LLM systems, document intelligence pipelines, and model fine-tuning. Open to AI Engineer, LLM Engineer, and Backend AI Engineer roles. If you're building production AI systems and need someone who can own the full pipeline — from prompt engineering and model integration to containerised deployment — let's talk.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '2rem' }}>

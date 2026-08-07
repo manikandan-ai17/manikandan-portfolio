@@ -17,7 +17,6 @@
       print-color-adjust: exact;
     }
 
-    /* ── Download bar ── */
     .dl-bar {
       background: #0f172a;
       color: #f1f5f9;
@@ -32,160 +31,75 @@
     .dl-bar-name { font-size: 13px; font-weight: 700; }
     .dl-bar-hint { font-size: 10.5px; opacity: 0.5; }
     .dl-btn {
-      background: #1d4ed8;
-      color: #fff;
-      border: none;
-      padding: 8px 22px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      letter-spacing: 0.2px;
-      white-space: nowrap;
-      transition: background 0.15s;
+      background: #1d4ed8; color: #fff; border: none;
+      padding: 8px 22px; border-radius: 6px; font-size: 13px;
+      font-weight: 600; cursor: pointer; font-family: inherit;
+      letter-spacing: 0.2px; white-space: nowrap; transition: background 0.15s;
     }
     .dl-btn:hover { background: #1e40af; }
 
-    /* ── A4 page ── */
     .page {
-      width: 210mm;
-      min-height: 297mm;
-      max-height: 297mm;
-      margin: 16px auto;
-      background: #fff;
+      width: 210mm; min-height: 297mm; max-height: 297mm;
+      margin: 16px auto; background: #fff;
       box-shadow: 0 4px 40px rgba(0,0,0,0.22);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      overflow: hidden; display: flex; flex-direction: column;
     }
 
-    /* ── HEADER ── */
-    .header {
-      padding: 18px 28px 13px;
-      border-bottom: 2px solid #1e3a8a;
-      flex-shrink: 0;
-    }
+    .header { padding: 17px 28px 12px; border-bottom: 2px solid #1e3a8a; flex-shrink: 0; }
     .header-row1 { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 4px; }
-    .header-name {
-      font-size: 23px;
-      font-weight: 900;
-      color: #0f172a;
-      letter-spacing: -0.5px;
-      line-height: 1;
-    }
-    .header-title {
-      font-size: 9px;
-      font-weight: 600;
-      color: #1d4ed8;
-      letter-spacing: 2.2px;
-      text-transform: uppercase;
-      padding-bottom: 2px;
-    }
-    .header-contacts {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0;
-      font-size: 8.5px;
-      color: #374151;
-      font-weight: 400;
-    }
-    .sep { margin: 0 7px; color: #94a3b8; font-size: 8px; }
+    .header-name { font-size: 22px; font-weight: 900; color: #0f172a; letter-spacing: -0.5px; line-height: 1; }
+    .header-title { font-size: 8.8px; font-weight: 600; color: #1d4ed8; letter-spacing: 2.2px; text-transform: uppercase; padding-bottom: 2px; }
+    .header-contacts { display: flex; flex-wrap: wrap; align-items: center; gap: 0; font-size: 8.3px; color: #374151; font-weight: 400; }
+    .sep { margin: 0 6px; color: #94a3b8; font-size: 8px; }
 
-    /* ── BODY ── */
-    .body {
-      display: grid;
-      grid-template-columns: 61% 39%;
-      flex: 1;
-      overflow: hidden;
-    }
-    .col-left  { padding: 12px 18px 10px 28px; border-right: 1px solid #e2e8f0; overflow: hidden; }
-    .col-right { padding: 12px 24px 10px 16px; overflow: hidden; }
+    .body { display: grid; grid-template-columns: 61% 39%; flex: 1; overflow: hidden; }
+    .col-left  { padding: 11px 17px 10px 27px; border-right: 1px solid #e2e8f0; overflow: hidden; }
+    .col-right { padding: 11px 23px 10px 15px; overflow: hidden; }
 
-    /* ── SECTION ── */
     .section { margin-bottom: 9px; }
     .section-title {
-      font-size: 7.8px;
-      font-weight: 800;
-      letter-spacing: 2.8px;
-      text-transform: uppercase;
-      color: #1e3a8a;
-      border-bottom: 1.5px solid #1e3a8a;
-      padding-bottom: 3px;
-      margin-bottom: 7px;
+      font-size: 7.6px; font-weight: 800; letter-spacing: 2.8px;
+      text-transform: uppercase; color: #1e3a8a;
+      border-bottom: 1.5px solid #1e3a8a; padding-bottom: 3px; margin-bottom: 7px;
     }
 
-    /* ── SUMMARY ── */
-    .summary { font-size: 8.7px; line-height: 1.62; color: #374151; }
+    .summary { font-size: 8.6px; line-height: 1.62; color: #374151; }
 
-    /* ── EXPERIENCE ── */
-    .exp-item { margin-bottom: 6.5px; }
+    .exp-item { margin-bottom: 6px; }
     .exp-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1px; }
-    .exp-role { font-size: 9.5px; font-weight: 700; color: #0f172a; }
-    .exp-date { font-size: 7.8px; color: #6b7280; font-weight: 500; white-space: nowrap; margin-left: 8px; }
-    .exp-company { font-size: 8.3px; color: #1d4ed8; font-weight: 600; margin-bottom: 2px; }
-    .exp-divider { border: none; border-top: 1px solid #f1f5f9; margin: 5.5px 0; }
+    .exp-role { font-size: 9.3px; font-weight: 700; color: #0f172a; }
+    .exp-date { font-size: 7.6px; color: #6b7280; font-weight: 500; white-space: nowrap; margin-left: 8px; }
+    .exp-company { font-size: 8.2px; color: #1d4ed8; font-weight: 600; margin-bottom: 2px; }
+    .exp-divider { border: none; border-top: 1px solid #f1f5f9; margin: 5px 0; }
 
-    /* ── PROJECTS ── */
-    .proj-item { margin-bottom: 5.5px; }
-    .proj-name { font-size: 9px; font-weight: 700; color: #0f172a; margin-bottom: 1px; }
-    .proj-meta { font-size: 7.4px; color: #1d4ed8; font-weight: 600; letter-spacing: 0.2px; margin-bottom: 2px; }
+    .proj-item { margin-bottom: 5px; }
+    .proj-name { font-size: 8.8px; font-weight: 700; color: #0f172a; margin-bottom: 1px; }
+    .proj-meta { font-size: 7.3px; color: #1d4ed8; font-weight: 600; letter-spacing: 0.2px; margin-bottom: 2px; }
     .bullets { list-style: none; }
     .bullets li {
-      font-size: 8.4px;
-      color: #374151;
-      line-height: 1.5;
-      padding-left: 10px;
-      position: relative;
-      margin-bottom: 1px;
+      font-size: 8.3px; color: #374151; line-height: 1.5;
+      padding-left: 10px; position: relative; margin-bottom: 1px;
     }
-    .bullets li::before {
-      content: '–';
-      position: absolute;
-      left: 0;
-      color: #64748b;
-      font-size: 9px;
-      top: 0;
-    }
-    .proj-divider { border: none; border-top: 1px solid #f1f5f9; margin: 5px 0; }
+    .bullets li::before { content: '–'; position: absolute; left: 0; color: #64748b; font-size: 9px; top: 0; }
+    .proj-divider { border: none; border-top: 1px solid #f1f5f9; margin: 4.5px 0; }
 
-    /* ── SKILLS ── */
-    .skill-group { margin-bottom: 5.5px; }
-    .skill-label { font-size: 7.5px; font-weight: 700; color: #0f172a; margin-bottom: 2.5px; text-transform: uppercase; letter-spacing: 0.8px; }
+    .skill-group { margin-bottom: 5px; }
+    .skill-label { font-size: 7.4px; font-weight: 700; color: #0f172a; margin-bottom: 2.5px; text-transform: uppercase; letter-spacing: 0.8px; }
     .skill-tags { display: flex; flex-wrap: wrap; gap: 2px; }
-    .skill-tag {
-      font-size: 7.4px; padding: 1.5px 5px;
-      background: #f0f4ff; color: #1e3a8a;
-      border-radius: 3px; font-weight: 600;
-      border: 1px solid #dde6ff;
-    }
+    .skill-tag { font-size: 7.3px; padding: 1.5px 5px; background: #f0f4ff; color: #1e3a8a; border-radius: 3px; font-weight: 600; border: 1px solid #dde6ff; }
 
-    /* ── EDUCATION ── */
-    .edu-item { margin-bottom: 6px; }
-    .edu-school { font-size: 8.7px; font-weight: 700; color: #0f172a; }
-    .edu-degree { font-size: 8.2px; color: #1d4ed8; font-weight: 600; margin: 1px 0; }
-    .edu-meta { font-size: 7.8px; color: #6b7280; }
+    .edu-item { margin-bottom: 5.5px; }
+    .edu-school { font-size: 8.5px; font-weight: 700; color: #0f172a; }
+    .edu-degree { font-size: 8px; color: #1d4ed8; font-weight: 600; margin: 1px 0; }
+    .edu-meta { font-size: 7.6px; color: #6b7280; }
 
-    /* ── DIFFERENTIATORS ── */
-    .hl-item {
-      margin-bottom: 4.5px;
-      padding: 4.5px 7px;
-      background: #f8faff;
-      border-left: 2.5px solid #1e3a8a;
-      border-radius: 0 4px 4px 0;
-    }
-    .hl-title { font-size: 8.5px; font-weight: 700; color: #0f172a; }
-    .hl-desc { font-size: 7.8px; color: #4b5563; margin-top: 1.5px; line-height: 1.42; }
+    .hl-item { margin-bottom: 4px; padding: 4px 7px; background: #f8faff; border-left: 2.5px solid #1e3a8a; border-radius: 0 4px 4px 0; }
+    .hl-title { font-size: 8.3px; font-weight: 700; color: #0f172a; }
+    .hl-desc { font-size: 7.7px; color: #4b5563; margin-top: 1.5px; line-height: 1.42; }
 
-    /* ── LANGUAGES ── */
-    .lang-row {
-      display: flex; justify-content: space-between;
-      font-size: 8.5px; color: #374151; margin-bottom: 3px; font-weight: 500;
-    }
-    .lang-level { color: #6b7280; font-size: 8px; font-weight: 400; }
+    .lang-row { display: flex; justify-content: space-between; font-size: 8.3px; color: #374151; margin-bottom: 3px; font-weight: 500; }
+    .lang-level { color: #6b7280; font-size: 7.8px; font-weight: 400; }
 
-    /* ── PRINT ── */
     @media print {
       body { background: white; }
       .dl-bar { display: none; }
@@ -196,7 +110,6 @@
 </head>
 <body>
 
-  <!-- Download bar -->
   <div class="dl-bar">
     <div class="dl-bar-left">
       <div class="dl-bar-name">Manikandan Santhosh &mdash; Resume</div>
@@ -213,7 +126,6 @@
 
   <div class="page">
 
-    <!-- HEADER -->
     <div class="header">
       <div class="header-row1">
         <div class="header-name">MANIKANDAN SANTHOSH</div>
@@ -226,13 +138,14 @@
         <span class="sep">|</span>
         <span>Coimbatore, India</span>
         <span class="sep">|</span>
+        <span>manikandan-portfolio-delta.vercel.app</span>
+        <span class="sep">|</span>
         <span>linkedin.com/in/manikandan-s-032518285</span>
         <span class="sep">|</span>
         <span>github.com/monkey-d-luffy9888888</span>
       </div>
     </div>
 
-    <!-- BODY -->
     <div class="body">
 
       <!-- LEFT -->
@@ -240,7 +153,7 @@
 
         <div class="section">
           <div class="section-title">Professional Summary</div>
-          <p class="summary">AI Engineer with hands-on experience designing and deploying production LLM systems, document intelligence pipelines, and model fine-tuning workflows. During a focused AI engineering internship at Deep Tech Launchpad, architected and delivered 6 enterprise AI systems — including a hallucination-resistant dual-LLM verification pipeline, a rule-engine + LLM audit system for large-scale datasets, an end-to-end LoRA fine-tuning lifecycle for Gemma (A100, Hugging Face Hub), and serverless Chrome MV3 extensions with embedded LLM pipelines. Proficient across the full engineering stack: Python · FastAPI · Docker · GCP · Hugging Face Transformers · PEFT · React. Targeting AI Engineer, LLM Engineer, and Backend AI Engineer roles.</p>
+          <p class="summary">AI Engineer with hands-on experience designing and deploying production LLM systems, document intelligence pipelines, and model fine-tuning workflows. During an AI engineering program at Deep Tech Launchpad, designed and delivered 6 AI systems — including a hallucination-resistant dual-LLM verification pipeline, a rule-engine + LLM audit system for large-scale datasets, an end-to-end LoRA fine-tuning lifecycle for Gemma (A100, Hugging Face Hub), and serverless Chrome MV3 extensions with embedded LLM pipelines. Stack: Python · PyTorch · FastAPI · Docker · GCP · Hugging Face Transformers · PEFT · React. Currently expanding into RAG systems, vector search, and LLM evaluation frameworks. Targeting AI Engineer, LLM Engineer, and Backend AI Engineer roles.</p>
         </div>
 
         <div class="section">
@@ -253,8 +166,8 @@
             </div>
             <div class="exp-company">AltiusNxt Technologies &nbsp;·&nbsp; Coimbatore</div>
             <ul class="bullets">
-              <li>Develop and ship production software features in Python and full-stack web technologies; contribute to system architecture discussions, code quality initiatives, and delivery cycles</li>
-              <li>Apply LLM integration and AI engineering patterns to internal product features and tooling</li>
+              <li>Develop and ship production software features in Python; participate in code reviews, system architecture discussions, and sprint delivery cycles</li>
+              <li>Integrate LLM and AI capabilities into internal product features; apply prompt engineering and output validation patterns to production workflows</li>
             </ul>
           </div>
           <hr class="exp-divider">
@@ -266,7 +179,7 @@
             </div>
             <div class="exp-company">AltiusNxt Technologies &nbsp;·&nbsp; Coimbatore</div>
             <ul class="bullets">
-              <li>Transitioned from AI internship to full-time engineering role; completed onboarding onto production codebase and internal architecture; contributed to feature development and bug resolution</li>
+              <li>Transitioned from AI engineering program to full-time employment; completed structured onboarding onto production codebase and engineering workflows; contributed to feature development and bug resolution</li>
             </ul>
           </div>
           <hr class="exp-divider">
@@ -278,10 +191,10 @@
             </div>
             <div class="exp-company">Deep Tech Launchpad &nbsp;·&nbsp; Coimbatore</div>
             <ul class="bullets">
-              <li>Architected and owned end-to-end delivery of 6 AI systems for enterprise use cases — spanning document intelligence, LLM pipelines, model fine-tuning, and browser-native AI extensions</li>
-              <li>Designed a dual-LLM verification architecture for enterprise document extraction: primary model extracts structured attributes → secondary model independently cross-validates each field → Pydantic schema gate rejects malformed output before production; containerised on Docker, deployed to GCP</li>
-              <li>Executed a complete LoRA fine-tuning lifecycle for Google Gemma on A100 GPU: dataset curation, bf16 mixed-precision PEFT training with gradient checkpointing, adapter merge, versioned Hugging Face Hub deployment, and FastAPI inference endpoint</li>
-              <li>Implemented a document AI pipeline for engineering CAD drawings: custom YOLO detector for region classification (title blocks, parts lists, dimension callouts) → adaptive Tesseract OCR with per-region deskewing and PSM tuning → LLM structuring layer producing typed JSON schema output</li>
+              <li>Designed and delivered 6 AI systems across document intelligence, LLM automation, model fine-tuning, and browser-native AI extensions during a structured 6-month AI engineering program</li>
+              <li>Built a dual-LLM verification pipeline for document extraction (under NDA): primary model extracts structured attributes → secondary model independently cross-validates each field → Pydantic schema gate rejects malformed output; containerised on Docker, deployed to GCP</li>
+              <li>Ran end-to-end LoRA fine-tuning for Google Gemma using PEFT on A100 GPU: dataset preparation, bf16 mixed-precision training with gradient checkpointing, adapter merge, versioned Hugging Face Hub deployment, FastAPI inference endpoint</li>
+              <li>Implemented a document AI pipeline for engineering CAD files: custom YOLO model detects region types → adaptive Tesseract OCR (per-region deskewing, PSM tuning) → LLM structuring layer → typed JSON schema output via FastAPI</li>
             </ul>
           </div>
 
@@ -292,30 +205,30 @@
 
           <div class="proj-item">
             <div class="proj-name">Enterprise AI Product Extraction System</div>
-            <div class="proj-meta">Python &nbsp;·&nbsp; Tesseract OCR &nbsp;·&nbsp; LLMs &nbsp;·&nbsp; Pydantic &nbsp;·&nbsp; FastAPI &nbsp;·&nbsp; Docker &nbsp;·&nbsp; GCP</div>
+            <div class="proj-meta">Python &nbsp;·&nbsp; PyTorch &nbsp;·&nbsp; Tesseract OCR &nbsp;·&nbsp; LLMs &nbsp;·&nbsp; Pydantic &nbsp;·&nbsp; FastAPI &nbsp;·&nbsp; Docker &nbsp;·&nbsp; GCP</div>
             <ul class="bullets">
-              <li><strong>Problem:</strong> Enterprise teams manually extracted product attributes from hundreds of unstructured supplier PDFs — slow, error-prone, and unscalable</li>
-              <li><strong>Solution:</strong> 4-stage pipeline — OCR ingestion → primary LLM extraction → independent secondary LLM cross-validation → Pydantic schema gate; hallucination-resistant without human review loop; deployed on GCP via Docker</li>
+              <li><strong>Problem:</strong> Manual extraction of structured product data from enterprise supplier PDFs — slow, inconsistent, and unscalable</li>
+              <li><strong>Solution:</strong> 4-stage pipeline — OCR ingestion → primary LLM extraction → independent secondary LLM cross-validation → Pydantic schema gate; hallucination risk reduced without human review loop; deployed to GCP via Docker</li>
             </ul>
           </div>
           <hr class="proj-divider">
 
           <div class="proj-item">
             <div class="proj-name">Enterprise Audit Automation System</div>
-            <div class="proj-meta">Python &nbsp;·&nbsp; OpenPyXL &nbsp;·&nbsp; LLMs &nbsp;·&nbsp; FastAPI &nbsp;·&nbsp; PostgreSQL</div>
+            <div class="proj-meta">Python &nbsp;·&nbsp; OpenPyXL &nbsp;·&nbsp; LLMs &nbsp;·&nbsp; Pydantic &nbsp;·&nbsp; FastAPI &nbsp;·&nbsp; PostgreSQL</div>
             <ul class="bullets">
-              <li><strong>Problem:</strong> Auditing large enterprise Excel datasets required manual validation across dozens of business rules and contextual checks</li>
-              <li><strong>Solution:</strong> Dual-layer engine — deterministic rule processor (field types, ranges, cross-column constraints) + LLM anomaly layer for contextual errors rules cannot encode; outputs corrected Excel, annotated report, and immutable PostgreSQL audit log</li>
+              <li><strong>Problem:</strong> Large enterprise Excel datasets required manual validation across dozens of field-level and cross-column business rules</li>
+              <li><strong>Solution:</strong> Dual-layer engine — deterministic rule processor (types, ranges, cross-column constraints) + LLM anomaly layer for contextual errors; outputs corrected Excel, annotated error report, and immutable PostgreSQL audit log</li>
             </ul>
           </div>
           <hr class="proj-divider">
 
           <div class="proj-item">
             <div class="proj-name">Gemma LoRA Fine-Tuning Pipeline</div>
-            <div class="proj-meta">Python &nbsp;·&nbsp; Gemma &nbsp;·&nbsp; LoRA / PEFT &nbsp;·&nbsp; Hugging Face Transformers &nbsp;·&nbsp; FastAPI</div>
+            <div class="proj-meta">Python &nbsp;·&nbsp; PyTorch &nbsp;·&nbsp; Gemma &nbsp;·&nbsp; LoRA / PEFT &nbsp;·&nbsp; Hugging Face Transformers &nbsp;·&nbsp; FastAPI</div>
             <ul class="bullets">
-              <li><strong>Problem:</strong> Domain adaptation of a base LLM required full fine-tuning infrastructure — not just API prompting</li>
-              <li><strong>Solution:</strong> End-to-end pipeline: curated dataset → bf16 LoRA training on A100 with gradient checkpointing → PEFT adapter merge → versioned Hub deployment → FastAPI inference endpoint; reusable workflow on GPU-constrained compute</li>
+              <li><strong>Problem:</strong> Domain adaptation of a base LLM required full fine-tuning infrastructure — API prompting alone was insufficient</li>
+              <li><strong>Solution:</strong> End-to-end pipeline: dataset curation → bf16 LoRA training on A100 with gradient checkpointing → PEFT adapter merge → versioned Hub deployment → FastAPI inference endpoint; reusable workflow on GPU-constrained compute</li>
             </ul>
           </div>
           <hr class="proj-divider">
@@ -324,17 +237,17 @@
             <div class="proj-name">Dual-LLM Chrome Extension — Product Spec Extractor (MV3)</div>
             <div class="proj-meta">JavaScript &nbsp;·&nbsp; Manifest V3 &nbsp;·&nbsp; Perplexity sonar-pro &nbsp;·&nbsp; Gemini 1.5 Flash &nbsp;·&nbsp; IndexedDB</div>
             <ul class="bullets">
-              <li><strong>Problem:</strong> Supplier product data required a server-side scraper that broke on DOM changes and needed per-site maintenance</li>
-              <li><strong>Solution:</strong> Serverless MV3 extension — Perplexity sonar-pro extracts specs, Gemini Flash independently verifies field-by-field; schema-validated output persisted in IndexedDB; zero backend, works on any supplier website</li>
+              <li><strong>Problem:</strong> Server-side scrapers for supplier websites required per-site DOM maintenance and broke on layout changes</li>
+              <li><strong>Solution:</strong> Serverless MV3 extension — Perplexity sonar-pro extracts, Gemini Flash independently verifies field-by-field; schema-validated output in IndexedDB; zero backend, works on any supplier website without DOM-specific code</li>
             </ul>
           </div>
           <hr class="proj-divider">
 
           <div class="proj-item">
-            <div class="proj-name">Real-Time Trading Signal Platform</div>
+            <div class="proj-name">Algorithmic Trading Signal System</div>
             <div class="proj-meta">Python &nbsp;·&nbsp; Flask &nbsp;·&nbsp; JavaScript &nbsp;·&nbsp; Manifest V3 &nbsp;·&nbsp; Binance REST API</div>
             <ul class="bullets">
-              <li>Flask backend fetches live OHLCV data from Binance, detects 14 candlestick patterns via deterministic ratio logic, feeds an AI recommendation engine; BUY/SELL signals with confidence scores injected into live charting overlays via Chrome MV3 extension</li>
+              <li>Flask backend fetches live OHLCV data from Binance, detects 14 candlestick patterns via deterministic ratio logic, feeds an AI ranking layer that generates confidence-scored BUY/SELL signals; signals injected directly into live charting overlays via Chrome MV3 extension</li>
             </ul>
           </div>
           <hr class="proj-divider">
@@ -343,8 +256,8 @@
             <div class="proj-name">PDF + CAD Document Intelligence System</div>
             <div class="proj-meta">Python &nbsp;·&nbsp; YOLO &nbsp;·&nbsp; Tesseract OCR &nbsp;·&nbsp; FastAPI</div>
             <ul class="bullets">
-              <li><strong>Problem:</strong> Generic OCR fails on engineering CAD drawings due to variable-format regions, rotation, and domain notation</li>
-              <li><strong>Solution:</strong> Custom YOLO model classifies regions (title blocks, parts lists, dimension callouts) → per-region Tesseract OCR with adaptive contrast, deskewing, and PSM tuning → LLM structuring layer maps raw text to typed JSON schema</li>
+              <li><strong>Problem:</strong> Standard OCR fails on engineering drawings — variable-format regions, rotation, and domain-specific notation cause extraction errors</li>
+              <li><strong>Solution:</strong> Custom YOLO model classifies regions (title blocks, parts lists, callouts) → adaptive Tesseract OCR with per-region contrast, deskewing, and PSM tuning → LLM structuring layer → typed JSON schema output</li>
             </ul>
           </div>
 
@@ -360,6 +273,7 @@
             <div class="skill-label">AI / ML &amp; GenAI</div>
             <div class="skill-tags">
               <span class="skill-tag">Python</span>
+              <span class="skill-tag">PyTorch</span>
               <span class="skill-tag">LLMs</span>
               <span class="skill-tag">Generative AI</span>
               <span class="skill-tag">LoRA / PEFT</span>
@@ -371,6 +285,7 @@
               <span class="skill-tag">Prompt Engineering</span>
               <span class="skill-tag">Tesseract OCR</span>
               <span class="skill-tag">YOLO</span>
+              <span class="skill-tag">NumPy</span>
             </div>
           </div>
           <div class="skill-group">
@@ -408,6 +323,16 @@
               <span class="skill-tag">Hugging Face Hub</span>
             </div>
           </div>
+          <div class="skill-group">
+            <div class="skill-label">Exploring</div>
+            <div class="skill-tags">
+              <span class="skill-tag">RAG</span>
+              <span class="skill-tag">Vector Search</span>
+              <span class="skill-tag">LLM Evals</span>
+              <span class="skill-tag">LangChain</span>
+              <span class="skill-tag">ChromaDB</span>
+            </div>
+          </div>
         </div>
 
         <div class="section">
@@ -420,28 +345,23 @@
           <div class="edu-item">
             <div class="edu-school">TA Ramalingam Chettiar Hr. Sec. School</div>
             <div class="edu-degree">Higher Secondary — Science</div>
-            <div class="edu-meta">2020 – 2022 &nbsp;·&nbsp; 70.33%</div>
-          </div>
-          <div class="edu-item">
-            <div class="edu-school">TA Ramalingam Chettiar Hr. Sec. School</div>
-            <div class="edu-degree">SSLC</div>
-            <div class="edu-meta">2019 – 2020 &nbsp;·&nbsp; 56.8%</div>
+            <div class="edu-meta">2020 – 2022</div>
           </div>
         </div>
 
         <div class="section">
           <div class="section-title">Technical Differentiators</div>
           <div class="hl-item">
-            <div class="hl-title">Dual-LLM Cross-Validation Architecture</div>
-            <div class="hl-desc">Two independent models validate data before production release — primary extracts, secondary cross-checks each field, schema layer rejects. Hallucination-resistant without a human-in-the-loop.</div>
+            <div class="hl-title">Dual-LLM Cross-Validation Pipeline</div>
+            <div class="hl-desc">Two independent models validate output before production release — primary extracts, secondary cross-checks each field, Pydantic schema layer rejects. Reduces hallucination risk without a human-in-the-loop requirement.</div>
           </div>
           <div class="hl-item">
-            <div class="hl-title">Full LoRA Fine-Tuning Lifecycle Ownership</div>
-            <div class="hl-desc">Ran complete training pipeline on A100: dataset curation, bf16 PEFT training, gradient checkpointing, adapter merge, Hub versioning, inference serving — not inference-only API calls.</div>
+            <div class="hl-title">End-to-End LoRA Fine-Tuning Ownership</div>
+            <div class="hl-desc">Ran complete PEFT training lifecycle on A100 — dataset prep, bf16 training, gradient checkpointing, adapter merge, Hub versioning, inference serving. Full pipeline ownership, not API-only integration.</div>
           </div>
           <div class="hl-item">
             <div class="hl-title">Browser-Native LLM Engineering (MV3)</div>
-            <div class="hl-desc">Architected LLM inference inside Chrome MV3 service workers — all model API calls outside page context. Works across any website with zero server infrastructure and no per-site DOM maintenance.</div>
+            <div class="hl-desc">Architected LLM inference inside MV3 service workers — all model API calls run outside page context, zero server infrastructure, works across any website without per-site DOM code.</div>
           </div>
         </div>
 

@@ -1,119 +1,89 @@
-<div align="center">
+# Manikandan Santhosh — AI Engineer
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=Manikandan%20Santhosh&fontSize=42&fontColor=fff&animation=twinkling&fontAlignY=32&desc=AI%20Developer%20%C2%B7%20Python%20Developer%20%C2%B7%20Full-Stack%20Developer&descAlignY=55&descSize=16" width="100%"/>
+**Building production LLM systems, document intelligence pipelines, and model fine-tuning workflows.**
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=0891B2&center=true&vCenter=true&random=false&width=600&lines=Hi+%F0%9F%91%8B%2C+I'm+Manikandan+Santhosh!;AI+Developer+%7C+Python+Developer;Building+Production+AI+Systems;LLMs+%C2%B7+FastAPI+%C2%B7+OCR+%C2%B7+React+%C2%B7+Docker)](https://git.io/typing-svg)
-
-<br/>
-
-[![Profile Views](https://komarev.com/ghpvc/?username=monkey-d-luffy9888888&color=0891b2&style=for-the-badge&label=PROFILE+VIEWS)](https://github.com/monkey-d-luffy9888888)
-[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-2563EB?style=for-the-badge&logo=vercel&logoColor=white)](https://manikandan-portfolio-delta.vercel.app)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/manikandan-s-032518285)
-[![Gmail](https://img.shields.io/badge/Gmail-Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:maniappu7777@gmail.com)
-
-</div>
+[![Portfolio](https://img.shields.io/badge/Portfolio-manikandan--portfolio--delta.vercel.app-2563EB?style=flat-square&logo=vercel&logoColor=white)](https://manikandan-portfolio-delta.vercel.app)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/manikandan-s-032518285)
+[![Gmail](https://img.shields.io/badge/Email-maniappu7777%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:maniappu7777@gmail.com)
+[![Location](https://img.shields.io/badge/Location-Coimbatore%2C%20India-16a34a?style=flat-square&logo=googlemaps&logoColor=white)](https://maps.google.com/?q=Coimbatore,India)
 
 ---
 
-### 👨‍💻 About Me
+## About
 
-```python
-developer = {
-    "name":       "Manikandan Santhosh",
-    "role":       "AI Developer | Python Developer | Full-Stack Developer",
-    "location":   "Coimbatore, Tamil Nadu, India 🇮🇳",
-    "building":   "Production AI systems — LLM pipelines, OCR document AI, Chrome extensions",
-    "learning":   "Advanced RAG systems, LangChain, cloud-native AI deployment",
-    "ask_me":     ["Python", "FastAPI", "LLMs", "LoRA fine-tuning", "Chrome Extensions"],
-    "shipped":    "6 production AI systems for enterprise clients",
-    "fun_fact":   "I built a dual-LLM pipeline where two models independently verify before data is trusted!",
-    "open_to":    ["AI Developer", "Python Developer", "Full-Stack Developer"],
-}
+AI Engineer focused on LLM system design, document AI, and model fine-tuning. During an AI engineering program at Deep Tech Launchpad, I designed and delivered 6 end-to-end AI systems — including a hallucination-resistant dual-LLM verification pipeline, an enterprise audit automation system, an end-to-end LoRA fine-tuning workflow for Gemma (A100 + Hugging Face Hub), and serverless Chrome MV3 extensions with embedded LLM pipelines.
+
+Currently working as a Junior Software Developer at AltiusNxt Technologies, integrating AI/LLM capabilities into production software. Expanding into RAG systems, vector search, and LLM evaluation frameworks.
+
+**Open to:** AI Engineer · LLM Engineer · Backend AI Engineer roles
+
+---
+
+## Tech Stack
+
+**AI / ML**
+```
+Python · PyTorch · Hugging Face Transformers · PEFT · LoRA Fine-Tuning
+Generative AI · LLMs · Prompt Engineering · Gemma · Gemini API
+Tesseract OCR · YOLO · Computer Vision · NumPy
+```
+
+**Backend**
+```
+FastAPI · Flask · PostgreSQL · REST APIs · WebSocket · Pydantic · JSON Schema
+```
+
+**Frontend / Browser**
+```
+React · TypeScript · JavaScript · Chrome Extensions (MV3) · IndexedDB · Tailwind CSS
+```
+
+**DevOps / MLOps**
+```
+Docker · GCP · AWS S3 · Git · Linux · Hugging Face Hub
+```
+
+**Currently Exploring**
+```
+RAG · Vector Databases (ChromaDB / pgvector) · LLM Evaluation Frameworks · LangChain
 ```
 
 ---
 
-### 🛠️ Tech Stack
+## Projects
 
-<div align="center">
-
-**AI & Machine Learning**
-
-[![My Skills](https://skillicons.dev/icons?i=python,tensorflow,pytorch&theme=dark)](https://skillicons.dev)
-
-**Backend**
-
-[![My Skills](https://skillicons.dev/icons?i=fastapi,flask,nodejs,postgres,redis&theme=dark)](https://skillicons.dev)
-
-**Frontend & Browser**
-
-[![My Skills](https://skillicons.dev/icons?i=react,ts,js,html,css,tailwind&theme=dark)](https://skillicons.dev)
-
-**DevOps & Cloud**
-
-[![My Skills](https://skillicons.dev/icons?i=docker,gcp,aws,git,linux,vscode&theme=dark)](https://skillicons.dev)
-
-</div>
-
-**Specialisations:**
-![LLMs](https://img.shields.io/badge/LLMs-7c3aed?style=flat-square&logoColor=white)
-![LoRA/PEFT](https://img.shields.io/badge/LoRA%2FPEFT-db2777?style=flat-square&logoColor=white)
-![Hugging Face](https://img.shields.io/badge/Hugging_Face-FFD21E?style=flat-square&logo=huggingface&logoColor=black)
-![OCR](https://img.shields.io/badge/OCR-d97706?style=flat-square&logoColor=white)
-![YOLO](https://img.shields.io/badge/YOLO-27338e?style=flat-square&logoColor=white)
-![Prompt Engineering](https://img.shields.io/badge/Prompt_Engineering-0891b2?style=flat-square&logoColor=white)
-![Chrome Extensions MV3](https://img.shields.io/badge/Chrome_Extensions_MV3-4285F4?style=flat-square&logo=googlechrome&logoColor=white)
-![WebSocket](https://img.shields.io/badge/WebSocket-009688?style=flat-square&logoColor=white)
-
----
-
-### 📊 GitHub Stats
-
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=monkey-d-luffy9888888&show_icons=true&theme=tokyonight&hide_border=true&count_private=true&rank_icon=github" height="180"/>
-  &nbsp;&nbsp;
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=monkey-d-luffy9888888&layout=compact&theme=tokyonight&hide_border=true&langs_count=8" height="180"/>
-</div>
-
-<div align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=monkey-d-luffy9888888&theme=tokyonight&hide_border=true" width="70%"/>
-</div>
-
-<div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=monkey-d-luffy9888888&theme=tokyonight&no-frame=true&no-bg=true&column=7&margin-w=4" width="100%"/>
-</div>
-
----
-
-### 🚀 Featured Projects
-
-| 🏗️ Project | ⚙️ Stack | 📝 What it does |
+| Project | Stack | What it does |
 |---|---|---|
-| **[Enterprise AI Product Extractor](#)** | Python · OCR · LLMs · FastAPI · GCP | Dual-LLM verification pipeline — primary extracts, second independently verifies each field |
-| **[DTLP Chrome Extension](#)** | JS · MV3 · Perplexity · Gemini · IndexedDB | Dual-model product spec extractor — fully local, no server required |
-| **[AI Trading Extension](#)** | Python · Flask · Binance API | 14-pattern candlestick detector with live AI signal overlay injected into browser |
-| **[Gemma LoRA Fine-Tuning](#)** | Python · PEFT · Hugging Face · FastAPI | End-to-end fine-tuning pipeline trained on A100 + Hugging Face Hub deployment |
-| **[Enterprise Audit AI](#)** | Python · OpenPyXL · LLMs · PostgreSQL | Rule engine + LLM layer for large-scale Excel dataset validation |
-| **[PDF + CAD AI Extractor](#)** | YOLO · Tesseract · FastAPI | Region detection + OCR for engineering CAD documents → typed JSON |
+| **Enterprise AI Extraction System** | Python · Tesseract · LLMs · Pydantic · FastAPI · Docker · GCP | Dual-LLM verification pipeline for extracting structured product data from enterprise PDFs — primary model extracts, secondary independently cross-validates, Pydantic schema gates production release |
+| **Enterprise Audit Automation** | Python · OpenPyXL · LLMs · FastAPI · PostgreSQL | Dual-layer audit engine: deterministic rule processor + LLM anomaly detection for large-scale Excel datasets; outputs corrected file, annotated report, immutable audit log |
+| **Gemma LoRA Fine-Tuning Pipeline** | Python · PyTorch · PEFT · Hugging Face · FastAPI | End-to-end LoRA training on A100: dataset prep → bf16 PEFT training → adapter merge → Hub deployment → FastAPI inference endpoint |
+| **Dual-LLM Chrome Extension (MV3)** | JS · MV3 · Perplexity sonar-pro · Gemini Flash · IndexedDB | Serverless MV3 extension — Perplexity extracts, Gemini verifies independently, schema-validated output in IndexedDB; zero backend required |
+| **Algorithmic Trading Signal System** | Python · Flask · JS · MV3 · Binance API | Detects 14 candlestick patterns on live OHLCV data; AI ranking layer generates confidence-scored signals injected into charting overlays via Chrome extension |
+| **PDF + CAD Document Intelligence** | Python · YOLO · Tesseract · FastAPI | Custom YOLO region detector → per-region adaptive OCR → LLM structuring layer → typed JSON schema output for engineering drawings |
 
 ---
 
-### 📈 Contribution Graph
+## What I'm Currently Building
 
-<div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=monkey-d-luffy9888888&theme=tokyo-night&hide_border=true&area=true" width="100%"/>
-</div>
+- **RAG Document Assistant** — Retrieval-augmented generation system with vector search (ChromaDB) for enterprise document Q&A; building evaluation harness to measure retrieval quality and answer faithfulness
+- **LLM Evaluation Framework** — Systematic eval pipeline for LLM output quality using LLM-as-judge pattern; tracking precision, recall, and hallucination rate across pipeline stages
 
 ---
 
-<div align="center">
+## Work History
 
-### 🤝 Let's Connect
+| Role | Company | Period |
+|---|---|---|
+| Junior Software Developer | AltiusNxt Technologies | Aug 2026 – Present |
+| Trainee Software Developer | AltiusNxt Technologies | Jan 2026 – Jul 2026 |
+| AI Software Developer (Intern) | Deep Tech Launchpad | Jul 2025 – Jan 2026 |
 
-*Open to roles as an AI Developer, Python Developer, or Full-Stack Developer*
+---
 
-[![Portfolio](https://img.shields.io/badge/🌐_Portfolio-manikandan--portfolio.vercel.app-2563EB?style=for-the-badge)](https://manikandan-portfolio-delta.vercel.app)
+## Education
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer" width="100%"/>
+**B.Sc. Computer Technology** — KG College of Arts & Science, Coimbatore (2022 – 2025)
 
-</div>
+---
+
+*Coimbatore, India · Open to remote and relocation*
