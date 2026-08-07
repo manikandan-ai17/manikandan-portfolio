@@ -121,7 +121,7 @@ export const portfolioData = {
     {
       role: 'Junior Software Developer',
       company: 'AltiusNxt Technologies',
-      date: 'Feb 2026 – Present',
+      date: 'Aug 2026 – Present',
       desc: 'Currently building and shipping production software features in Python and full-stack web technologies. Collaborating with senior engineers on system design, architecture decisions, and code review in a fast-paced delivery environment.',
       descBullets: [
         'Delivering production features in Python and full-stack web technologies for enterprise clients',
@@ -135,7 +135,7 @@ export const portfolioData = {
     {
       role: 'Trainee Software Developer',
       company: 'AltiusNxt Technologies',
-      date: 'Jan 2026',
+      date: 'Jan 2026 – Jul 2026',
       desc: 'Joined AltiusNxt as a full-time employee. Completed structured onboarding into the engineering team — studied internal architecture, ramped onto the production codebase, and contributed to initial development tasks.',
       descBullets: [
         'Completed structured onboarding into the engineering team and production systems',
