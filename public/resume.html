@@ -100,11 +100,11 @@
       flex: 1;
       overflow: hidden;
     }
-    .col-left  { padding: 13px 18px 10px 28px; border-right: 1px solid #e2e8f0; overflow: hidden; }
-    .col-right { padding: 13px 24px 10px 16px; overflow: hidden; }
+    .col-left  { padding: 12px 18px 10px 28px; border-right: 1px solid #e2e8f0; overflow: hidden; }
+    .col-right { padding: 12px 24px 10px 16px; overflow: hidden; }
 
     /* ── SECTION ── */
-    .section { margin-bottom: 11px; }
+    .section { margin-bottom: 9px; }
     .section-title {
       font-size: 7.8px;
       font-weight: 800;
@@ -112,22 +112,30 @@
       text-transform: uppercase;
       color: #1e3a8a;
       border-bottom: 1.5px solid #1e3a8a;
-      padding-bottom: 3.5px;
-      margin-bottom: 8px;
+      padding-bottom: 3px;
+      margin-bottom: 7px;
     }
 
     /* ── SUMMARY ── */
-    .summary { font-size: 9px; line-height: 1.65; color: #374151; }
+    .summary { font-size: 8.7px; line-height: 1.62; color: #374151; }
+
+    /* ── EXPERIENCE ── */
+    .exp-item { margin-bottom: 6.5px; }
+    .exp-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1px; }
+    .exp-role { font-size: 9.5px; font-weight: 700; color: #0f172a; }
+    .exp-date { font-size: 7.8px; color: #6b7280; font-weight: 500; white-space: nowrap; margin-left: 8px; }
+    .exp-company { font-size: 8.3px; color: #1d4ed8; font-weight: 600; margin-bottom: 2px; }
+    .exp-divider { border: none; border-top: 1px solid #f1f5f9; margin: 5.5px 0; }
 
     /* ── PROJECTS ── */
-    .proj-item { margin-bottom: 7.5px; }
-    .proj-name { font-size: 9.5px; font-weight: 700; color: #0f172a; margin-bottom: 1px; }
-    .proj-meta { font-size: 7.8px; color: #1d4ed8; font-weight: 600; letter-spacing: 0.2px; margin-bottom: 2px; }
+    .proj-item { margin-bottom: 5.5px; }
+    .proj-name { font-size: 9px; font-weight: 700; color: #0f172a; margin-bottom: 1px; }
+    .proj-meta { font-size: 7.4px; color: #1d4ed8; font-weight: 600; letter-spacing: 0.2px; margin-bottom: 2px; }
     .bullets { list-style: none; }
     .bullets li {
-      font-size: 8.8px;
+      font-size: 8.4px;
       color: #374151;
-      line-height: 1.55;
+      line-height: 1.5;
       padding-left: 10px;
       position: relative;
       margin-bottom: 1px;
@@ -140,48 +148,40 @@
       font-size: 9px;
       top: 0;
     }
-    .proj-divider { border: none; border-top: 1px solid #f1f5f9; margin: 6px 0; }
-
-    /* ── EXPERIENCE ── */
-    .exp-item { margin-bottom: 7px; }
-    .exp-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.5px; }
-    .exp-role { font-size: 9.5px; font-weight: 700; color: #0f172a; }
-    .exp-date { font-size: 7.8px; color: #6b7280; font-weight: 500; white-space: nowrap; margin-left: 8px; }
-    .exp-company { font-size: 8.5px; color: #1d4ed8; font-weight: 600; margin-bottom: 2.5px; }
-    .exp-divider { border: none; border-top: 1px solid #f1f5f9; margin: 6px 0; }
+    .proj-divider { border: none; border-top: 1px solid #f1f5f9; margin: 5px 0; }
 
     /* ── SKILLS ── */
-    .skill-group { margin-bottom: 6.5px; }
-    .skill-label { font-size: 7.8px; font-weight: 700; color: #0f172a; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.8px; }
+    .skill-group { margin-bottom: 5.5px; }
+    .skill-label { font-size: 7.5px; font-weight: 700; color: #0f172a; margin-bottom: 2.5px; text-transform: uppercase; letter-spacing: 0.8px; }
     .skill-tags { display: flex; flex-wrap: wrap; gap: 2px; }
     .skill-tag {
-      font-size: 7.8px; padding: 1.5px 5px;
+      font-size: 7.4px; padding: 1.5px 5px;
       background: #f0f4ff; color: #1e3a8a;
       border-radius: 3px; font-weight: 600;
       border: 1px solid #dde6ff;
     }
 
     /* ── EDUCATION ── */
-    .edu-item { margin-bottom: 7px; }
-    .edu-school { font-size: 9px; font-weight: 700; color: #0f172a; }
-    .edu-degree { font-size: 8.5px; color: #1d4ed8; font-weight: 600; margin: 1.5px 0 1px; }
-    .edu-meta { font-size: 8px; color: #6b7280; }
+    .edu-item { margin-bottom: 6px; }
+    .edu-school { font-size: 8.7px; font-weight: 700; color: #0f172a; }
+    .edu-degree { font-size: 8.2px; color: #1d4ed8; font-weight: 600; margin: 1px 0; }
+    .edu-meta { font-size: 7.8px; color: #6b7280; }
 
-    /* ── HIGHLIGHTS ── */
+    /* ── DIFFERENTIATORS ── */
     .hl-item {
-      margin-bottom: 5px;
-      padding: 5px 8px;
+      margin-bottom: 4.5px;
+      padding: 4.5px 7px;
       background: #f8faff;
       border-left: 2.5px solid #1e3a8a;
       border-radius: 0 4px 4px 0;
     }
-    .hl-title { font-size: 8.8px; font-weight: 700; color: #0f172a; }
-    .hl-desc { font-size: 8px; color: #4b5563; margin-top: 1.5px; line-height: 1.45; }
+    .hl-title { font-size: 8.5px; font-weight: 700; color: #0f172a; }
+    .hl-desc { font-size: 7.8px; color: #4b5563; margin-top: 1.5px; line-height: 1.42; }
 
     /* ── LANGUAGES ── */
     .lang-row {
       display: flex; justify-content: space-between;
-      font-size: 8.8px; color: #374151; margin-bottom: 3px; font-weight: 500;
+      font-size: 8.5px; color: #374151; margin-bottom: 3px; font-weight: 500;
     }
     .lang-level { color: #6b7280; font-size: 8px; font-weight: 400; }
 
@@ -217,14 +217,14 @@
     <div class="header">
       <div class="header-row1">
         <div class="header-name">MANIKANDAN SANTHOSH</div>
-        <div class="header-title">AI Developer &nbsp;·&nbsp; Python Developer &nbsp;·&nbsp; Full-Stack Developer</div>
+        <div class="header-title">AI Engineer &nbsp;·&nbsp; LLM Systems &nbsp;·&nbsp; Backend Engineering</div>
       </div>
       <div class="header-contacts">
         <span>+91 9944680311</span>
         <span class="sep">|</span>
         <span>maniappu7777@gmail.com</span>
         <span class="sep">|</span>
-        <span>Coimbatore, Tamil Nadu</span>
+        <span>Coimbatore, India</span>
         <span class="sep">|</span>
         <span>linkedin.com/in/manikandan-s-032518285</span>
         <span class="sep">|</span>
@@ -239,8 +239,8 @@
       <div class="col-left">
 
         <div class="section">
-          <div class="section-title">Summary</div>
-          <p class="summary">Python developer specialising in AI-powered systems — LLM extraction pipelines, OCR document AI, LoRA fine-tuning, and real-time data platforms. Built and shipped multiple production systems for enterprise clients using Python, FastAPI, React, Docker, and GCP. Comfortable across the full stack from model orchestration to React UI.</p>
+          <div class="section-title">Professional Summary</div>
+          <p class="summary">AI Engineer with hands-on experience designing and deploying production LLM systems, document intelligence pipelines, and model fine-tuning workflows. During a focused AI engineering internship at Deep Tech Launchpad, architected and delivered 6 enterprise AI systems — including a hallucination-resistant dual-LLM verification pipeline, a rule-engine + LLM audit system for large-scale datasets, an end-to-end LoRA fine-tuning lifecycle for Gemma (A100, Hugging Face Hub), and serverless Chrome MV3 extensions with embedded LLM pipelines. Proficient across the full engineering stack: Python · FastAPI · Docker · GCP · Hugging Face Transformers · PEFT · React. Targeting AI Engineer, LLM Engineer, and Backend AI Engineer roles.</p>
         </div>
 
         <div class="section">
@@ -253,7 +253,8 @@
             </div>
             <div class="exp-company">AltiusNxt Technologies &nbsp;·&nbsp; Coimbatore</div>
             <ul class="bullets">
-              <li>Building and shipping production software features in Python and full-stack web technologies; collaborating with senior engineers on system design and code review</li>
+              <li>Develop and ship production software features in Python and full-stack web technologies; contribute to system architecture discussions, code quality initiatives, and delivery cycles</li>
+              <li>Apply LLM integration and AI engineering patterns to internal product features and tooling</li>
             </ul>
           </div>
           <hr class="exp-divider">
@@ -265,7 +266,7 @@
             </div>
             <div class="exp-company">AltiusNxt Technologies &nbsp;·&nbsp; Coimbatore</div>
             <ul class="bullets">
-              <li>Onboarded into the engineering team; studied internal architecture, contributed to initial tasks, and ramped onto the production stack</li>
+              <li>Transitioned from AI internship to full-time engineering role; completed onboarding onto production codebase and internal architecture; contributed to feature development and bug resolution</li>
             </ul>
           </div>
           <hr class="exp-divider">
@@ -277,7 +278,10 @@
             </div>
             <div class="exp-company">Deep Tech Launchpad &nbsp;·&nbsp; Coimbatore</div>
             <ul class="bullets">
-              <li>Built and shipped 6 production AI systems for enterprise clients — dual-LLM extraction pipelines, OCR document AI, Gemma LoRA fine-tuning, Chrome MV3 extensions, and a real-time trading platform</li>
+              <li>Architected and owned end-to-end delivery of 6 AI systems for enterprise use cases — spanning document intelligence, LLM pipelines, model fine-tuning, and browser-native AI extensions</li>
+              <li>Designed a dual-LLM verification architecture for enterprise document extraction: primary model extracts structured attributes → secondary model independently cross-validates each field → Pydantic schema gate rejects malformed output before production; containerised on Docker, deployed to GCP</li>
+              <li>Executed a complete LoRA fine-tuning lifecycle for Google Gemma on A100 GPU: dataset curation, bf16 mixed-precision PEFT training with gradient checkpointing, adapter merge, versioned Hugging Face Hub deployment, and FastAPI inference endpoint</li>
+              <li>Implemented a document AI pipeline for engineering CAD drawings: custom YOLO detector for region classification (title blocks, parts lists, dimension callouts) → adaptive Tesseract OCR with per-region deskewing and PSM tuning → LLM structuring layer producing typed JSON schema output</li>
             </ul>
           </div>
 
@@ -288,10 +292,10 @@
 
           <div class="proj-item">
             <div class="proj-name">Enterprise AI Product Extraction System</div>
-            <div class="proj-meta">Python &nbsp;·&nbsp; FastAPI &nbsp;·&nbsp; OCR &nbsp;·&nbsp; LLMs &nbsp;·&nbsp; Docker &nbsp;·&nbsp; GCP</div>
+            <div class="proj-meta">Python &nbsp;·&nbsp; Tesseract OCR &nbsp;·&nbsp; LLMs &nbsp;·&nbsp; Pydantic &nbsp;·&nbsp; FastAPI &nbsp;·&nbsp; Docker &nbsp;·&nbsp; GCP</div>
             <ul class="bullets">
-              <li>Built a production document AI pipeline — OCR ingests enterprise PDFs/images, a primary LLM extracts structured product attributes, a second LLM independently verifies each field</li>
-              <li>JSON schema validation rejects malformed outputs before production; FastAPI backend containerised with Docker and deployed on GCP</li>
+              <li><strong>Problem:</strong> Enterprise teams manually extracted product attributes from hundreds of unstructured supplier PDFs — slow, error-prone, and unscalable</li>
+              <li><strong>Solution:</strong> 4-stage pipeline — OCR ingestion → primary LLM extraction → independent secondary LLM cross-validation → Pydantic schema gate; hallucination-resistant without human review loop; deployed on GCP via Docker</li>
             </ul>
           </div>
           <hr class="proj-divider">
@@ -300,45 +304,47 @@
             <div class="proj-name">Enterprise Audit Automation System</div>
             <div class="proj-meta">Python &nbsp;·&nbsp; OpenPyXL &nbsp;·&nbsp; LLMs &nbsp;·&nbsp; FastAPI &nbsp;·&nbsp; PostgreSQL</div>
             <ul class="bullets">
-              <li>Rule engine validates required fields, data types, numeric ranges, and cross-column constraints across large Excel datasets; LLM layer detects contextual anomalies the rules miss</li>
-              <li>Outputs corrected Excel file, annotated error report, and a PostgreSQL-backed audit log</li>
+              <li><strong>Problem:</strong> Auditing large enterprise Excel datasets required manual validation across dozens of business rules and contextual checks</li>
+              <li><strong>Solution:</strong> Dual-layer engine — deterministic rule processor (field types, ranges, cross-column constraints) + LLM anomaly layer for contextual errors rules cannot encode; outputs corrected Excel, annotated report, and immutable PostgreSQL audit log</li>
             </ul>
           </div>
           <hr class="proj-divider">
 
           <div class="proj-item">
             <div class="proj-name">Gemma LoRA Fine-Tuning Pipeline</div>
-            <div class="proj-meta">Python &nbsp;·&nbsp; Gemma &nbsp;·&nbsp; LoRA / PEFT &nbsp;·&nbsp; Hugging Face &nbsp;·&nbsp; FastAPI</div>
+            <div class="proj-meta">Python &nbsp;·&nbsp; Gemma &nbsp;·&nbsp; LoRA / PEFT &nbsp;·&nbsp; Hugging Face Transformers &nbsp;·&nbsp; FastAPI</div>
             <ul class="bullets">
-              <li>End-to-end LoRA fine-tuning for Google Gemma on Colab A100 — dataset curation, bf16 mixed-precision training, gradient checkpointing, adapter merge, Hugging Face Hub deployment</li>
-              <li>Wrapped the final model in a FastAPI inference endpoint for production query serving</li>
+              <li><strong>Problem:</strong> Domain adaptation of a base LLM required full fine-tuning infrastructure — not just API prompting</li>
+              <li><strong>Solution:</strong> End-to-end pipeline: curated dataset → bf16 LoRA training on A100 with gradient checkpointing → PEFT adapter merge → versioned Hub deployment → FastAPI inference endpoint; reusable workflow on GPU-constrained compute</li>
             </ul>
           </div>
           <hr class="proj-divider">
 
           <div class="proj-item">
-            <div class="proj-name">DTLP Chrome Extension — Dual-LLM Product Extractor</div>
-            <div class="proj-meta">JavaScript &nbsp;·&nbsp; Manifest V3 &nbsp;·&nbsp; Perplexity API &nbsp;·&nbsp; Google Gemini &nbsp;·&nbsp; IndexedDB</div>
+            <div class="proj-name">Dual-LLM Chrome Extension — Product Spec Extractor (MV3)</div>
+            <div class="proj-meta">JavaScript &nbsp;·&nbsp; Manifest V3 &nbsp;·&nbsp; Perplexity sonar-pro &nbsp;·&nbsp; Gemini 1.5 Flash &nbsp;·&nbsp; IndexedDB</div>
             <ul class="bullets">
-              <li>Perplexity sonar-pro extracts structured product specs from supplier websites; Gemini 1.5 Flash independently verifies each field; results schema-validated and stored in IndexedDB with no server required</li>
+              <li><strong>Problem:</strong> Supplier product data required a server-side scraper that broke on DOM changes and needed per-site maintenance</li>
+              <li><strong>Solution:</strong> Serverless MV3 extension — Perplexity sonar-pro extracts specs, Gemini Flash independently verifies field-by-field; schema-validated output persisted in IndexedDB; zero backend, works on any supplier website</li>
             </ul>
           </div>
           <hr class="proj-divider">
 
           <div class="proj-item">
-            <div class="proj-name">AI Trading Extension — Real-Time Pattern Detection</div>
+            <div class="proj-name">Real-Time Trading Signal Platform</div>
             <div class="proj-meta">Python &nbsp;·&nbsp; Flask &nbsp;·&nbsp; JavaScript &nbsp;·&nbsp; Manifest V3 &nbsp;·&nbsp; Binance REST API</div>
             <ul class="bullets">
-              <li>Local Flask backend fetches live OHLCV data, detects 14 candlestick patterns via deterministic ratio checks, feeds an AI recommendation engine; BUY/SELL signals with confidence scores injected directly into the charting overlay</li>
+              <li>Flask backend fetches live OHLCV data from Binance, detects 14 candlestick patterns via deterministic ratio logic, feeds an AI recommendation engine; BUY/SELL signals with confidence scores injected into live charting overlays via Chrome MV3 extension</li>
             </ul>
           </div>
           <hr class="proj-divider">
 
           <div class="proj-item">
-            <div class="proj-name">PDF + CAD Document AI System</div>
-            <div class="proj-meta">Python &nbsp;·&nbsp; YOLO &nbsp;·&nbsp; Tesseract &nbsp;·&nbsp; FastAPI</div>
+            <div class="proj-name">PDF + CAD Document Intelligence System</div>
+            <div class="proj-meta">Python &nbsp;·&nbsp; YOLO &nbsp;·&nbsp; Tesseract OCR &nbsp;·&nbsp; FastAPI</div>
             <ul class="bullets">
-              <li>Custom YOLO model detects title blocks, parts lists, and dimension callouts in CAD drawings; Tesseract OCR with per-region PSM tuning and deskewing extracts text; LLM maps raw output to a typed JSON schema</li>
+              <li><strong>Problem:</strong> Generic OCR fails on engineering CAD drawings due to variable-format regions, rotation, and domain notation</li>
+              <li><strong>Solution:</strong> Custom YOLO model classifies regions (title blocks, parts lists, dimension callouts) → per-region Tesseract OCR with adaptive contrast, deskewing, and PSM tuning → LLM structuring layer maps raw text to typed JSON schema</li>
             </ul>
           </div>
 
@@ -347,6 +353,62 @@
 
       <!-- RIGHT -->
       <div class="col-right">
+
+        <div class="section">
+          <div class="section-title">Technical Skills</div>
+          <div class="skill-group">
+            <div class="skill-label">AI / ML &amp; GenAI</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">LLMs</span>
+              <span class="skill-tag">Generative AI</span>
+              <span class="skill-tag">LoRA / PEFT</span>
+              <span class="skill-tag">Hugging Face</span>
+              <span class="skill-tag">Transformers</span>
+              <span class="skill-tag">Gemma</span>
+              <span class="skill-tag">Gemini API</span>
+              <span class="skill-tag">Perplexity API</span>
+              <span class="skill-tag">Prompt Engineering</span>
+              <span class="skill-tag">Tesseract OCR</span>
+              <span class="skill-tag">YOLO</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-label">Backend</div>
+            <div class="skill-tags">
+              <span class="skill-tag">FastAPI</span>
+              <span class="skill-tag">Flask</span>
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">PostgreSQL</span>
+              <span class="skill-tag">REST APIs</span>
+              <span class="skill-tag">WebSocket</span>
+              <span class="skill-tag">Pydantic</span>
+              <span class="skill-tag">JSON Schema</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-label">Frontend / Browser</div>
+            <div class="skill-tags">
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">Chrome Ext MV3</span>
+              <span class="skill-tag">IndexedDB</span>
+              <span class="skill-tag">Tailwind CSS</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-label">DevOps / MLOps</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Docker</span>
+              <span class="skill-tag">GCP</span>
+              <span class="skill-tag">AWS S3</span>
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">Linux</span>
+              <span class="skill-tag">Hugging Face Hub</span>
+            </div>
+          </div>
+        </div>
 
         <div class="section">
           <div class="section-title">Education</div>
@@ -368,66 +430,18 @@
         </div>
 
         <div class="section">
-          <div class="section-title">Technical Skills</div>
-          <div class="skill-group">
-            <div class="skill-label">AI / ML</div>
-            <div class="skill-tags">
-              <span class="skill-tag">Python</span>
-              <span class="skill-tag">LLMs</span>
-              <span class="skill-tag">LoRA / PEFT</span>
-              <span class="skill-tag">Gemma</span>
-              <span class="skill-tag">Hugging Face</span>
-              <span class="skill-tag">OCR</span>
-              <span class="skill-tag">YOLO</span>
-              <span class="skill-tag">Prompt Engineering</span>
-            </div>
-          </div>
-          <div class="skill-group">
-            <div class="skill-label">Backend</div>
-            <div class="skill-tags">
-              <span class="skill-tag">FastAPI</span>
-              <span class="skill-tag">Flask</span>
-              <span class="skill-tag">Node.js</span>
-              <span class="skill-tag">PostgreSQL</span>
-              <span class="skill-tag">REST APIs</span>
-              <span class="skill-tag">WebSocket</span>
-            </div>
-          </div>
-          <div class="skill-group">
-            <div class="skill-label">Frontend / Browser</div>
-            <div class="skill-tags">
-              <span class="skill-tag">React</span>
-              <span class="skill-tag">TypeScript</span>
-              <span class="skill-tag">JavaScript</span>
-              <span class="skill-tag">Chrome Ext (MV3)</span>
-              <span class="skill-tag">IndexedDB</span>
-            </div>
-          </div>
-          <div class="skill-group">
-            <div class="skill-label">DevOps / Cloud</div>
-            <div class="skill-tags">
-              <span class="skill-tag">Docker</span>
-              <span class="skill-tag">GCP</span>
-              <span class="skill-tag">AWS S3</span>
-              <span class="skill-tag">Git</span>
-              <span class="skill-tag">Linux</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="section">
-          <div class="section-title">Key Highlights</div>
+          <div class="section-title">Technical Differentiators</div>
           <div class="hl-item">
-            <div class="hl-title">Multi-LLM Verification Pipeline</div>
-            <div class="hl-desc">Dual-model extraction architecture — primary LLM extracts, second LLM independently verifies each field. Schema validation layer rejects malformed output before it reaches production.</div>
+            <div class="hl-title">Dual-LLM Cross-Validation Architecture</div>
+            <div class="hl-desc">Two independent models validate data before production release — primary extracts, secondary cross-checks each field, schema layer rejects. Hallucination-resistant without a human-in-the-loop.</div>
           </div>
           <div class="hl-item">
-            <div class="hl-title">Gemma LoRA Fine-Tuning on A100</div>
-            <div class="hl-desc">Full training pipeline: bf16 precision, gradient checkpointing, adapter merge, Hugging Face Hub deployment, and a FastAPI inference endpoint.</div>
+            <div class="hl-title">Full LoRA Fine-Tuning Lifecycle Ownership</div>
+            <div class="hl-desc">Ran complete training pipeline on A100: dataset curation, bf16 PEFT training, gradient checkpointing, adapter merge, Hub versioning, inference serving — not inference-only API calls.</div>
           </div>
           <div class="hl-item">
-            <div class="hl-title">6 Production AI Systems Shipped</div>
-            <div class="hl-desc">Enterprise document AI, audit automation, LLM fine-tuning, Chrome MV3 extensions, and a real-time trading platform — all built and deployed end-to-end.</div>
+            <div class="hl-title">Browser-Native LLM Engineering (MV3)</div>
+            <div class="hl-desc">Architected LLM inference inside Chrome MV3 service workers — all model API calls outside page context. Works across any website with zero server infrastructure and no per-site DOM maintenance.</div>
           </div>
         </div>
 
