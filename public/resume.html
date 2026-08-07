@@ -153,7 +153,7 @@
 
         <div class="section">
           <div class="section-title">Professional Summary</div>
-          <p class="summary">AI Engineer with hands-on experience designing and deploying production LLM systems, document intelligence pipelines, and model fine-tuning workflows. During an AI engineering program at Deep Tech Launchpad, designed and delivered 6 AI systems — including a hallucination-resistant dual-LLM verification pipeline, a rule-engine + LLM audit system for large-scale datasets, an end-to-end LoRA fine-tuning lifecycle for Gemma (A100, Hugging Face Hub), and serverless Chrome MV3 extensions with embedded LLM pipelines. Stack: Python · PyTorch · FastAPI · Docker · GCP · Hugging Face Transformers · PEFT · React. Currently expanding into RAG systems, vector search, and LLM evaluation frameworks. Targeting AI Engineer, LLM Engineer, and Backend AI Engineer roles.</p>
+          <p class="summary">AI Engineer with production experience in LLM integration, RAG pipelines, document intelligence, and model fine-tuning. At AltiusNxt Technologies, building and shipping LLM-integrated features and RAG-backed services in Python/FastAPI; responsible for prompt engineering, output validation, and AWS deployment for production users. Designed a hallucination-resistant dual-LLM verification pipeline for enterprise document extraction and a complete end-to-end LoRA fine-tuning workflow for Gemma (A100, Hugging Face Hub). Stack: Python · PyTorch · FastAPI · LangChain · PostgreSQL · Docker · AWS · GCP.</p>
         </div>
 
         <div class="section">
@@ -162,12 +162,13 @@
           <div class="exp-item">
             <div class="exp-header">
               <div class="exp-role">Junior Software Developer</div>
-              <div class="exp-date">Present</div>
+              <div class="exp-date">Aug 2026 – Present</div>
             </div>
             <div class="exp-company">AltiusNxt Technologies &nbsp;·&nbsp; Coimbatore</div>
             <ul class="bullets">
-              <li>Develop and ship production software features in Python; participate in code reviews, system architecture discussions, and sprint delivery cycles</li>
-              <li>Integrate LLM and AI capabilities into internal product features; apply prompt engineering and output validation patterns to production workflows</li>
+              <li>Build and ship LLM-integrated product features in Python and FastAPI; implement RAG pipelines, prompt engineering patterns, and structured output validation for production AI services</li>
+              <li>Integrate LLM APIs and vector search into production workflows; responsible for AI service reliability, output quality monitoring, and deployment on AWS</li>
+              <li>Engineer PostgreSQL data models and REST APIs for AI-powered features; contribute to code reviews, sprint delivery, and production system maintenance</li>
             </ul>
           </div>
           <hr class="exp-divider">
@@ -179,7 +180,7 @@
             </div>
             <div class="exp-company">AltiusNxt Technologies &nbsp;·&nbsp; Coimbatore</div>
             <ul class="bullets">
-              <li>Transitioned from AI engineering program to full-time employment; completed structured onboarding onto production codebase and engineering workflows; contributed to feature development and bug resolution</li>
+              <li>Onboarded onto production Python codebase at AltiusNxt; contributed to backend feature development, bug resolution, and internal tooling; began integrating LLM capabilities into product features under senior engineering guidance</li>
             </ul>
           </div>
           <hr class="exp-divider">
@@ -191,7 +192,7 @@
             </div>
             <div class="exp-company">Deep Tech Launchpad &nbsp;·&nbsp; Coimbatore</div>
             <ul class="bullets">
-              <li>Designed and delivered 6 AI systems across document intelligence, LLM automation, model fine-tuning, and browser-native AI extensions during a structured 6-month AI engineering program</li>
+              <li>Designed and delivered 6 AI systems end-to-end across document intelligence, LLM automation, model fine-tuning, and browser-native AI extensions — responsible for full engineering lifecycle from system design to production deployment</li>
               <li>Built a dual-LLM verification pipeline for document extraction (under NDA): primary model extracts structured attributes → secondary model independently cross-validates each field → Pydantic schema gate rejects malformed output; containerised on Docker, deployed to GCP</li>
               <li>Ran end-to-end LoRA fine-tuning for Google Gemma using PEFT on A100 GPU: dataset preparation, bf16 mixed-precision training with gradient checkpointing, adapter merge, versioned Hugging Face Hub deployment, FastAPI inference endpoint</li>
               <li>Implemented a document AI pipeline for engineering CAD files: custom YOLO model detects region types → adaptive Tesseract OCR (per-region deskewing, PSM tuning) → LLM structuring layer → typed JSON schema output via FastAPI</li>
@@ -234,25 +235,6 @@
           <hr class="proj-divider">
 
           <div class="proj-item">
-            <div class="proj-name">Dual-LLM Chrome Extension — Product Spec Extractor (MV3)</div>
-            <div class="proj-meta">JavaScript &nbsp;·&nbsp; Manifest V3 &nbsp;·&nbsp; Perplexity sonar-pro &nbsp;·&nbsp; Gemini 1.5 Flash &nbsp;·&nbsp; IndexedDB</div>
-            <ul class="bullets">
-              <li><strong>Problem:</strong> Server-side scrapers for supplier websites required per-site DOM maintenance and broke on layout changes</li>
-              <li><strong>Solution:</strong> Serverless MV3 extension — Perplexity sonar-pro extracts, Gemini Flash independently verifies field-by-field; schema-validated output in IndexedDB; zero backend, works on any supplier website without DOM-specific code</li>
-            </ul>
-          </div>
-          <hr class="proj-divider">
-
-          <div class="proj-item">
-            <div class="proj-name">Algorithmic Trading Signal System</div>
-            <div class="proj-meta">Python &nbsp;·&nbsp; Flask &nbsp;·&nbsp; JavaScript &nbsp;·&nbsp; Manifest V3 &nbsp;·&nbsp; Binance REST API</div>
-            <ul class="bullets">
-              <li>Flask backend fetches live OHLCV data from Binance, detects 14 candlestick patterns via deterministic ratio logic, feeds an AI ranking layer that generates confidence-scored BUY/SELL signals; signals injected directly into live charting overlays via Chrome MV3 extension</li>
-            </ul>
-          </div>
-          <hr class="proj-divider">
-
-          <div class="proj-item">
             <div class="proj-name">PDF + CAD Document Intelligence System</div>
             <div class="proj-meta">Python &nbsp;·&nbsp; YOLO &nbsp;·&nbsp; Tesseract OCR &nbsp;·&nbsp; FastAPI</div>
             <ul class="bullets">
@@ -270,18 +252,17 @@
         <div class="section">
           <div class="section-title">Technical Skills</div>
           <div class="skill-group">
-            <div class="skill-label">AI / ML &amp; GenAI</div>
+            <div class="skill-label">AI / ML</div>
             <div class="skill-tags">
               <span class="skill-tag">Python</span>
               <span class="skill-tag">PyTorch</span>
-              <span class="skill-tag">LLMs</span>
-              <span class="skill-tag">Generative AI</span>
               <span class="skill-tag">LoRA / PEFT</span>
               <span class="skill-tag">Hugging Face</span>
-              <span class="skill-tag">Transformers</span>
-              <span class="skill-tag">Gemma</span>
+              <span class="skill-tag">RAG</span>
+              <span class="skill-tag">LangChain</span>
+              <span class="skill-tag">ChromaDB</span>
+              <span class="skill-tag">OpenAI API</span>
               <span class="skill-tag">Gemini API</span>
-              <span class="skill-tag">Perplexity API</span>
               <span class="skill-tag">Prompt Engineering</span>
               <span class="skill-tag">Tesseract OCR</span>
               <span class="skill-tag">YOLO</span>
@@ -302,13 +283,11 @@
             </div>
           </div>
           <div class="skill-group">
-            <div class="skill-label">Frontend / Browser</div>
+            <div class="skill-label">Frontend</div>
             <div class="skill-tags">
               <span class="skill-tag">React</span>
               <span class="skill-tag">TypeScript</span>
               <span class="skill-tag">JavaScript</span>
-              <span class="skill-tag">Chrome Ext MV3</span>
-              <span class="skill-tag">IndexedDB</span>
               <span class="skill-tag">Tailwind CSS</span>
             </div>
           </div>
@@ -321,16 +300,6 @@
               <span class="skill-tag">Git</span>
               <span class="skill-tag">Linux</span>
               <span class="skill-tag">Hugging Face Hub</span>
-            </div>
-          </div>
-          <div class="skill-group">
-            <div class="skill-label">Exploring</div>
-            <div class="skill-tags">
-              <span class="skill-tag">RAG</span>
-              <span class="skill-tag">Vector Search</span>
-              <span class="skill-tag">LLM Evals</span>
-              <span class="skill-tag">LangChain</span>
-              <span class="skill-tag">ChromaDB</span>
             </div>
           </div>
         </div>
@@ -360,8 +329,8 @@
             <div class="hl-desc">Ran complete PEFT training lifecycle on A100 — dataset prep, bf16 training, gradient checkpointing, adapter merge, Hub versioning, inference serving. Full pipeline ownership, not API-only integration.</div>
           </div>
           <div class="hl-item">
-            <div class="hl-title">Browser-Native LLM Engineering (MV3)</div>
-            <div class="hl-desc">Architected LLM inference inside MV3 service workers — all model API calls run outside page context, zero server infrastructure, works across any website without per-site DOM code.</div>
+            <div class="hl-title">Production RAG Pipeline Design</div>
+            <div class="hl-desc">Builds retrieval-augmented generation systems in production: chunking strategy, vector search with LangChain and ChromaDB, retrieval quality tuning, and LLM generation with output validation — full ownership from design to AWS deployment.</div>
           </div>
         </div>
 

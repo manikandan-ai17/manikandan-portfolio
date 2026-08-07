@@ -11,9 +11,9 @@
 
 ## About
 
-AI Engineer focused on LLM system design, document AI, and model fine-tuning. During an AI engineering program at Deep Tech Launchpad, I designed and delivered 6 end-to-end AI systems — including a hallucination-resistant dual-LLM verification pipeline, an enterprise audit automation system, an end-to-end LoRA fine-tuning workflow for Gemma (A100 + Hugging Face Hub), and serverless Chrome MV3 extensions with embedded LLM pipelines.
+AI Engineer with production experience in LLM integration, RAG pipelines, document intelligence, and model fine-tuning. At AltiusNxt Technologies, building and shipping LLM-integrated features and RAG-backed services in Python/FastAPI; responsible for prompt engineering, output validation, and AWS deployment for production users.
 
-Currently working as a Junior Software Developer at AltiusNxt Technologies, integrating AI/LLM capabilities into production software. Expanding into RAG systems, vector search, and LLM evaluation frameworks.
+Previously designed and delivered 6 AI systems end-to-end at Deep Tech Launchpad — including a hallucination-resistant dual-LLM verification pipeline for enterprise document extraction, an enterprise audit automation system, and a complete LoRA fine-tuning workflow for Gemma (A100 + Hugging Face Hub).
 
 **Open to:** AI Engineer · LLM Engineer · Backend AI Engineer roles
 
@@ -24,8 +24,8 @@ Currently working as a Junior Software Developer at AltiusNxt Technologies, inte
 **AI / ML**
 ```
 Python · PyTorch · Hugging Face Transformers · PEFT · LoRA Fine-Tuning
-Generative AI · LLMs · Prompt Engineering · Gemma · Gemini API
-Tesseract OCR · YOLO · Computer Vision · NumPy
+RAG · LangChain · ChromaDB · OpenAI API · Gemini API
+Prompt Engineering · Tesseract OCR · YOLO · NumPy
 ```
 
 **Backend**
@@ -33,19 +33,14 @@ Tesseract OCR · YOLO · Computer Vision · NumPy
 FastAPI · Flask · PostgreSQL · REST APIs · WebSocket · Pydantic · JSON Schema
 ```
 
-**Frontend / Browser**
+**Frontend**
 ```
-React · TypeScript · JavaScript · Chrome Extensions (MV3) · IndexedDB · Tailwind CSS
+React · TypeScript · JavaScript · Tailwind CSS
 ```
 
 **DevOps / MLOps**
 ```
 Docker · GCP · AWS S3 · Git · Linux · Hugging Face Hub
-```
-
-**Currently Exploring**
-```
-RAG · Vector Databases (ChromaDB / pgvector) · LLM Evaluation Frameworks · LangChain
 ```
 
 ---
