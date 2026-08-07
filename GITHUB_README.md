@@ -11,9 +11,9 @@
 
 ## About
 
-AI Engineer with production experience in LLM integration, document intelligence, and model fine-tuning. At AltiusNxt Technologies, building and shipping LLM-integrated features in Python/FastAPI; responsible for prompt engineering, output validation, and production deployment on AWS.
+AI Engineer with production experience building LLM-powered systems for enterprise clients at AltiusNxt Technologies — document intelligence pipelines, SKU automation platforms on AWS, and LLM-integrated backend services.
 
-Previously designed and delivered 6 AI systems end-to-end at Deep Tech Launchpad — including a hallucination-resistant dual-LLM verification pipeline for enterprise document extraction, an enterprise audit automation system, and a complete LoRA fine-tuning workflow for Gemma (A100 + Hugging Face Hub).
+Designed and delivered a hallucination-resistant dual-LLM verification pipeline for enterprise document extraction, a 5-stage LLM automation pipeline on AWS S3 and Lambda (Shopify publishing), and a complete LoRA fine-tuning workflow for Gemma (A100 + Hugging Face Hub).
 
 **Open to:** AI Engineer · LLM Engineer · Backend AI Engineer roles
 
@@ -54,12 +54,12 @@ Docker · GCP · AWS S3 · Git · Linux · Hugging Face Hub
 
 | Project | Stack | What it does |
 |---|---|---|
-| **Enterprise AI Extraction System** | Python · Tesseract · LLMs · Pydantic · FastAPI · Docker · GCP | Dual-LLM verification pipeline for extracting structured product data from enterprise PDFs — primary model extracts, secondary independently cross-validates, Pydantic schema gates production release |
-| **Enterprise Audit Automation** | Python · OpenPyXL · LLMs · FastAPI · PostgreSQL | Dual-layer audit engine: deterministic rule processor + LLM anomaly detection for large-scale Excel datasets; outputs corrected file, annotated report, immutable audit log |
+| **ADM Retail Automation Platform** | Python · LLMs · FastAPI · AWS S3 · AWS Lambda · Shopify API | 5-stage LLM pipeline: enriches and classifies product SKUs, validates output, auto-publishes to Shopify via Admin API; batch processing on S3 + Lambda for an enterprise retail client |
+| **Enterprise AI Extraction System** | Python · Tesseract · LLMs · Pydantic · FastAPI · Docker · GCP | Dual-LLM verification pipeline — primary model extracts structured data from enterprise PDFs, secondary independently cross-validates each field, Pydantic schema gates production release |
 | **Gemma LoRA Fine-Tuning Pipeline** | Python · PyTorch · PEFT · Hugging Face · FastAPI | End-to-end LoRA training on A100: dataset prep → bf16 PEFT training → adapter merge → Hub deployment → FastAPI inference endpoint |
-| **Dual-LLM Chrome Extension (MV3)** | JS · MV3 · Perplexity sonar-pro · Gemini Flash · IndexedDB | Serverless MV3 extension — Perplexity extracts, Gemini verifies independently, schema-validated output in IndexedDB; zero backend required |
-| **Algorithmic Trading Signal System** | Python · Flask · JS · MV3 · Binance API | Detects 14 candlestick patterns on live OHLCV data; AI ranking layer generates confidence-scored signals injected into charting overlays via Chrome extension |
 | **PDF + CAD Document Intelligence** | Python · YOLO · Tesseract · FastAPI | Custom YOLO region detector → per-region adaptive OCR → LLM structuring layer → typed JSON schema output for engineering drawings |
+| **Enterprise Audit Automation** | Python · OpenPyXL · LLMs · FastAPI · PostgreSQL | Dual-layer audit engine: deterministic rule processor + LLM anomaly detection for large-scale Excel datasets; outputs corrected file, annotated report, immutable audit log |
+| **Dual-LLM Chrome Extension (MV3)** | JS · MV3 · Perplexity sonar-pro · Gemini Flash · IndexedDB | Serverless MV3 extension — Perplexity extracts, Gemini verifies independently, schema-validated output in IndexedDB; zero backend required |
 
 ---
 
