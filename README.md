@@ -1,32 +1,31 @@
-﻿# React + TypeScript + Vite
+﻿# Manikandan Santhosh: portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Personal portfolio of Manikandan Santhosh, a software engineer working with LLM-integrated applications.
+Live site: https://manikandan-portfolio-delta.vercel.app
 
-Currently, two official plugins are available:
+Every project on the site is labelled with what can actually be demonstrated (public source, local run, or private company code) and lists its evidence and known limitations. All content lives in [src/data/portfolio.ts](src/data/portfolio.ts).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Stack
 
-## React Compiler
+React 19, TypeScript, Vite, React Router, plain CSS. No UI framework and no animation library.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Develop
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev      # local development server
+npm run build    # type-check and production build into dist/
+npm run lint     # oxlint
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Resume
+
+[public/resume.html](public/resume.html) is the editable source (A4, prints to one page). [public/Manikandan_Santhosh_Resume.pdf](public/Manikandan_Santhosh_Resume.pdf) is generated from it with a headless browser:
+
+```bash
+msedge --headless=new --no-pdf-header-footer --print-to-pdf=public/Manikandan_Santhosh_Resume.pdf file:///<path>/public/resume.html
+```
+
+## Deployment
+
+Pushing to `main` deploys to Vercel. `vercel.json` rewrites unknown paths to `index.html` so project pages such as `/project/cad-drawing-agent` work as direct links.

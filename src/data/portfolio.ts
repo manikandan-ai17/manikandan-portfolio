@@ -1,376 +1,343 @@
-export const portfolioData = {
-  name: 'Manikandan Santhosh',
-  greeting: 'Manikandan Santhosh',
-  roleLabel: 'AI Systems Engineer',
-  emoji: '👋',
-  subTitle:
-    'AI Engineer with production experience in LLM integration, document intelligence, and model fine-tuning. Building LLM-powered features at AltiusNxt Technologies. Designed a dual-LLM verification pipeline for enterprise document extraction and an end-to-end LoRA fine-tuning workflow for Gemma (A100, Hugging Face Hub). Stack: Python · PyTorch · FastAPI · PostgreSQL · Docker · AWS · GCP.',
-  resumeLink: '/resume.html',
-  contactEmail: 'maniappu7777@gmail.com',
-  location: 'India',
-  openToOpportunities: true,
-  githubLink: 'https://github.com/manikandan-ai17',
-  linkedinLink: 'https://www.linkedin.com/in/manikandan-s-032518285/',
+export type StatusTone = 'live' | 'local' | 'internal' | 'prototype'
 
-  socialLinks: [
-    { label: 'GitHub', href: 'https://github.com/manikandan-ai17', bg: '#181717', icon: 'github' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/manikandan-s-032518285/', bg: '#0077B5', icon: 'linkedin' },
-    { label: 'Email', href: 'mailto:maniappu7777@gmail.com', bg: '#D44638', icon: 'mail' },
-  ],
-
-  whatIDo: {
-    title: 'What I Build',
-    subtitle: 'SPECIALISING IN LLM SYSTEMS, DOCUMENT AI, AND REAL-TIME DATA PIPELINES',
-    bullets: [
-      'Design end-to-end LLM extraction pipelines: OCR ingestion, structured output, multi-model verification, schema validation',
-      'Build full-stack systems with FastAPI backends, PostgreSQL data stores, and React frontends',
-      'Fine-tune language models (Gemma) using LoRA/PEFT on domain-specific datasets, deployed via Hugging Face Hub',
-      'Deploy containerised AI services on GCP with Docker, scaling to handle production enterprise workloads',
-      'Automate complex enterprise workflows — audit systems, document processors, real-time trading dashboards',
-    ],
-    techStack: [
-      { name: 'Python', icon: 'devicon-python-plain colored' },
-      { name: 'FastAPI', icon: 'devicon-fastapi-plain colored' },
-      { name: 'React', icon: 'devicon-react-original colored' },
-      { name: 'Node.js', icon: 'devicon-nodejs-plain colored' },
-      { name: 'Docker', icon: 'devicon-docker-plain colored' },
-      { name: 'GCP', icon: 'devicon-googlecloud-plain colored' },
-      { name: 'PostgreSQL', icon: 'devicon-postgresql-plain colored' },
-      { name: 'Git', icon: 'devicon-git-plain colored' },
-      { name: 'TypeScript', icon: 'devicon-typescript-plain colored' },
-      { name: 'JavaScript', icon: 'devicon-javascript-plain colored' },
-      { name: 'HTML5', icon: 'devicon-html5-plain colored' },
-      { name: 'CSS3', icon: 'devicon-css3-plain colored' },
-    ],
-  },
-
-  // Skills matrix — replaces self-assessed % bars
-  techSkills: [
-    {
-      domain: 'AI & Machine Learning',
-      color: '#3b82f6',
-      items: [
-        'LLM Fine-tuning (LoRA / PEFT)',
-        'Multi-model Orchestration & Verification',
-        'Document AI — OCR + YOLO Object Detection',
-        'RAG Pipeline Design',
-        'Candlestick Pattern Detection',
-      ],
-    },
-    {
-      domain: 'Backend Engineering',
-      color: '#10b981',
-      items: [
-        'Python, FastAPI, Flask',
-        'PostgreSQL, Data Modelling',
-        'REST & WebSocket APIs',
-        'Async I/O, High-throughput Processing',
-        'OpenPyXL, Pandas, Data Pipelines',
-      ],
-    },
-    {
-      domain: 'Frontend & Browser',
-      color: '#818cf8',
-      items: [
-        'React 19, TypeScript, Vite',
-        'Tailwind CSS, Framer Motion',
-        'Chrome Extensions (Manifest V3)',
-        'IndexedDB, Web Storage APIs',
-        'Accessible, Responsive UI',
-      ],
-    },
-    {
-      domain: 'Infrastructure & Tools',
-      color: '#f59e0b',
-      items: [
-        'Docker, Container Deployment',
-        'Google Cloud Platform, Cloud Run',
-        'Hugging Face Hub, Model Registry',
-        'AWS S3, Lambda Pipelines',
-        'GitHub, CI/CD Workflows',
-      ],
-    },
-  ],
-
-  // Legacy — kept for backward compat but Proficiency section now uses techSkills
-  proficiency: {
-    bars: [
-      { label: 'AI / Machine Learning', value: 90 },
-      { label: 'Backend Development', value: 82 },
-      { label: 'Frontend Development', value: 72 },
-      { label: 'Cloud & DevOps', value: 68 },
-    ],
-  },
-
-  education: [
-    {
-      school: 'KG College of Arts and Science',
-      degree: 'Bachelor of Science in Computer Technology',
-      duration: '2022 — 2025',
-      desc: 'Focused on software engineering, AI/ML fundamentals, data structures, and system design. Built a strong foundation in Python programming and applied machine learning.',
-      descBullets: [
-        'Specialised in Artificial Intelligence and Machine Learning coursework',
-        'Final year project: automated AI data extraction using OCR and NLP',
-      ],
-      logo: '🎓',
-      logoImg: '/kgcas-logo.png',
-    },
-  ],
-
-  experiences: [
-    {
-      role: 'Junior Software Developer',
-      company: 'AltiusNxt Technologies',
-      date: 'Present',
-      desc: 'Maintaining and extending production AI systems for enterprise clients at AltiusNxt; responsible for LLM feature development, backend engineering, and cloud deployments on AWS and GCP.',
-      descBullets: [
-        'Maintain and extend production AI systems serving enterprise clients; ship new LLM-powered features in Python/FastAPI with prompt engineering, output validation, and deployment on AWS and GCP',
-        'Own backend engineering for enterprise AI workflows: FastAPI service design, PostgreSQL data modelling, Docker containerisation, and cloud deployment',
-        'Contribute to client-facing technical requirements, architecture discussions, code reviews, and sprint delivery',
-      ],
-      color: '#00695C',
-      icon: '💻',
-      tech: ['Python', 'FastAPI', 'PostgreSQL', 'AWS', 'GCP', 'Docker', 'LLMs'],
-    },
-    {
-      role: 'Trainee Software Developer',
-      company: 'AltiusNxt Technologies',
-      date: 'Jan 2026 – Jul 2026',
-      desc: 'Built production AI systems for enterprise clients at AltiusNxt; delivered full-stack LLM automation workflows and data processing pipelines as part of the engineering team.',
-      descBullets: [
-        'Built the ADM Retail Platform — a 5-stage LLM-powered SKU enrichment and Shopify publishing pipeline on AWS S3 and Lambda, delivered end-to-end for an enterprise retail client',
-        'Contributed to enterprise AI system development across document intelligence and LLM automation workflows; grew to independently owning feature delivery within weeks of joining',
-        'Developed production Python/FastAPI backends, managed PostgreSQL schemas, and deployed containerised services to AWS and GCP',
-      ],
-      color: '#37474F',
-      icon: '🎯',
-      tech: ['Python', 'FastAPI', 'AWS S3', 'AWS Lambda', 'PostgreSQL', 'Docker', 'LLMs'],
-    },
-    {
-      role: 'AI Software Developer · Internship',
-      company: 'Deep Tech Launchpad',
-      date: 'Jul 2025 – Jan 2026',
-      desc: 'Designed and delivered 6 AI systems end-to-end — spanning document intelligence, LLM verification pipelines, model fine-tuning, and browser-native AI extensions. Responsible for full engineering lifecycle from system design to production deployment.',
-      descBullets: [
-        'Designed a dual-LLM verification pipeline: primary model extracts structured attributes → secondary model independently cross-validates → Pydantic schema gate rejects before production; deployed on GCP via Docker',
-        'Ran complete LoRA fine-tuning lifecycle for Gemma using PEFT on A100 GPU: dataset prep, bf16 training, adapter merge, Hugging Face Hub deployment, FastAPI inference endpoint',
-        'Built a CAD/PDF document AI pipeline: YOLO region detection → adaptive Tesseract OCR → LLM structuring → typed JSON schema output',
-      ],
-      color: '#0d47a1',
-      icon: '🚀',
-      tech: ['Python', 'FastAPI', 'LLMs', 'OCR', 'React', 'Docker', 'GCP'],
-    },
-    {
-      id: 'enterprise-product-ai',
-      role: 'Enterprise Product AI',
-      company: 'AI Extraction System',
-      date: '2024',
-      desc: 'Built a production document AI pipeline for an enterprise client — OCR ingests PDFs and images, a primary LLM extracts structured attributes, and a second LLM independently verifies each field. FastAPI backend containerised with Docker, deployed on GCP.',
-      descBullets: [
-        'Dual-LLM verification: primary model extracts, second model independently confirms each field',
-        'JSON schema validation rejects malformed outputs before they reach production',
-        'FastAPI + Docker + GCP: containerised service handling enterprise document volumes',
-      ],
-      color: '#1565C0',
-      icon: '🤖',
-      image: '/images/exp-1.svg',
-      tech: ['Python', 'FastAPI', 'OCR', 'LLMs', 'Docker', 'GCP'],
-    },
-    {
-      id: 'enterprise-audit-ai',
-      role: 'Enterprise Audit AI',
-      company: 'Audit Automation System',
-      date: '2024',
-      desc: 'Built an automated audit system for enterprise Excel datasets — a rule engine validates required fields, data types, and cross-column constraints, then an LLM layer catches contextual anomalies the rules miss. Outputs a corrected file, annotated error report, and PostgreSQL audit log.',
-      descBullets: [
-        'Rule engine validates required fields, numeric ranges, formats, and cross-column constraints',
-        'LLM layer detects contextual anomalies rules cannot express — mismatched records, outliers',
-        'Outputs corrected Excel file, annotated error report, and a PostgreSQL-backed audit trail',
-      ],
-      color: '#4A148C',
-      icon: '📊',
-      image: '/images/exp-2.svg',
-      tech: ['Python', 'OpenPyXL', 'LLMs', 'FastAPI', 'PostgreSQL'],
-    },
-    {
-      id: 'gemma-fine-tuning',
-      role: 'Gemma Fine-Tuning',
-      company: 'LLM Pipeline',
-      date: '2023',
-      desc: 'Built an end-to-end LoRA fine-tuning pipeline for Google Gemma on Colab A100 — dataset curation, mixed-precision training (bf16), gradient checkpointing, adapter merge, and Hugging Face Hub deployment. Final model served via a FastAPI inference endpoint.',
-      descBullets: [
-        'LoRA/PEFT training on A100 with bf16 mixed-precision and gradient checkpointing to fit GPU memory',
-        'Adapter merged and pushed to Hugging Face Hub as a versioned private model repository',
-        'FastAPI inference endpoint wraps the merged model for production query serving',
-      ],
-      color: '#1B5E20',
-      icon: '🧠',
-      image: '/images/exp-3.svg',
-      tech: ['Python', 'Gemma', 'LoRA', 'Hugging Face', 'FastAPI'],
-    },
-    {
-      id: 'ai-chrome-extension',
-      role: 'AI Chrome Extension',
-      company: 'Browser AI Tool',
-      date: '2023',
-      desc: 'Built a Chrome extension (Manifest V3) that uses an LLM to extract structured product attributes from any e-commerce product page. Service worker manages all API calls outside the page context; schema validation rejects malformed responses; retry logic applies corrective prompting on failure.',
-      descBullets: [
-        'Manifest V3 service worker handles all LLM API calls outside the product page context',
-        'JSON schema validation on every LLM response — corrective prompting retries on failure',
-        'Session history persisted to chrome.storage.local; CSV and JSON export built in',
-      ],
-      color: '#006064',
-      icon: '🔌',
-      image: '/images/exp-4.svg',
-      tech: ['JavaScript', 'Chrome API', 'LLMs', 'Manifest V3'],
-    },
-    {
-      id: 'trading-ai-platform',
-      role: 'Trading AI Platform',
-      company: 'Market Intelligence Tool',
-      date: '2023',
-      desc: 'Built a real-time trading intelligence platform — per-site Python adapters normalise data into a unified schema, an AI pattern engine correlates signals across multiple sources, and a FastAPI WebSocket server pushes ranked signals to a React dashboard with sub-second latency.',
-      descBullets: [
-        'Per-site Python adapters normalise raw market data into a unified schema before analysis',
-        'Cross-source signal correlation — patterns detected across multiple feeds are elevated to high priority',
-        'FastAPI WebSocket server pushes ranked AI signals to React clients with sub-second latency',
-      ],
-      color: '#E65100',
-      icon: '📈',
-      image: '/images/exp-5.svg',
-      tech: ['Python', 'FastAPI', 'React', 'WebSocket', 'AI/ML'],
-    },
-    {
-      id: 'pdf-cad-ai-extractor',
-      role: 'PDF + CAD AI Extractor',
-      company: 'Document AI System',
-      date: '2023',
-      desc: 'Built a document AI pipeline for engineering drawings — a custom YOLO model detects title blocks, parts lists, and dimension callouts in CAD files; Tesseract OCR (with per-region deskewing and PSM tuning) extracts text; an LLM structuring layer maps raw output to a clean JSON schema.',
-      descBullets: [
-        'Custom YOLO model detects title blocks, revision tables, parts lists, and dimension callouts',
-        'Per-region OCR preprocessing: contrast enhancement, deskewing, and PSM mode tuned per region type',
-        'LLM structuring layer maps raw OCR text to a typed JSON schema — handles abbreviations and notation',
-      ],
-      color: '#880E4F',
-      icon: '📄',
-      image: '/images/exp-6.svg',
-      tech: ['Python', 'YOLO', 'Tesseract', 'PDF.js', 'FastAPI'],
-    },
-  ],
-
-  openSource: [
-    {
-      name: 'excel-auditor-pro',
-      desc: 'React application for AI-powered Excel spreadsheet quality auditing using Google Gemini. Validates data, detects errors, and exports annotated reports.',
-      lang: 'TypeScript',
-      stars: 0,
-      forks: 0,
-      url: 'https://github.com/manikandan-ai17',
-    },
-    {
-      name: 'ocr-pdf-analyzer',
-      desc: 'Full-stack tool for extracting technical specifications from PDF engineering drawings using OCR and Node.js. Outputs structured JSON for downstream systems.',
-      lang: 'JavaScript',
-      stars: 0,
-      forks: 0,
-      url: 'https://github.com/manikandan-ai17',
-    },
-    {
-      name: 'ai-trading-extension',
-      desc: 'Chrome extension for real-time candlestick pattern detection and AI trade recommendations. Flask backend polls Binance API and pushes signals via WebSocket.',
-      lang: 'Python',
-      stars: 0,
-      forks: 0,
-      url: 'https://github.com/manikandan-ai17',
-    },
-    {
-      name: 'dtlp-data-extraction-extension',
-      desc: 'Chrome extension for AI-powered structured product data extraction using Perplexity sonar-pro and Google Gemini with IndexedDB local storage.',
-      lang: 'JavaScript',
-      stars: 0,
-      forks: 0,
-      url: 'https://github.com/manikandan-ai17',
-    },
-  ],
-
-  bigProjects: [
-    {
-      id: 'adm-retail-platform',
-      name: 'ADM Retail Platform',
-      desc: 'Full-stack retail automation platform built for an enterprise client — an LLM pipeline enriches and classifies product SKUs, then publishes them to Shopify automatically via a 5-stage batch pipeline on AWS S3 and Lambda.',
-      problem: 'Retail teams were spending days manually enriching, classifying, and publishing product SKUs to Shopify.',
-      llm: 'LLM enrichment engine',
-      status: 'Shipped',
-      metrics: ['5-stage pipeline', 'AWS S3 + Lambda', 'Shopify Admin API'],
-      link: '#',
-      color: 'from-blue-500 to-blue-700',
-      image: '/images/project-1.svg',
-      github: 'https://github.com/manikandan-ai17',
-    },
-    {
-      id: 'dtlp-data-extraction-extension',
-      name: 'DTLP Data Extraction Extension',
-      desc: 'Chrome extension (Manifest V3) that extracts structured product specs from any supplier website using a dual-LLM pipeline — Perplexity sonar-pro extracts, Gemini 1.5 Flash independently verifies each field. Schema-validated results stored in IndexedDB; no server required.',
-      problem: 'Procurement teams were manually copying product specs from supplier websites into spreadsheets.',
-      llm: 'Perplexity sonar-pro + Gemini',
-      status: 'Shipped',
-      metrics: ['Dual-LLM pipeline', 'JSON schema validation', 'IndexedDB storage'],
-      link: '#',
-      color: 'from-indigo-500 to-blue-600',
-      image: '/images/project-2.svg',
-      github: 'https://github.com/manikandan-ai17',
-    },
-    {
-      id: 'ai-trading-extension',
-      name: 'Algorithmic Trading Signal System',
-      desc: 'Chrome extension with a local Flask backend that detects 14 candlestick patterns via deterministic ratio logic on live Binance OHLCV data. Pattern signals feed an AI ranking layer that generates confidence-scored BUY/SELL recommendations, injected directly into the charting interface.',
-      problem: 'Traders were manually scanning charts and switching tabs to identify patterns and generate signals under live market conditions.',
-      llm: 'AI recommendation engine',
-      status: 'Shipped',
-      metrics: ['Binance REST API', '14 pattern detectors', 'Local-first backend'],
-      link: '#',
-      color: 'from-emerald-500 to-teal-600',
-      image: '/images/project-3.svg',
-      github: 'https://github.com/manikandan-ai17',
-    },
-  ],
-
-  achievements: [
-    {
-      title: 'Multi-LLM Verification Pipeline',
-      desc: 'Built a dual-model extraction system where a primary LLM extracts fields from documents and a second LLM independently verifies each value — mismatches are flagged for human review. Deployed on GCP handling enterprise document volumes.',
-      tags: ['Document AI', 'Multi-LLM', 'GCP'],
-      emoji: '🔬',
-      image: '/images/achievement-1.svg',
-    },
-    {
-      title: 'Gemma LoRA Fine-Tuning on A100',
-      desc: 'Ran a complete LoRA fine-tuning pipeline for Google Gemma on Colab A100 — mixed-precision training, gradient checkpointing, domain evaluation, Hugging Face Hub deployment, and a FastAPI inference endpoint.',
-      tags: ['Gemma', 'LoRA', 'Hugging Face'],
-      emoji: '🧠',
-      image: '/images/achievement-2.svg',
-    },
-    {
-      title: 'Real-Time Trading Intelligence',
-      desc: 'Engineered a WebSocket platform that aggregates live data from multiple trading sources, runs AI pattern detection across all feeds in parallel, and pushes ranked signals to a React dashboard with sub-second latency.',
-      tags: ['WebSocket', 'Real-Time', 'AI/ML'],
-      emoji: '📡',
-      image: '/images/achievement-3.svg',
-    },
-  ],
-
-  blogs: [
-    {
-      title: 'Designing a Multi-Model Verification Pipeline for Document Extraction',
-      desc: 'How I use two LLMs in sequence — one to extract, one to verify — to get high-confidence structured output from unstructured enterprise documents. Covers prompt design, schema validation, and conflict resolution.',
-      topic: 'AI Systems',
-      url: '#',
-    },
-    {
-      title: 'Fine-Tuning Gemma for Domain-Specific Tasks: A Practical Walkthrough',
-      desc: 'From raw dataset curation to LoRA training on an A100 and deploying an inference endpoint via Hugging Face Hub. A concrete walkthrough of every step in a real fine-tuning pipeline.',
-      topic: 'LLM Engineering',
-      url: '#',
-    },
-  ],
+export interface ProjectLink {
+  label: string
+  href: string
 }
+
+export interface Project {
+  id: string
+  name: string
+  tagline: string
+  status: string
+  statusTone: StatusTone
+  statusNote: string
+  summary: string
+  features: string[]
+  stack: string[]
+  role: string
+  evidence: string[]
+  limitations: string[]
+  links: ProjectLink[]
+}
+
+export const profile = {
+  name: 'Manikandan Santhosh',
+  title: 'Software Engineer · LLM-integrated applications',
+  location: 'Coimbatore, India',
+  email: 'maniappu7777@gmail.com',
+  phone: '+91 9944680311',
+  github: 'https://github.com/manikandan-ai17',
+  linkedin: 'https://www.linkedin.com/in/manikandan-s-032518285/',
+  resume: '/resume.html',
+  resumePdf: '/Manikandan_Santhosh_Resume.pdf',
+  openToWork: true,
+  summary:
+    'I build full-stack applications that put hosted LLM APIs (Gemini, Perplexity) to work on business data: sales prospects, product spreadsheets, supplier pages, PDFs and engineering drawings. At AltiusNxt Technologies I built and deployed a TypeScript and React B2B outreach platform, and I have worked on a product-catalog platform and a spreadsheet audit tool. On my own I wrote a CAD drawing analysis agent that cross-checks a vision model against the PDF’s own vector data.',
+  note:
+    'Every project below is labelled with what I can actually demonstrate: public source, local run, or private company code. I use external LLM APIs; I have not trained or fine-tuned models.',
+}
+
+export const featuredProjects: Project[] = [
+  {
+    id: 'marketing-ai-outreach',
+    name: 'AltiusNXT Marketing AI',
+    tagline: 'B2B outreach platform that takes a company from prospect discovery to tracked email outreach, with human approval before anything is sent.',
+    status: 'Deployed · sign-in required',
+    statusTone: 'live',
+    statusNote:
+      'Deployed on a server I manage. Sign-in is limited to company email domains, so it cannot be tried from outside, and the source is a private company repository.',
+    summary:
+      'A full-stack TypeScript platform for B2B sales outreach. Six pipeline engines move a company from discovery to engagement tracking: prospect discovery, company enrichment, intent signals, decision-maker discovery, multichannel outreach and engagement tracking. Gemini drafts content; a person approves it before it goes out.',
+    features: [
+      'Six engines in one workspace: Prospect Discovery, Company Enrichment, Intent Signals, Decision Maker Discovery, Multichannel Outreach and Engagement Tracking, plus a sync to the company’s sales CRM.',
+      'Outreach: personalised email drafting, sales sequences with follow-ups, a suppression list, a test-send mode and a manual-send flow. LinkedIn is draft-only: a person sends it.',
+      'Bulk email: Excel recipient import, attachments, company-wise ZIP files up to 1 GB, up to three own templates, signature, open tracking, scheduling, and a report of the companies a send skipped. Sending sits behind feature flags.',
+      'Website audit with generated PDF reports.',
+      'Four roles (viewer, operator, approver, admin). Approving is separate from operating, and self-approval is off by default.',
+      'Sign-in with email one-time codes or passwords, restricted to allowed company email domains.',
+    ],
+    stack: ['TypeScript', 'Node.js', 'Express', 'React', 'Vite', 'PostgreSQL', 'Prisma', 'pg-boss', 'Gemini API', 'PM2', 'Vitest'],
+    role: 'Main committer (50 of the repository’s 58 commits, Sep–Oct 2026) and deployed it at AltiusNxt Technologies.',
+    evidence: [
+      'Source reviewed on 22 Oct 2026: about 74,000 lines of TypeScript in the backend, 32,000 in the React app and 42,000 in tests.',
+      'The backend has 68 database models and 44 migrations on PostgreSQL. The API and a separate background worker run as two PM2 processes.',
+      '183 test files with about 3,100 test cases (counted from the source; not run for this page).',
+      'Git history: 58 commits from 3 Sep to 21 Oct 2026. 50 are mine; the other 8 are pull-request merge commits.',
+      'The deployed application responds (HTTP 200) and shows the sign-in page.',
+    ],
+    limitations: [
+      'Private company product: I did not create an account to test the live app beyond the sign-in page, and I do not quote usage or email-volume figures.',
+      'Several capabilities are switched off by default through feature flags, such as bulk sending and CRM writes.',
+    ],
+    links: [{ label: 'Open the app (sign-in page)', href: 'http://72.61.245.208:8110/outreach' }],
+  },
+  {
+    id: 'cad-drawing-agent',
+    name: 'CAD Drawing Analysis Agent',
+    tagline:
+      'Reads engineering-drawing PDFs and answers questions about them, with every answer tied to a highlighted mark on the page.',
+    status: 'Working · runs locally',
+    statusTone: 'local',
+    statusNote:
+      'Public source code. No hosted demo is running at the moment; a Render deployment file is included in the repository.',
+    summary:
+      'A Python/FastAPI application that analyses CAD drawing PDFs by comparing two independent readings of each page: the PDF’s own vector geometry and text layer, and a Gemini vision model that never sees that text. Where the two agree, confidence rises. Where they disagree, the conflict is reported instead of being resolved silently.',
+    features: [
+      'PyMuPDF classifies each page (vector, raster, hybrid, non-drawing) and extracts text, lines, circles and arcs.',
+      'Five concurrent, schema-constrained Gemini vision passes per page: structure, annotations, features, GD&T and title block.',
+      'Cross-validation labels each value HIGH, MEDIUM or LOW, and checks diameters and radii against circles fitted in the vector layer.',
+      'Browser workspace with no build step: page viewer with evidence overlays, Q&A whose answers cite item IDs, a named-attribute extraction table, and Excel/CSV export.',
+      'A missing dimension, tolerance or unit stays missing. “Insufficient evidence” is a supported answer.',
+    ],
+    stack: ['Python', 'FastAPI', 'PyMuPDF', 'Gemini API', 'NumPy', 'pdfplumber', 'openpyxl', 'JavaScript'],
+    role: 'Author of the repository (every commit in the public repo).',
+    evidence: [
+      '329 automated tests pass (run on 22 Oct 2026). They cover parsing, geometry, confidence rules and API routes. The vision calls themselves are not tested.',
+      'Benchmark on 26 real packaging drawings (36 pages): 90.3% dimension recall (308 of 341) and 97.7% value precision on the values it found.',
+      'The benchmark’s ground truth was labelled by a different model family (Claude). A second pass agreed on 327 of 335 sampled items (97.6%). It is model-assisted, not human-labelled.',
+    ],
+    limitations: [
+      'Hole-count accuracy was 28.6% and diameter typing 59.1% in the same benchmark.',
+      'Fixes were made after failures found on these same drawings, so the figures are development-set results, not a blind test.',
+      'Needs a Gemini API key and makes roughly five model calls per page.',
+      'Linear dimensions are not verified against geometry. Page scale needs at least two matched diameter or radius callouts.',
+    ],
+    links: [{ label: 'Source on GitHub', href: 'https://github.com/manikandan-ai17/Pdf-Cad-Drawing-Analizer' }],
+  },
+  {
+    id: 'catalogwiz',
+    name: 'CatalogWiz',
+    tagline: 'Product-catalog enrichment and review platform for retail catalog teams.',
+    status: 'Completed · company code',
+    statusTone: 'internal',
+    statusNote: 'Built at AltiusNxt Technologies. The source is a company project and is not public; there is no public demo.',
+    summary:
+      'A multi-service application that takes raw product data, audits and enriches it with Gemini, lets a team review the results, and syncs approved products to Shopify or WooCommerce. I worked on it as part of the AltiusNxt engineering team.',
+    features: [
+      'Import product spreadsheets and map their headers to catalog fields.',
+      'Gemini-based enrichment: attribute extraction from scraped supplier pages, plus SEO titles, descriptions, bullet points and meta text.',
+      'Audit-and-fix and competitor-benchmark workflows that raise issues per product and propose corrections.',
+      'Taxonomy classification of products.',
+      'React review interface with bulk review and approval, and settings for brand tone, restricted words and generation rules.',
+      'Shopify (Admin GraphQL) and WooCommerce sync, with multi-user JWT authentication.',
+    ],
+    stack: ['React', 'Vite', 'MUI', 'Node.js', 'Express', 'MongoDB', 'Python', 'Gemini API', 'AWS SQS', 'AWS S3', 'Shopify API', 'WooCommerce API'],
+    role: 'Developer on the AltiusNxt engineering team.',
+    evidence: [
+      'Features above are taken from the source code (Express API routes, React pages, Python workers), not from documentation.',
+      'Architecture: React front end → Node/Express API with MongoDB → AWS SQS queues → Python workers that call Gemini.',
+    ],
+    limitations: [
+      'No automated tests in the delivered code.',
+      'Internal tool: no public repository or demo. Details are discussed in interviews.',
+      'AI output is treated as a draft; the review interface exists because it needs human approval.',
+    ],
+    links: [],
+  },
+  {
+    id: 'audit-pipeline',
+    name: 'Audit Pipeline',
+    tagline: 'Pilot-first audit of vendor product spreadsheets with Gemini.',
+    status: 'Deployed · company server',
+    statusTone: 'internal',
+    statusNote: 'Runs on a company server. The link is withheld until access to it is restricted.',
+    summary:
+      'A web tool that audits product-data spreadsheets. You upload a workbook, run a small pilot batch, review the findings, give feedback and re-run the pilot, and only then approve the full batch and download the audited workbook.',
+    features: [
+      'Upload an .xlsx file, choose the sheet and the pilot size.',
+      'Pilot run with review, a downloadable pilot file, and free-text feedback that re-runs the pilot with guidance.',
+      'Approve to process the remaining rows, then download the audited workbook.',
+      'Gemini API key required; an optional Scrape.do key is used when source pages must be fetched.',
+    ],
+    stack: ['Python', 'FastAPI', 'React', 'Gemini API', 'pandas', 'openpyxl', 'Playwright'],
+    role: 'Deployed the application at AltiusNxt Technologies.',
+    evidence: [
+      'Checked on 22 Oct 2026: the application responds (HTTP 200) and its client code calls the pilot, revise, approve and download endpoints described above.',
+      'A related Audit Tool codebase (FastAPI + React) with the same pilot workflow, rule engine and workbook write-back was reviewed.',
+    ],
+    limitations: [
+      'No accuracy benchmark. The pilot-and-review step is the quality control.',
+      'Jobs and settings are stored as files on disk; there is no database.',
+    ],
+    links: [],
+  },
+  {
+    id: 'dtlp-extension',
+    name: 'DTLP Data Extraction Extension',
+    tagline: 'Chrome extension that extracts structured product attributes from web pages, PDFs and Excel lists using an LLM.',
+    status: 'Working · load unpacked',
+    statusTone: 'local',
+    statusNote:
+      'Not published on the Chrome Web Store. Private repository; it runs by loading the folder at chrome://extensions with your own API key.',
+    summary:
+      'A Manifest V3 Chrome extension that sends page, PDF or spreadsheet content to Perplexity (sonar-pro) or Gemini (1.5 Flash), chosen per run, and returns the attributes you define as JSON.',
+    features: [
+      'Category templates and value mappings guide which attributes are extracted.',
+      'Inputs: the current page, PDF files (PDF.js, first 10 pages), Excel lists (SheetJS) and multi-URL batches.',
+      'Draggable in-page overlay, token-usage display, JSON copy to clipboard and CSV download.',
+      'Client-side only: no backend server. API keys are kept in chrome.storage.local.',
+    ],
+    stack: ['JavaScript', 'Chrome Extension (MV3)', 'Perplexity API', 'Gemini API', 'PDF.js', 'SheetJS', 'IndexedDB'],
+    role: 'Author of the repository.',
+    evidence: [
+      'About 6,300 lines of JavaScript, plus CSS and HTML, in the extension source.',
+      'The two models are alternatives. The extension does not run one model’s output through a second model.',
+    ],
+    limitations: [
+      'No schema validation or retry: the response is parsed as JSON and an error is raised if that fails, so results need human review.',
+      'No automated tests.',
+      'Requests access to all URLs, as on-page extraction requires.',
+    ],
+    links: [],
+  },
+]
+
+export const otherProjects: Project[] = [
+  {
+    id: 'excel-auditor-pro',
+    name: 'Excel Auditor Pro',
+    tagline: 'React + TypeScript spreadsheet quality checker using Gemini.',
+    status: 'Local prototype',
+    statusTone: 'prototype',
+    statusNote: 'Private repository.',
+    summary:
+      'Upload a sheet, choose columns and checklists (duplicates, hidden rows, formulas, spell check) and have Gemini flag issues, with export to Excel or JSON and history kept in the browser.',
+    features: [],
+    stack: ['React 19', 'TypeScript', 'Vite', 'Gemini API'],
+    role: 'Author of the repository.',
+    evidence: [],
+    limitations: ['The Gemini key is injected into the client bundle, so it is not safe to deploy publicly as it stands.', 'No tests; the type check reports 2 errors.'],
+    links: [],
+  },
+  {
+    id: 'ocr-pdf-analyzer',
+    name: 'OCR PDF Analyzer',
+    tagline: 'Extracts user-defined attributes from PDF drawings.',
+    status: 'Local prototype',
+    statusTone: 'prototype',
+    statusNote: 'Private repository.',
+    summary:
+      'Node/Express backend and a plain-JavaScript front end. It reads the PDF text layer, falls back to Tesseract OCR, and matches attributes with patterns or, optionally, Perplexity.',
+    features: [],
+    stack: ['Node.js', 'Express', 'Tesseract.js', 'pdf-parse', 'Perplexity API'],
+    role: 'Author of the repository.',
+    evidence: [],
+    limitations: ['Some matching patterns are hard-coded to specific attributes.', 'No accuracy evaluation was done.'],
+    links: [],
+  },
+  {
+    id: 'pasternack-scraper',
+    name: 'Pasternack Product Scraper',
+    tagline: 'Playwright script that enriches an Excel list of part numbers from a manufacturer website.',
+    status: 'Used on one batch',
+    statusTone: 'prototype',
+    statusNote: 'Private repository. No LLM is involved.',
+    summary:
+      'Reads part numbers from Excel, searches the site for each, and writes back URL, taxonomy, title, description and specifications. It saves after every row and detects Cloudflare challenges. One run covered 1,000 part numbers: 833 matched and 167 were not found.',
+    features: [],
+    stack: ['Python', 'Playwright', 'BeautifulSoup', 'openpyxl'],
+    role: 'Author of the repository.',
+    evidence: [],
+    limitations: ['Runs with a visible browser window and depends on the site’s current page structure.'],
+    links: [],
+  },
+  {
+    id: 'docx-pdf-converter',
+    name: 'DOCX ↔ PDF Converter',
+    tagline: 'Batch document converter with a web interface.',
+    status: 'Local tool',
+    statusTone: 'prototype',
+    statusNote: 'Private repository. No LLM is involved.',
+    summary:
+      'FastAPI service and React front end that convert DOCX to PDF (Microsoft Word on Windows, LibreOffice on Linux) and PDF to DOCX, with batch download and a packaged Windows executable.',
+    features: [],
+    stack: ['Python', 'FastAPI', 'React', 'PyMuPDF'],
+    role: 'Author of the repository.',
+    evidence: [],
+    limitations: ['No automated tests, and the README does not match the current endpoints.'],
+    links: [],
+  },
+  {
+    id: 'trading-assistant',
+    name: 'Candlestick Pattern Assistant',
+    tagline: 'Experimental Chrome extension and Flask backend for TradingView charts.',
+    status: 'Experimental prototype',
+    statusTone: 'prototype',
+    statusNote: 'Private repository. Not a trading system and not financial advice.',
+    summary:
+      'Rule-based detection of 7 named candlestick patterns and simple moving averages on public Binance candle data, with an optional Perplexity text analysis in one backend variant.',
+    features: [],
+    stack: ['JavaScript', 'Chrome Extension (MV3)', 'Python', 'Flask'],
+    role: 'Author of the repository.',
+    evidence: [],
+    limitations: ['Prototype only: signals in one backend are fixed rules, and there is no back-testing.'],
+    links: [],
+  },
+]
+
+export const allProjects: Project[] = [...featuredProjects, ...otherProjects]
+
+export const skillGroups = [
+  {
+    title: 'Languages',
+    items: ['Python', 'JavaScript', 'TypeScript', 'C and C++ (coursework)', 'MySQL (coursework)'],
+  },
+  {
+    title: 'Backend and data',
+    items: ['Node.js / Express', 'FastAPI', 'Flask', 'REST APIs', 'PostgreSQL (Prisma)', 'MongoDB', 'Job queues (pg-boss, AWS SQS)', 'Authentication (JWT, one-time codes)', 'pandas', 'openpyxl'],
+  },
+  {
+    title: 'LLM and document processing',
+    items: ['Gemini API (text and vision)', 'Perplexity API', 'Prompting for structured JSON output', 'PyMuPDF', 'pdfplumber', 'PDF.js', 'Tesseract.js (OCR)', 'Playwright scraping'],
+  },
+  {
+    title: 'Frontend',
+    items: ['React', 'Vite', 'Tailwind CSS', 'MUI', 'Chrome extensions (Manifest V3)'],
+  },
+  {
+    title: 'Tools and services',
+    items: ['Git and GitHub', 'PM2 process management', 'Vitest and pytest', 'AWS SQS and S3 (used in CatalogWiz)', 'Shopify and WooCommerce APIs'],
+  },
+]
+
+export const experience = [
+  {
+    role: 'Junior Software Developer',
+    company: 'AltiusNxt Technologies',
+    place: 'Coimbatore',
+    period: 'Present',
+    bullets: [
+      'Built and deployed AltiusNXT Marketing AI, a B2B outreach platform (TypeScript, Express, React, PostgreSQL): prospect discovery, Gemini-drafted outreach emails with approval gates, sequences and bulk sending.',
+      'Deployed the Audit Pipeline, a Gemini-based spreadsheet audit tool with a pilot-then-approve workflow.',
+    ],
+  },
+  {
+    role: 'Trainee Software Developer',
+    company: 'AltiusNxt Technologies',
+    place: 'Coimbatore',
+    period: 'Jan 2026 – Jul 2026',
+    bullets: [
+      'Worked on CatalogWiz, a product-catalog enrichment and review platform (React, Node.js/Express, MongoDB, Python workers calling Gemini through AWS SQS).',
+      'Worked on its Shopify and WooCommerce sync for publishing reviewed products.',
+    ],
+  },
+  {
+    role: 'AI Software Developer · Internship',
+    company: 'Deep Tech Launchpad',
+    place: 'Coimbatore',
+    period: 'Jul 2025 – Jan 2026',
+    bullets: [
+      'Built the DTLP Data Extraction Extension: a Manifest V3 Chrome extension that uses Perplexity or Gemini to extract structured product attributes from web pages, PDFs and Excel lists.',
+    ],
+  },
+]
+
+export const education = [
+  {
+    school: 'KG College of Arts and Science',
+    degree: 'B.Sc. Computer Technology',
+    period: '2022 – 2025',
+    detail: 'Coimbatore · CGPA 7.1',
+  },
+]

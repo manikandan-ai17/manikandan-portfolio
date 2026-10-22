@@ -38,3 +38,14 @@ push-all-repos.ps1
 *.njsproj
 *.sln
 *.sw?
+
+# Private working folders: client data, credentials, company code (never publish)
+Consolide_Script/
+Drawing Agents/
+extension (v.2)/
+product enrichment/
+valider Tool/
+AI_Trading_Extension_Complete (2)/
+.claude/
+.playwright-mcp/
+marketing-agent/

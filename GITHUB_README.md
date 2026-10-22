@@ -1,89 +1,63 @@
-# Manikandan Santhosh — AI Engineer
+# Manikandan Santhosh
 
-**Building production LLM systems, document intelligence pipelines, and model fine-tuning workflows.**
+**Software engineer building Python and TypeScript applications that use hosted LLM APIs on business data: sales prospects, product spreadsheets, PDFs and engineering drawings.**
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-manikandan--portfolio--delta.vercel.app-2563EB?style=flat-square&logo=vercel&logoColor=white)](https://manikandan-portfolio-delta.vercel.app)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/manikandan-s-032518285)
 [![Gmail](https://img.shields.io/badge/Email-maniappu7777%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:maniappu7777@gmail.com)
-[![Location](https://img.shields.io/badge/Location-Coimbatore%2C%20India-16a34a?style=flat-square&logo=googlemaps&logoColor=white)](https://maps.google.com/?q=Coimbatore,India)
 
 ---
 
 ## About
 
-AI Engineer with production experience building LLM-powered systems for enterprise clients at AltiusNxt Technologies — document intelligence pipelines, SKU automation platforms on AWS, and LLM-integrated backend services.
+Junior Software Developer at AltiusNxt Technologies, Coimbatore. I use external LLM APIs (Gemini, Perplexity); I have not trained or fine-tuned models.
 
-Designed and delivered a hallucination-resistant dual-LLM verification pipeline for enterprise document extraction, a 5-stage LLM automation pipeline on AWS S3 and Lambda (Shopify publishing), and a complete LoRA fine-tuning workflow for Gemma (A100 + Hugging Face Hub).
+At AltiusNxt I built and deployed a TypeScript and React B2B outreach platform, and worked on a product-catalog enrichment platform and a spreadsheet audit tool. On my own I wrote a CAD drawing analysis agent that cross-checks a vision model against a PDF's vector data.
 
-**Open to:** AI Engineer · LLM Engineer · Backend AI Engineer roles
-
----
-
-## Tech Stack
-
-**AI / ML**
-```
-Python · PyTorch · Hugging Face Transformers · PEFT · LoRA Fine-Tuning
-OpenAI API · Gemini API · Prompt Engineering
-Tesseract OCR · YOLO · NumPy
-```
-
-**Currently Learning**
-```
-RAG · Vector Databases · LangChain · LLM Evaluation Frameworks
-```
-
-**Backend**
-```
-FastAPI · Flask · PostgreSQL · REST APIs · WebSocket · Pydantic · JSON Schema
-```
-
-**Frontend**
-```
-React · TypeScript · JavaScript · Tailwind CSS
-```
-
-**DevOps / MLOps**
-```
-Docker · GCP · AWS S3 · Git · Linux · Hugging Face Hub
-```
+**Open to:** software engineering and AI/LLM application roles, including remote and international.
 
 ---
 
-## Projects
+## Featured projects
 
-| Project | Stack | What it does |
-|---|---|---|
-| **ADM Retail Automation Platform** | Python · LLMs · FastAPI · AWS S3 · AWS Lambda · Shopify API | 5-stage LLM pipeline: enriches and classifies product SKUs, validates output, auto-publishes to Shopify via Admin API; batch processing on S3 + Lambda for an enterprise retail client |
-| **Enterprise AI Extraction System** | Python · Tesseract · LLMs · Pydantic · FastAPI · Docker · GCP | Dual-LLM verification pipeline — primary model extracts structured data from enterprise PDFs, secondary independently cross-validates each field, Pydantic schema gates production release |
-| **Gemma LoRA Fine-Tuning Pipeline** | Python · PyTorch · PEFT · Hugging Face · FastAPI | End-to-end LoRA training on A100: dataset prep → bf16 PEFT training → adapter merge → Hub deployment → FastAPI inference endpoint |
-| **PDF + CAD Document Intelligence** | Python · YOLO · Tesseract · FastAPI | Custom YOLO region detector → per-region adaptive OCR → LLM structuring layer → typed JSON schema output for engineering drawings |
-| **Enterprise Audit Automation** | Python · OpenPyXL · LLMs · FastAPI · PostgreSQL | Dual-layer audit engine: deterministic rule processor + LLM anomaly detection for large-scale Excel datasets; outputs corrected file, annotated report, immutable audit log |
-| **Dual-LLM Chrome Extension (MV3)** | JS · MV3 · Perplexity sonar-pro · Gemini Flash · IndexedDB | Serverless MV3 extension — Perplexity extracts, Gemini verifies independently, schema-validated output in IndexedDB; zero backend required |
+| Project | Status | Stack | What it does |
+|---|---|---|---|
+| **[CAD Drawing Analysis Agent](https://github.com/manikandan-ai17/Pdf-Cad-Drawing-Analizer)** | Public source, runs locally | Python · FastAPI · PyMuPDF · Gemini API | Compares five Gemini vision passes with a PDF's own vector geometry and text, labels each value HIGH / MEDIUM / LOW, and reports conflicts instead of resolving them silently. 329 automated tests. Benchmark on 26 real drawings: 90.3% dimension recall, 97.7% value precision (development set, model-labelled ground truth); hole-count accuracy only 28.6%. |
+| **AltiusNXT Marketing AI** | Deployed, sign-in required, private company code | TypeScript · Express · React · PostgreSQL · pg-boss · Gemini API | B2B outreach platform: prospect discovery, enrichment, intent signals, decision-maker discovery, outreach emails with approval gates, bulk sending. |
+| **CatalogWiz** | Completed, private company code | React · Node.js · MongoDB · Python · Gemini API · AWS SQS | Product-catalog enrichment and review platform with Shopify and WooCommerce sync. |
+| **Audit Pipeline** | Deployed on a company server | Python · FastAPI · React · Gemini API | Spreadsheet audit with a pilot, review and approve workflow. |
+| **DTLP Data Extraction Extension** | Runs unpacked in Chrome, private repo | JavaScript · Chrome MV3 · Perplexity · Gemini | Extracts product attributes from pages, PDFs and Excel lists to JSON or CSV. One model per run; results need review. |
 
----
-
-## What I'm Currently Building
-
-- **RAG Document Assistant** — Retrieval-augmented generation system with vector search (ChromaDB) for enterprise document Q&A; building evaluation harness to measure retrieval quality and answer faithfulness
-- **LLM Evaluation Framework** — Systematic eval pipeline for LLM output quality using LLM-as-judge pattern; tracking precision, recall, and hallucination rate across pipeline stages
+Smaller projects and prototypes (private): Excel Auditor Pro, OCR PDF Analyzer, Pasternack product scraper, DOCX/PDF converter, candlestick-pattern prototype. Each is labelled with its real status on the [portfolio](https://manikandan-portfolio-delta.vercel.app).
 
 ---
 
-## Work History
+## Tools I have used
+
+```
+Languages      Python · TypeScript · JavaScript
+Backend        Node.js / Express · FastAPI · Flask · PostgreSQL (Prisma) · MongoDB · pg-boss · AWS SQS
+LLM / docs     Gemini API · Perplexity API · PyMuPDF · pdfplumber · PDF.js · Tesseract.js · Playwright
+Frontend       React · Vite · Tailwind CSS · Chrome extensions (MV3)
+Tools          Git · PM2 · Vitest · pytest
+```
+
+**Learning:** retrieval-augmented generation and LLM evaluation (not yet used in my projects).
+
+---
+
+## Work history
 
 | Role | Company | Period |
 |---|---|---|
-| Junior Software Developer | AltiusNxt Technologies | Aug 2026 – Present |
+| Junior Software Developer | AltiusNxt Technologies | Present |
 | Trainee Software Developer | AltiusNxt Technologies | Jan 2026 – Jul 2026 |
 | AI Software Developer (Intern) | Deep Tech Launchpad | Jul 2025 – Jan 2026 |
 
----
-
 ## Education
 
-**B.Sc. Computer Technology** — KG College of Arts & Science, Coimbatore (2022 – 2025)
+**B.Sc. Computer Technology**, KG College of Arts & Science, Coimbatore (2022 – 2025)
 
 ---
 
-*Coimbatore, India · Open to remote and relocation*
+*Coimbatore, India*
