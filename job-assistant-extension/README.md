@@ -2,8 +2,9 @@
 
 Finds AI-company roles that genuinely match Manikandan's verified background, explains each match, fills
 application forms with verified details, drafts answers to written questions from the real portfolio, and tracks
-every application. **It never submits an application, and nothing goes into a form without your approval** — you
-review everything, answer the sensitive questions yourself and press the site's own Submit button.
+every application. **By default it never submits anything**: you review every answer and press the site's own Submit
+button. **Optionally, Auto-apply** (off by default, dry-run first) can fill and submit applications for Strong/Good
+matches on Greenhouse, Lever and Ashby company pages — see below.
 
 It is separate from the portfolio site: nothing under `../src`, `../public` or `../index.html` is changed, and the
 site build (`tsc` on `src/` + Vite) does not include this folder.
@@ -40,6 +41,36 @@ site build (`tsc` on `src/` + Vite) does not include this folder.
 5. Any other careers site: open its application form, click the extension → **Fill this page**.
 6. Click **I submitted it** in the panel. **Applications** keeps company, role, job site, link, date, resume
    version, the answers you submitted and the status; warns before a duplicate; exports CSV.
+
+## Auto-apply (optional)
+
+Profile → **Auto-apply** → tick *Turn on auto-apply*. Leave **Dry run** ticked at first. Then Dashboard →
+**Auto-apply** tab → **▶ Dry-run N jobs**.
+
+What it does, per job, in a background tab it opens itself:
+
+1. Fills your details and attaches your resume (and the template cover letter, if the form has a box).
+2. Answers the other required questions **only from what you typed in Profile**: work authorization and visa
+   sponsorship (from your countries and your yes/no answers), relocation, notice period, "how did you hear" (company
+   careers page), consent/privacy boxes (if allowed), diversity questions (**"prefer not to say"**, never a guess), and
+   written questions from your approved answers or profile-built drafts (AI drafts only if you allow them).
+3. Checks every required field is filled. If **anything** is missing, a CAPTCHA appears, a legal agreement
+   (arbitration, non-compete, NDA) is required, or no rule covers a question, it **stops without submitting** and
+   lists exactly why under *Results* — the tab stays open so you can finish it yourself.
+4. Dry run: stops here and leaves the filled tab open for you to check. Live: clicks the site's own Submit, waits for its
+   confirmation, and records the application (Applications tab, marked *via auto-apply*).
+
+Guard rails: only Greenhouse, Lever and Ashby company pages (never LinkedIn, Indeed, Wellfound); minimum match (Good
+or Strong); a daily limit (default 10 live) and a pause between applications; no duplicates (the tracker); needs a
+resume and your Profile answers (phone, city, countries, visa, relocation). It assumes you were **not referred** —
+turn it off for a referred job. Keep the dashboard tab open while the queue runs; **Stop** ends it after the current job.
+
+**Verified so far:** the answer rules and the whole fill → submit → confirm flow on test forms (`npm test`);
+form detection, dropdown opening/reading/selection (react-select) and Yes/No answers on a **real** Anthropic
+Greenhouse application page (nothing submitted); Ashby's Yes/No button groups detected on a real Cohere page
+(detection only: Ashby saves answers as they are typed). **Not verified:** a real submission and the real
+confirmation page — nothing was submitted to any company while building this. Run **one** job live first and watch it.
+Lever pages use the same engine but were not opened live.
 
 ### LinkedIn, Indeed, Wellfound
 
@@ -93,6 +124,7 @@ engineering roles all ask for 3+ years or are Staff level.
 - Job data comes from the companies' own public job-board APIs.
 - Your API key (optional) is kept in extension storage and sent only to `api.anthropic.com`. Anyone with access
   to this browser profile could read it: use a key with a spending limit and remove it when not in use.
+- **Auto-apply submits applications in your name.** Every answer it gives comes from your Profile; check a dry run first and keep the daily limit low. Nothing is sent anywhere except the company's own form (and your Anthropic key's requests to api.anthropic.com if you allow AI drafts).
 - **Filling a form sends data to the company before you submit, on some sites.** Seen in testing: Ashby (OpenAI,
   ElevenLabs, Mistral …) saves each answer as it is filled, and both Greenhouse and Ashby upload an attached
   resume immediately — exactly as when you attach it yourself. The panel warns on Ashby pages. Fill (and put
@@ -113,7 +145,7 @@ engineering roles all ask for 3+ years or are Staff level.
 
 ```bash
 npm install
-npm test               # 51 unit tests (matcher, feeds, tracker, LinkedIn import, letters, answers, form filling)
+npm test               # 66 tests (matcher, feeds, tracker, LinkedIn import, letters, answers, form filling, auto-apply)
 npm run sync-profile   # after editing ../src/data/portfolio.ts: regenerate the verified profile
 npm run vendor         # rebuild the bundled Anthropic SDK (extension/src/vendor)
 npm run icons

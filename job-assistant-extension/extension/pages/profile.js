@@ -1,6 +1,7 @@
 import { h, toast, download, fmtDate } from './ui.js'
 import { get, set, loadProfile, saveProfile, loadSources, loadSettings } from '../src/lib/store.js'
 import { missingInfo } from '../src/lib/profile.js'
+import { DEFAULT_AUTO } from '../src/lib/autoapply.js'
 import { SEED_PROFILE } from '../src/lib/seedProfile.js'
 import { importLinkedInZip } from '../src/lib/linkedin.js'
 import { fetchGitHubRepos, fetchPortfolioResume, bytesToBase64 } from '../src/lib/publicData.js'
@@ -70,6 +71,30 @@ function renderAnswers() {
       profile.preferences = { ...p, fullTime: draft.fullTime, internships: draft.internships, contract: draft.contract }
       await persist('Saved. Press “Re-check” on the dashboard to apply it to the saved jobs.')
     } }, 'Save answers'),
+  )
+}
+
+// ── Auto-apply ──────────────────────────────────────────────────────────────
+
+function renderAutoApply() {
+  const a = { ...DEFAULT_AUTO, ...(settings.autoApply ?? {}) }
+  const check = (k, label, hint) => h('label', { class: 'check', style: 'align-items:flex-start' }, h('input', { type: 'checkbox', checked: a[k], onchange: (e) => (a[k] = e.target.checked) }), h('span', {}, label, hint ? h('div', { class: 'muted small' }, hint) : null))
+  $('autoapply').replaceChildren(
+    h('h2', {}, 'Auto-apply'),
+    h('p', { class: 'muted small' }, 'Lets the assistant fill and submit applications on Greenhouse, Lever and Ashby company pages for Strong/Good matches. Start with dry run on: it fills the form and stops before Submit so you can check what it would send. It never runs on LinkedIn, Indeed or Wellfound, never solves CAPTCHAs, and stops (without submitting) whenever an answer is not in your profile above.'),
+    check('enabled', 'Turn on auto-apply'),
+    check('dryRun', 'Dry run: fill the form but do NOT submit (recommended until you have checked a few)'),
+    h('div', { class: 'grid2' },
+      h('label', { class: 'field' }, 'Minimum match', h('select', { onchange: (e) => (a.minVerdict = e.target.value) }, [['good', 'Good or Strong'], ['strong', 'Strong only']].map(([v, l]) => h('option', { value: v, selected: a.minVerdict === v ? '' : null }, l)))),
+      h('label', { class: 'field' }, 'Applications per day (live)', h('input', { type: 'number', min: 1, max: 50, value: a.dailyCap, oninput: (e) => (a.dailyCap = Math.max(1, Math.min(50, Number(e.target.value) || 10))) })),
+      h('label', { class: 'field' }, 'Seconds between applications', h('input', { type: 'number', min: 10, max: 300, value: a.pauseSeconds, oninput: (e) => (a.pauseSeconds = Math.max(10, Math.min(300, Number(e.target.value) || 30))) })),
+    ),
+    check('acceptConsent', 'Tick privacy / data-processing / “my information is true” boxes for me', 'Legal agreements (arbitration, non-compete, NDA) are never accepted for you.'),
+    check('neverAppliedBefore', 'I have not applied to these companies before except through this assistant', 'Used to answer “Have you applied here before?” with No. Leave it off to be asked instead.'),
+    check('autoCoverLetter', 'Attach the template cover letter when a form has a cover-letter box', 'Built only from your verified profile and checked for unsupported claims.'),
+    check('allowAi', 'Allow checked AI drafts for written questions (needs your Anthropic key)', 'Off: only answers from your profile and answers you approved on the dashboard are used; other written questions stop the application.'),
+    h('div', { class: 'banner small' }, 'Assumes you were not referred. Turn auto-apply off, or apply yourself, for any job where someone referred you. Visa, relocation, notice period and salary answers come only from what you typed above.'),
+    h('div', {}, h('button', { class: 'btn primary', onclick: async () => { settings = { ...settings, autoApply: a }; await set('settings', settings); toast(a.enabled ? (a.dryRun ? 'Saved. Auto-apply is on in dry-run mode.' : 'Saved. Auto-apply is LIVE.') : 'Saved. Auto-apply is off.', 4000) } }, 'Save auto-apply settings')),
   )
 }
 
@@ -259,6 +284,7 @@ function renderData() {
 
 renderMissing()
 renderAnswers()
+renderAutoApply()
 renderMyWords()
 renderVerified()
 renderResumes()

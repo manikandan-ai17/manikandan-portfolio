@@ -213,9 +213,9 @@
 
   const inserted = new Map() // question → the answer you approved and put in the form
 
-  async function draftWritten(questions) {
+  async function draftWritten(questions, { preferAi = false } = {}) {
     const { pending } = await context()
-    const res = await chrome.runtime.sendMessage({ type: 'draftAnswers', jobKey: pending?.jobKey ?? null, page: pageJob(pending), approved: pending?.answers ?? [], questions: questions.map(({ id, text, maxLength }) => ({ id, text, maxLength })) })
+    const res = await chrome.runtime.sendMessage({ type: 'draftAnswers', jobKey: pending?.jobKey ?? null, page: pageJob(pending), approved: pending?.answers ?? [], preferAi, questions: questions.map(({ id, text, maxLength }) => ({ id, text, maxLength })) })
     if (!res?.ok) throw new Error(res?.error ?? 'The assistant did not answer.')
     return res.drafts
   }
@@ -470,5 +470,5 @@
   }, 500)
 
   // For tests: the pure parts.
-  globalThis.__jobAssist = { fields, fill, describe, captcha, setValue, writtenQuestions, pageJob, inserted, markApplied }
+  globalThis.__jobAssist = { fields, fill, describe, captcha, setValue, writtenQuestions, pageJob, inserted, markApplied, context, draftWritten, textOf, visible }
 })()

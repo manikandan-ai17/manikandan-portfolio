@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Job Application Assistant",
-  "version": "0.2.0",
-  "description": "Finds AI roles that match your verified profile, explains the fit, fills forms and drafts written answers for your review, and tracks what you applied to. Never submits for you.",
+  "version": "0.3.0",
+  "description": "Finds AI roles that match your verified profile, explains the fit, fills forms and drafts written answers for your review, and tracks what you applied to. Submits only when you turn on auto-apply (dry-run first); otherwise it only fills and drafts.",
   "icons": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
   "action": {
     "default_title": "Job Application Assistant",
@@ -35,7 +35,7 @@
         "https://apply.workable.com/*",
         "https://jobs.smartrecruiters.com/*"
       ],
-      "js": ["src/content/fieldmap.js", "src/content/autofill.js"],
+      "js": ["src/content/fieldmap.js", "src/content/autofill.js", "src/content/autoquestions.js", "src/content/autorun.js"],
       "all_frames": true,
       "run_at": "document_idle"
     }

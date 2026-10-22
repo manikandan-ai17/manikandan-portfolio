@@ -6,6 +6,7 @@ import { missingInfo, skillEvidence } from '../src/lib/profile.js'
 import { runSearch } from '../src/lib/pipeline.js'
 import { scoreJob, VERDICT_LABEL } from '../src/lib/match.js'
 import { templateCoverLetter, aiCoverLetter, checkLetter } from '../src/lib/coverLetter.js'
+import { renderAutoTab, onQueueChange } from './autoapply.js'
 
 const $ = (id) => document.getElementById(id)
 const state = {
@@ -399,18 +400,24 @@ function renderSources() {
 for (const t of document.querySelectorAll('.tab')) {
   t.onclick = () => {
     for (const x of document.querySelectorAll('.tab')) x.classList.toggle('active', x === t)
-    for (const id of ['matches', 'apps', 'sources']) $(id).hidden = id !== t.dataset.tab
+    for (const id of ['matches', 'auto', 'apps', 'sources']) $(id).hidden = id !== t.dataset.tab
+    if (t.dataset.tab === 'auto') renderAuto()
   }
 }
+
+const renderAuto = () => renderAutoTab($('auto'), state, allJobs)
+onQueueChange(renderAuto)
 
 function renderAll() {
   renderBanners()
   renderMatches()
   renderApps()
   renderSources()
+  renderAuto()
 }
 
 chrome.storage.onChanged.addListener((changes) => {
+  if (changes.autoApplyLog || changes.autoApplyRun || changes.settings) renderAuto()
   if (changes.tracker) {
     state.tracker = changes.tracker.newValue ?? {}
     renderApps()
