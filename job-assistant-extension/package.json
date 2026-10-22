@@ -1,0 +1,19 @@
+{
+  "name": "job-application-assistant",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Chrome extension: finds AI roles that match your verified profile and helps you apply. Never submits for you.",
+  "scripts": {
+    "sync-profile": "node scripts/sync-profile.mjs",
+    "vendor": "esbuild scripts/anthropic-entry.js --bundle --format=esm --platform=browser --target=chrome120 --minify --legal-comments=eof --outfile=extension/src/vendor/anthropic-sdk.js",
+    "icons": "python scripts/make-icons.py",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^1.1.0",
+    "esbuild": "^0.24.2",
+    "jsdom": "^25.0.1",
+    "vitest": "^2.1.9"
+  }
+}
