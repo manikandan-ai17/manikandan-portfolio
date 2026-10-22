@@ -72,6 +72,14 @@ Greenhouse application page (nothing submitted); Ashby's Yes/No button groups de
 confirmation page — nothing was submitted to any company while building this. Run **one** job live first and watch it.
 Lever pages use the same engine but were not opened live.
 
+### Playwright runner (companion, review-first)
+
+For the most automated *and* most careful flow, use the companion runner in [`runner/`](runner/README.md):
+`node runner/cli.mjs prepare --data export.json`. It analyses each posting against your real profile, picks the
+best resume, fills everything your profile can answer with real browser input, **asks you in the terminal about
+anything it cannot answer**, then leaves the page open so **you** review and press Submit. `survey` measures how
+well this works on each job portal without filling anything. See `runner/README.md` for results and limits.
+
 ### LinkedIn, Indeed, Wellfound
 
 Their terms forbid extensions that read their pages or apply automatically, and they can restrict accounts that

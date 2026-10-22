@@ -452,6 +452,7 @@
 
   // "Fill this page" from the popup shows the panel at once (top frame); otherwise it waits for a form.
   const show = () => {
+    if (window.__jobAssistNoPanel) return // the Playwright runner uses these helpers without the panel
     if (!document.getElementById('job-assist-panel')) panel()
   }
   window.__jobAssistShow = () => {

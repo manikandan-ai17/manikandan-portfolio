@@ -136,7 +136,7 @@
 
   /** The options of one dropdown. react-select numbers them `${inputId}-option-N`; other widgets use role=option. */
   function optionsOf(el) {
-    const own = el.id ? [...document.querySelectorAll(`[id^="${CSS.escape(el.id)}-option-"]`)] : []
+    const own = el.id ? [...document.querySelectorAll(`[id*="${CSS.escape(el.id)}-option-"]`)] : []
     return (own.length ? own : [...document.querySelectorAll('[role=option], [class*="select__option" i]')]).filter(isShown)
   }
 

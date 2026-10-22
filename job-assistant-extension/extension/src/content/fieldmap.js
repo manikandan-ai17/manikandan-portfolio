@@ -16,7 +16,7 @@
     { key: 'first_name', re: /^(legal )?first name|given name|forename/i },
     { key: 'last_name', re: /^(legal )?last name|surname|family name/i },
     { key: 'preferred_name', re: /preferred (first )?name|nickname/i, skip: 'Optional — fill it yourself if you use a different name' },
-    { key: 'full_name', re: /^(full |legal |your )?name$|^(full|legal) name/i },
+    { key: 'full_name', re: /^(full |legal |your )*name$|^(full )?legal name(?! in )|^full name(?! in )/i },
     { key: 'email', re: /e-?mail/i },
     { key: 'phone', re: /phone|mobile|telephone|\btel\b/i },
     { key: 'linkedin', re: /linked\s*in/i },
@@ -29,7 +29,7 @@
     { key: 'degree', re: /^degree|degree (type|level)|highest (level of )?education/i },
     { key: 'discipline', re: /discipline|major|field of study|area of study/i },
     { key: 'graduation_year', re: /graduation|grad(uation)? (year|date)|year of graduation|end (year|date)/i },
-    { key: 'location', re: /^location$|^city$|current(ly)? (location|city)|where (are you|do you) (currently )?(located|based|live)|city of residence|address from which/i },
+    { key: 'location', re: /^(your |current )?location$|^city$|current(ly)? (location|city)|where (are you|do you) (currently )?(located|based|live)|city of residence|address from which/i },
     { key: 'years_experience', re: /years of (professional |relevant |work )?experience/i },
   ]
 
