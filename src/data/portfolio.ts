@@ -126,7 +126,7 @@ export const portfolioData = {
       date: 'Jan 2026 – Jul 2026',
       desc: 'Assigned to CatalogWiz, a product-catalog enrichment and review platform. I completed roughly 60% of it before it was reassigned to another developer.',
       descBullets: [
-        'Worked across the React review interface, the Node/Express API and the Python workers that call Gemini',
+        'The version I worked on has a React review interface, a Node/Express API and Python workers that call Gemini',
         'Not a finished product by me: the project was reassigned at about 60%',
       ],
       color: '#37474F',
