@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+<defs>
+<linearGradient id="bg-a-approval-gate" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0A0A1F"/><stop offset="100%" stop-color="#05050F"/></linearGradient>
+<radialGradient id="gl-a-approval-gate" cx="50%" cy="30%" r="55%"><stop offset="0%" stop-color="#818cf8" stop-opacity="0.20"/><stop offset="100%" stop-color="#818cf8" stop-opacity="0"/></radialGradient>
+<pattern id="gr-a-approval-gate" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.4" stroke-opacity="0.035"/></pattern>
+</defs>
+<rect width="1200" height="675" fill="url(#bg-a-approval-gate)"/><rect width="1200" height="675" fill="url(#gl-a-approval-gate)"/><rect width="1200" height="675" fill="url(#gr-a-approval-gate)"/>
+<rect x="0" y="0" width="1200" height="44" fill="#0B1525" fill-opacity="0.95"/><rect x="0" y="44" width="1200" height="1" fill="#ffffff" fill-opacity="0.05"/>
+<circle cx="28" cy="22" r="5.5" fill="#EF4444" fill-opacity="0.85"/><circle cx="46" cy="22" r="5.5" fill="#F59E0B" fill-opacity="0.85"/><circle cx="64" cy="22" r="5.5" fill="#10B981" fill-opacity="0.85"/>
+<rect x="88" y="10" width="302" height="24" rx="4" fill="#0F1D35"/><text x="104" y="26" font-family="'SF Mono',ui-monospace,monospace" font-size="11" fill="#64748B">outreach-platform · safeguards</text>
+<rect x="1091" y="12" width="85" height="22" rx="11" fill="#a78bfa" fill-opacity="0.12" stroke="#a78bfa" stroke-width="0.8" stroke-opacity="0.4"/>
+<circle cx="1107" cy="23" r="3.5" fill="#a78bfa"/>
+<text x="1117" y="27.5" font-family="'SF Pro Display',system-ui,sans-serif" font-size="10.5" font-weight="700" fill="#a78bfa" letter-spacing="0.8">DESIGN</text>
+<text x="60" y="108" font-family="'SF Pro Display',system-ui,sans-serif" font-size="14" font-weight="700" fill="#818cf8" letter-spacing="3">TECHNICAL HIGHLIGHT</text>
+<text x="60" y="152" font-family="'SF Pro Display',system-ui,sans-serif" font-size="44" font-weight="800" fill="#F1F5F9">Approval-Gated Outreach</text>
+<text x="60" y="186" font-family="'SF Pro Display',system-ui,sans-serif" font-size="16" fill="#64748B">Gemini drafts; a person approves before anything is sent</text>
+<rect x="60.0" y="270" width="247.5" height="200" rx="12" fill="#0f1d35" fill-opacity="0.9" stroke="#818cf8" stroke-opacity="0.35" stroke-width="1"/>
+<circle cx="183.8" cy="310" r="16" fill="#818cf8" fill-opacity="0.16" stroke="#818cf8" stroke-opacity="0.6"/>
+<text x="183.8" y="315" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="14" font-weight="700" fill="#818cf8">1</text>
+<text x="183.8" y="364" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="20" font-weight="700" fill="#F1F5F9">Draft</text>
+<text x="183.8" y="394" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">Gemini writes</text>
+<text x="183.8" y="416" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">the outreach copy</text>
+<line x1="311.5" y1="370.0" x2="328.5" y2="370.0" stroke="#818cf8" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M326.5 365.0L333.5 370.0L326.5 375.0" stroke="#818cf8" stroke-opacity="0.7" stroke-width="1.6" fill="none"/>
+<rect x="337.5" y="270" width="247.5" height="200" rx="12" fill="#0f1d35" fill-opacity="0.9" stroke="#F59E0B" stroke-opacity="0.75" stroke-width="1.6"/>
+<circle cx="461.2" cy="310" r="16" fill="#F59E0B" fill-opacity="0.16" stroke="#F59E0B" stroke-opacity="0.6"/>
+<text x="461.2" y="315" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="14" font-weight="700" fill="#F59E0B">2</text>
+<text x="461.2" y="364" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="20" font-weight="700" fill="#F1F5F9">Approve</text>
+<text x="461.2" y="394" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">Operating is separate</text>
+<text x="461.2" y="416" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">from approving</text>
+<line x1="589.0" y1="370.0" x2="606.0" y2="370.0" stroke="#818cf8" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M604.0 365.0L611.0 370.0L604.0 375.0" stroke="#818cf8" stroke-opacity="0.7" stroke-width="1.6" fill="none"/>
+<rect x="615.0" y="270" width="247.5" height="200" rx="12" fill="#0f1d35" fill-opacity="0.9" stroke="#818cf8" stroke-opacity="0.35" stroke-width="1"/>
+<circle cx="738.8" cy="310" r="16" fill="#818cf8" fill-opacity="0.16" stroke="#818cf8" stroke-opacity="0.6"/>
+<text x="738.8" y="315" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="14" font-weight="700" fill="#818cf8">3</text>
+<text x="738.8" y="364" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="20" font-weight="700" fill="#F1F5F9">Test send</text>
+<text x="738.8" y="394" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">Safe mode before</text>
+<text x="738.8" y="416" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">real sends</text>
+<line x1="866.5" y1="370.0" x2="883.5" y2="370.0" stroke="#818cf8" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M881.5 365.0L888.5 370.0L881.5 375.0" stroke="#818cf8" stroke-opacity="0.7" stroke-width="1.6" fill="none"/>
+<rect x="892.5" y="270" width="247.5" height="200" rx="12" fill="#0f1d35" fill-opacity="0.9" stroke="#818cf8" stroke-opacity="0.35" stroke-width="1"/>
+<circle cx="1016.2" cy="310" r="16" fill="#818cf8" fill-opacity="0.16" stroke="#818cf8" stroke-opacity="0.6"/>
+<text x="1016.2" y="315" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="14" font-weight="700" fill="#818cf8">4</text>
+<text x="1016.2" y="364" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="20" font-weight="700" fill="#F1F5F9">Send</text>
+<text x="1016.2" y="394" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">Behind</text>
+<text x="1016.2" y="416" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">feature flags</text>
+</svg>

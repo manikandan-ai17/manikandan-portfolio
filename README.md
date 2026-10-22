@@ -3,11 +3,11 @@
 Personal portfolio of Manikandan Santhosh, a software engineer working with LLM-integrated applications.
 Live site: https://manikandan-portfolio-delta.vercel.app
 
-Every project on the site is labelled with what can actually be demonstrated (public source, local run, or private company code) and lists its evidence and known limitations. All content lives in [src/data/portfolio.ts](src/data/portfolio.ts).
+Every project on the site is labelled with its real status (public source, local run, or private company code) and its detail page lists evidence and limitations. All content lives in [src/data/portfolio.ts](src/data/portfolio.ts) and the project pages in [src/pages/ProjectDetail.tsx](src/pages/ProjectDetail.tsx).
 
 ## Stack
 
-React 19, TypeScript, Vite, React Router, plain CSS. No UI framework and no animation library.
+React 19, TypeScript, Vite, React Router, Tailwind CSS v4, Framer Motion.
 
 ## Develop
 
@@ -26,6 +26,8 @@ npm run lint     # oxlint
 msedge --headless=new --no-pdf-header-footer --print-to-pdf=public/Manikandan_Santhosh_Resume.pdf file:///<path>/public/resume.html
 ```
 
-## Deployment
+## Notes
 
-Pushing to `main` deploys to Vercel. `vercel.json` rewrites unknown paths to `index.html` so project pages such as `/project/cad-drawing-agent` work as direct links.
+- Card banners in `public/images` are generated illustrations of each project's verified flow.
+- `src/data/githubActivity.ts` is a dated snapshot of the public GitHub contribution calendar.
+- Pushing to `main` deploys to Vercel. `vercel.json` rewrites unknown paths to `index.html` so project pages work as direct links.

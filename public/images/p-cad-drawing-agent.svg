@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+<defs>
+<linearGradient id="bg-p-cad-drawing-agent" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#060B18"/><stop offset="100%" stop-color="#030608"/></linearGradient>
+<radialGradient id="gl-p-cad-drawing-agent" cx="50%" cy="30%" r="55%"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.20"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/></radialGradient>
+<pattern id="gr-p-cad-drawing-agent" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.4" stroke-opacity="0.035"/></pattern>
+</defs>
+<rect width="1200" height="675" fill="url(#bg-p-cad-drawing-agent)"/><rect width="1200" height="675" fill="url(#gl-p-cad-drawing-agent)"/><rect width="1200" height="675" fill="url(#gr-p-cad-drawing-agent)"/>
+<rect x="0" y="0" width="1200" height="44" fill="#0B1525" fill-opacity="0.95"/><rect x="0" y="44" width="1200" height="1" fill="#ffffff" fill-opacity="0.05"/>
+<circle cx="28" cy="22" r="5.5" fill="#EF4444" fill-opacity="0.85"/><circle cx="46" cy="22" r="5.5" fill="#F59E0B" fill-opacity="0.85"/><circle cx="64" cy="22" r="5.5" fill="#10B981" fill-opacity="0.85"/>
+<rect x="88" y="10" width="185" height="24" rx="4" fill="#0F1D35"/><text x="104" y="26" font-family="'SF Mono',ui-monospace,monospace" font-size="11" fill="#64748B">cad-drawing-agent</text>
+<rect x="924" y="12" width="252" height="22" rx="11" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-width="0.8" stroke-opacity="0.4"/>
+<circle cx="940" cy="23" r="3.5" fill="#38bdf8"/>
+<text x="950" y="27.5" font-family="'SF Pro Display',system-ui,sans-serif" font-size="10.5" font-weight="700" fill="#38bdf8" letter-spacing="0.8">RUNS LOCALLY · PUBLIC SOURCE</text>
+<text x="60" y="108" font-family="'SF Pro Display',system-ui,sans-serif" font-size="14" font-weight="700" fill="#3b82f6" letter-spacing="3">CAD DRAWING ANALYSIS AGENT</text>
+<text x="60" y="152" font-family="'SF Pro Display',system-ui,sans-serif" font-size="44" font-weight="800" fill="#F1F5F9">Cross-Validated Drawing Analysis</text>
+<text x="60" y="186" font-family="'SF Pro Display',system-ui,sans-serif" font-size="16" fill="#64748B">Python · FastAPI · PyMuPDF · Gemini API · NumPy · 329 automated tests</text>
+<rect x="60.0" y="270" width="155.0" height="200" rx="12" fill="#0f1d35" fill-opacity="0.9" stroke="#3b82f6" stroke-opacity="0.35" stroke-width="1"/>
+<circle cx="137.5" cy="310" r="16" fill="#3b82f6" fill-opacity="0.16" stroke="#3b82f6" stroke-opacity="0.6"/>
+<text x="137.5" y="315" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="14" font-weight="700" fill="#3b82f6">1</text>
+<text x="137.5" y="364" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="20" font-weight="700" fill="#F1F5F9">PDF in</text>
+<text x="137.5" y="394" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">Upload a drawing</text>
+<text x="137.5" y="416" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">(up to 60 MB)</text>
+<line x1="219.0" y1="370.0" x2="236.0" y2="370.0" stroke="#3b82f6" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M234.0 365.0L241.0 370.0L234.0 375.0" stroke="#3b82f6" stroke-opacity="0.7" stroke-width="1.6" fill="none"/>
+<rect x="245.0" y="270" width="155.0" height="200" rx="12" fill="#0f1d35" fill-opacity="0.9" stroke="#3b82f6" stroke-opacity="0.35" stroke-width="1"/>
+<circle cx="322.5" cy="310" r="16" fill="#3b82f6" fill-opacity="0.16" stroke="#3b82f6" stroke-opacity="0.6"/>
+<text x="322.5" y="315" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="14" font-weight="700" fill="#3b82f6">2</text>
+<text x="322.5" y="364" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="20" font-weight="700" fill="#F1F5F9">Classify</text>
+<text x="322.5" y="394" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">Vector, raster, hybrid</text>
+<text x="322.5" y="416" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">or non-drawing</text>
+<line x1="404.0" y1="370.0" x2="421.0" y2="370.0" stroke="#3b82f6" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M419.0 365.0L426.0 370.0L419.0 375.0" stroke="#3b82f6" stroke-opacity="0.7" stroke-width="1.6" fill="none"/>
+<rect x="430.0" y="270" width="155.0" height="200" rx="12" fill="#0f1d35" fill-opacity="0.9" stroke="#3b82f6" stroke-opacity="0.35" stroke-width="1"/>
+<circle cx="507.5" cy="310" r="16" fill="#3b82f6" fill-opacity="0.16" stroke="#3b82f6" stroke-opacity="0.6"/>
+<text x="507.5" y="315" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="14" font-weight="700" fill="#3b82f6">3</text>
+<text x="507.5" y="364" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="20" font-weight="700" fill="#F1F5F9">Extract</text>
+<text x="507.5" y="394" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">PyMuPDF: geometry</text>
+<text x="507.5" y="416" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">and text layer</text>
+<line x1="589.0" y1="370.0" x2="606.0" y2="370.0" stroke="#3b82f6" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M604.0 365.0L611.0 370.0L604.0 375.0" stroke="#3b82f6" stroke-opacity="0.7" stroke-width="1.6" fill="none"/>
+<rect x="615.0" y="270" width="155.0" height="200" rx="12" fill="#0f1d35" fill-opacity="0.9" stroke="#3b82f6" stroke-opacity="0.35" stroke-width="1"/>
+<circle cx="692.5" cy="310" r="16" fill="#3b82f6" fill-opacity="0.16" stroke="#3b82f6" stroke-opacity="0.6"/>
+<text x="692.5" y="315" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="14" font-weight="700" fill="#3b82f6">4</text>
+<text x="692.5" y="364" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="20" font-weight="700" fill="#F1F5F9">5 vision passes</text>
+<text x="692.5" y="394" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">Gemini, blind to</text>
+<text x="692.5" y="416" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">the text layer</text>
+<line x1="774.0" y1="370.0" x2="791.0" y2="370.0" stroke="#3b82f6" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M789.0 365.0L796.0 370.0L789.0 375.0" stroke="#3b82f6" stroke-opacity="0.7" stroke-width="1.6" fill="none"/>
+<rect x="800.0" y="270" width="155.0" height="200" rx="12" fill="#0f1d35" fill-opacity="0.9" stroke="#F59E0B" stroke-opacity="0.75" stroke-width="1.6"/>
+<circle cx="877.5" cy="310" r="16" fill="#F59E0B" fill-opacity="0.16" stroke="#F59E0B" stroke-opacity="0.6"/>
+<text x="877.5" y="315" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="14" font-weight="700" fill="#F59E0B">5</text>
+<text x="877.5" y="364" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="20" font-weight="700" fill="#F1F5F9">Cross-check</text>
+<text x="877.5" y="394" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">Confidence HIGH /</text>
+<text x="877.5" y="416" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">MEDIUM / LOW</text>
+<line x1="959.0" y1="370.0" x2="976.0" y2="370.0" stroke="#3b82f6" stroke-opacity="0.55" stroke-width="1.6"/>
+<path d="M974.0 365.0L981.0 370.0L974.0 375.0" stroke="#3b82f6" stroke-opacity="0.7" stroke-width="1.6" fill="none"/>
+<rect x="985.0" y="270" width="155.0" height="200" rx="12" fill="#0f1d35" fill-opacity="0.9" stroke="#3b82f6" stroke-opacity="0.35" stroke-width="1"/>
+<circle cx="1062.5" cy="310" r="16" fill="#3b82f6" fill-opacity="0.16" stroke="#3b82f6" stroke-opacity="0.6"/>
+<text x="1062.5" y="315" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="14" font-weight="700" fill="#3b82f6">6</text>
+<text x="1062.5" y="364" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="20" font-weight="700" fill="#F1F5F9">Workspace</text>
+<text x="1062.5" y="394" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">Overlays, Q&amp;A,</text>
+<text x="1062.5" y="416" text-anchor="middle" font-family="'SF Pro Display',system-ui,sans-serif" font-size="13.5" fill="#94A3B8">Excel / CSV export</text>
+<rect x="60" y="598" width="80" height="28" rx="14" fill="#3b82f6" fill-opacity="0.10" stroke="#3b82f6" stroke-opacity="0.3"/>
+<text x="100.0" y="616.5" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="13" fill="#3b82f6">Python</text>
+<rect x="150" y="598" width="88" height="28" rx="14" fill="#3b82f6" fill-opacity="0.10" stroke="#3b82f6" stroke-opacity="0.3"/>
+<text x="194.0" y="616.5" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="13" fill="#3b82f6">FastAPI</text>
+<rect x="248" y="598" width="88" height="28" rx="14" fill="#3b82f6" fill-opacity="0.10" stroke="#3b82f6" stroke-opacity="0.3"/>
+<text x="292.0" y="616.5" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="13" fill="#3b82f6">PyMuPDF</text>
+<rect x="346" y="598" width="112" height="28" rx="14" fill="#3b82f6" fill-opacity="0.10" stroke="#3b82f6" stroke-opacity="0.3"/>
+<text x="402.0" y="616.5" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="13" fill="#3b82f6">Gemini API</text>
+<rect x="468" y="598" width="72" height="28" rx="14" fill="#3b82f6" fill-opacity="0.10" stroke="#3b82f6" stroke-opacity="0.3"/>
+<text x="504.0" y="616.5" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="13" fill="#3b82f6">NumPy</text>
+</svg>
