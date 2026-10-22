@@ -55,11 +55,13 @@ export function checkLetter(letter, profile) {
     if (!ev) issues.push(`Mentions ${s.name}, which your profile does not show`)
     else if (ev.level === 'education' || ev.level === 'linkedin') issues.push(`Mentions ${s.name}; your profile shows it only from ${ev.level === 'education' ? 'coursework' : 'your LinkedIn skills list'} — do not present it as work experience`)
   }
-  const profileText = JSON.stringify(profile)
+  // Whole numbers only: "12" must appear as a number in the profile, not inside "2012" or "1255".
+  const bareOf = (n) => n.replace(/[+%]$/, '').replace(/[.,]+$/, '')
+  const known = new Set((JSON.stringify(profile).match(/\d[\d,.]*/g) ?? []).map(bareOf))
   for (const n of new Set(letter.match(/\b\d[\d,.]*\+?%?/g) ?? [])) {
-    const bare = n.replace(/[+%]$/, '').replace(/[.,]+$/, '')
-    if (!bare || profileText.includes(bare)) continue
-    issues.push(`Contains the number "${n}", which is not in your profile`)
+    const bare = bareOf(n)
+    if (!bare || known.has(bare)) continue
+    issues.push(`Contains the number "${bare}${/[+%]$/.test(n) ? n.slice(-1) : ''}", which is not in your profile`)
   }
   return issues
 }

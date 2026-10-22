@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Job Application Assistant",
-  "version": "0.1.0",
-  "description": "Finds AI roles that match your verified profile, explains the fit, fills application forms and tracks what you applied to. Never submits for you.",
+  "version": "0.2.0",
+  "description": "Finds AI roles that match your verified profile, explains the fit, fills forms and drafts written answers for your review, and tracks what you applied to. Never submits for you.",
   "icons": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
   "action": {
     "default_title": "Job Application Assistant",
@@ -10,11 +10,14 @@
     "default_icon": { "16": "icons/icon16.png", "48": "icons/icon48.png" }
   },
   "options_page": "pages/profile.html",
-  "permissions": ["storage", "unlimitedStorage"],
+  "background": { "service_worker": "src/background.js", "type": "module" },
+  "permissions": ["storage", "unlimitedStorage", "activeTab", "scripting"],
   "host_permissions": [
     "https://boards-api.greenhouse.io/*",
     "https://api.ashbyhq.com/*",
     "https://api.lever.co/*",
+    "https://apply.workable.com/*",
+    "https://api.smartrecruiters.com/*",
     "https://*.myworkdayjobs.com/*",
     "https://api.github.com/*",
     "https://manikandan-portfolio-delta.vercel.app/*",
@@ -28,7 +31,9 @@
         "https://boards.greenhouse.io/*",
         "https://jobs.lever.co/*",
         "https://jobs.eu.lever.co/*",
-        "https://jobs.ashbyhq.com/*"
+        "https://jobs.ashbyhq.com/*",
+        "https://apply.workable.com/*",
+        "https://jobs.smartrecruiters.com/*"
       ],
       "js": ["src/content/fieldmap.js", "src/content/autofill.js"],
       "all_frames": true,

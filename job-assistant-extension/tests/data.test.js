@@ -61,7 +61,7 @@ describe('tracker', () => {
   })
   it('exports CSV without letting a cell become an Excel formula', () => {
     const csv = trackerCsv({ a: { ...trackerRecord(j, null), notes: '=HYPERLINK("x")' } })
-    expect(csv.split('\r\n')[0]).toBe('company,title,status,appliedAt,resumeVersion,score,verdict,locations,employmentType,applyUrl,notes')
+    expect(csv.split('\r\n')[0]).toBe('company,title,portal,status,appliedAt,resumeVersion,score,verdict,locations,employmentType,applyUrl,answers,notes')
     expect(csv).toContain(`"'=HYPERLINK(""x"")"`)
   })
 })

@@ -10,6 +10,34 @@ document.getElementById('run').onclick = () => open('dashboard.html#run')
 document.getElementById('dash').onclick = () => open('dashboard.html')
 document.getElementById('profile').onclick = () => open('profile.html')
 
+// "Fill this page": the panel on the application form open in this tab, on any careers site. Runs only when you
+// click (activeTab), never in the background. LinkedIn, Indeed and Wellfound forbid automation in their terms.
+const BLOCKED = /(^|\.)(linkedin\.com|indeed\.[a-z.]+|wellfound\.com|angel\.co|glassdoor\.[a-z.]+)$/
+document.getElementById('here').onclick = async () => {
+  const msg = document.getElementById('hereMsg')
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
+  let host = ''
+  try {
+    host = new URL(tab?.url ?? '').hostname
+  } catch {
+    /* not a web page */
+  }
+  if (!/^https?:/.test(tab?.url ?? '')) return msg.replaceChildren(h('div', { class: 'banner small' }, 'Open the job’s application form in this tab first.'))
+  if (BLOCKED.test(host)) {
+    return msg.replaceChildren(
+      h('div', { class: 'banner small' }, h('b', {}, `${host.replace(/^www\./, '')} does not allow automation`), ' — its terms forbid extensions that read or fill its pages, and accounts can be restricted. Instead: ', h('a', { href: '#', onclick: (e) => (e.preventDefault(), open('dashboard.html#add')) }, 'add the job to your dashboard'), ' (paste its link and description) to score it, track it and draft answers you copy in yourself — or use “Apply on company site” if the posting has it; the assistant works there.'),
+    )
+  }
+  try {
+    await chrome.scripting.executeScript({ target: { tabId: tab.id, allFrames: true }, func: () => (window.__jobAssistForce = true) })
+    await chrome.scripting.executeScript({ target: { tabId: tab.id, allFrames: true }, files: ['src/content/fieldmap.js', 'src/content/autofill.js'] })
+    await chrome.scripting.executeScript({ target: { tabId: tab.id, allFrames: true }, func: () => window.__jobAssistShow?.() })
+    window.close()
+  } catch (err) {
+    msg.replaceChildren(h('div', { class: 'banner bad small' }, `Could not open the panel on this page: ${err.message}`))
+  }
+}
+
 const profile = await loadProfile()
 const meta = await get('runMeta')
 const tracker = await get('tracker', {})

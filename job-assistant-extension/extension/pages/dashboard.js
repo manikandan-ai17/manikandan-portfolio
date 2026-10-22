@@ -1,5 +1,7 @@
 import { h, toast, download, fmtDate, TYPE_LABEL, STATUS_LABEL } from './ui.js'
-import { get, set, loadProfile, saveProfile, loadSources, loadSettings, findDuplicate, trackerRecord, withStatus, updateTracker, trackerCsv, STATUSES } from '../src/lib/store.js'
+import { get, set, loadProfile, saveProfile, loadSources, loadSettings, findDuplicate, trackerRecord, withStatus, updateTracker, trackerCsv, manualJob, STATUSES } from '../src/lib/store.js'
+import { draftAnswer, checkAnswer, COMMON_QUESTIONS, KINDS, classifyQuestion } from '../src/lib/answers.js'
+import { portalOf } from '../src/lib/sources.js'
 import { missingInfo, skillEvidence } from '../src/lib/profile.js'
 import { runSearch } from '../src/lib/pipeline.js'
 import { scoreJob, VERDICT_LABEL } from '../src/lib/match.js'
@@ -9,6 +11,9 @@ const $ = (id) => document.getElementById(id)
 const state = {
   profile: await loadProfile(),
   jobs: await get('jobs', {}),
+  // Jobs you added by hand (found on LinkedIn, Indeed, Wellfound …): kept across runs.
+  manual: await get('manualJobs', {}),
+  adding: location.hash === '#add',
   meta: await get('runMeta'),
   tracker: await get('tracker', {}),
   resumes: await get('resumes', []),
@@ -65,10 +70,13 @@ async function run() {
   }
 }
 
+const allJobs = () => ({ ...state.jobs, ...state.manual })
+
 async function rescore() {
   const ev = skillEvidence(state.profile)
-  for (const j of Object.values(state.jobs)) j.match = scoreJob(j, state.profile, ev)
+  for (const j of Object.values(allJobs())) j.match = scoreJob(j, state.profile, ev)
   await set('jobs', state.jobs)
+  await set('manualJobs', state.manual)
   toast('Re-checked every saved job against your current profile.')
   renderAll()
 }
@@ -80,7 +88,7 @@ const ORDER = { strong: 0, good: 1, stretch: 2, low: 3, blocked: 4 }
 function filtered() {
   const f = state.filters
   const q = f.q.trim().toLowerCase()
-  return Object.values(state.jobs)
+  return Object.values(allJobs())
     .filter((j) => f.show.has(j.match.verdict))
     .filter((j) => f.type === 'all' || j.employmentType === f.type || (f.type === 'full_time' && j.employmentType === null))
     .filter((j) => f.company === 'all' || j.company === f.company)
@@ -91,8 +99,8 @@ function filtered() {
 function filterBar() {
   const f = state.filters
   const counts = {}
-  for (const j of Object.values(state.jobs)) counts[j.match.verdict] = (counts[j.match.verdict] ?? 0) + 1
-  const companies = [...new Set(Object.values(state.jobs).map((j) => j.company))].sort()
+  for (const j of Object.values(allJobs())) counts[j.match.verdict] = (counts[j.match.verdict] ?? 0) + 1
+  const companies = [...new Set(Object.values(allJobs()).map((j) => j.company))].sort()
   return h('div', { class: 'card row', style: 'margin-bottom:12px' },
     ...['strong', 'good', 'stretch', 'low', 'blocked'].map((v) => h('label', { class: 'check' }, h('input', { type: 'checkbox', checked: f.show.has(v), onchange: (e) => { if (e.target.checked) f.show.add(v); else f.show.delete(v); renderMatches() } }), h('span', { class: `chip ${v}` }, `${VERDICT_LABEL[v]} ${counts[v] ?? 0}`))),
     h('select', { style: 'width:auto', onchange: (e) => { f.type = e.target.value; renderMatches() } }, ...[['all', 'All types'], ['internship', 'Internships'], ['full_time', 'Full-time']].map(([v, l]) => h('option', { value: v, selected: f.type === v ? '' : null }, l))),
@@ -104,12 +112,46 @@ function filterBar() {
 function renderMatches() {
   const m = $('matches')
   m.replaceChildren()
-  if (!Object.keys(state.jobs).length) {
+  m.append(h('div', { class: 'row', style: 'margin-bottom:12px' }, h('button', { class: 'btn small', onclick: () => { state.adding = !state.adding; renderMatches() } }, state.adding ? 'Close' : '+ Add a job you found elsewhere (LinkedIn, Indeed, Wellfound …)')))
+  if (state.adding) m.append(addJobForm())
+  if (!Object.keys(allJobs()).length) {
     m.append(h('div', { class: 'card stack' }, h('h2', {}, 'No search yet'), h('p', { class: 'muted' }, 'Press “Run search”. It reads the official job boards of Anthropic, OpenAI, Mistral AI, ElevenLabs, NVIDIA and other AI companies, then scores every engineering role against your profile.')))
     return
   }
   m.append(filterBar(), h('div', { id: 'list', class: 'stack' }))
   renderList()
+}
+
+// Jobs from sites the assistant must not automate: you paste the posting, it scores, tracks and drafts answers.
+function addJobForm() {
+  const f = { portal: 'LinkedIn', company: '', title: '', url: '', location: '', employmentType: '', description: '' }
+  const inp = (k, ph) => h('input', { type: 'text', placeholder: ph, oninput: (e) => (f[k] = e.target.value) })
+  return h('div', { class: 'card stack', style: 'margin-bottom:12px' },
+    h('h2', {}, 'Add a job you found yourself'),
+    h('p', { class: 'muted small' }, 'LinkedIn, Indeed and Wellfound do not allow extensions to read or fill their pages, so copy the posting in here. It is scored against your profile, tracked (no duplicates) and gets drafted answers that you paste into their form yourself.'),
+    h('div', { class: 'grid2' },
+      h('label', { class: 'field' }, 'Where you found it', h('select', { onchange: (e) => (f.portal = e.target.value) }, ['LinkedIn', 'Indeed', 'Wellfound', 'Naukri', 'Referral', 'Company site', 'Other'].map((p) => h('option', { value: p }, p)))),
+      h('label', { class: 'field' }, 'Type', h('select', { onchange: (e) => (f.employmentType = e.target.value) }, [['', 'Not stated'], ['full_time', 'Full-time'], ['internship', 'Internship'], ['contract', 'Contract']].map(([v, l]) => h('option', { value: v }, l)))),
+      h('label', { class: 'field' }, 'Company', inp('company', 'e.g. Sarvam AI')),
+      h('label', { class: 'field' }, 'Job title', inp('title', 'e.g. AI Engineer')),
+      h('label', { class: 'field' }, 'Link to the posting', inp('url', 'https://…')),
+      h('label', { class: 'field' }, 'Location', inp('location', 'e.g. Bengaluru, India; Remote')),
+    ),
+    h('label', { class: 'field' }, 'The job description (copy it from the posting)', h('textarea', { style: 'min-height:140px', oninput: (e) => (f.description = e.target.value) })),
+    h('div', {}, h('button', { class: 'btn primary', onclick: async () => {
+      if (!f.company.trim() || !f.title.trim()) return toast('Add at least the company and the job title.')
+      if (f.description.trim().length < 80) return toast('Paste the job description too — the match and the answers are based on it.')
+      const job = manualJob(f)
+      job.match = scoreJob(job, state.profile)
+      state.manual = { ...state.manual, [job.key]: job }
+      await set('manualJobs', state.manual)
+      state.adding = false
+      state.filters.show.add(job.match.verdict)
+      state.filters.q = job.title
+      toast(`Added: ${job.title} at ${job.company} — ${VERDICT_LABEL[job.match.verdict]} (${job.match.score}/100).`, 4000)
+      renderAll()
+    } }, 'Score and add')),
+  )
 }
 
 function renderList() {
@@ -182,7 +224,9 @@ function prepare(j) {
   const dup = findDuplicate(state.tracker, j)
   const draft = (state.drafts[j.key] ??= { mode: rec?.coverLetter ? 'letter' : 'none', text: rec?.coverLetter ?? '', reviewed: Boolean(rec?.coverLetter), issues: [], resumeId: state.resumes.find((r) => r.label === rec?.resumeVersion)?.id ?? state.resumes.find((r) => r.isDefault)?.id ?? state.resumes[0]?.id ?? null, acceptBlocked: false, busy: false, error: null })
   const box = h('div', { class: 'details stack' })
-  const redraw = () => box.replaceWith(prepare(j))
+  // Re-render the list (the draft lives in state.drafts). Replacing `box` only worked once: after that it is
+  // no longer on the page, so later updates (e.g. "Drafting…" → the draft) never showed.
+  const redraw = () => renderList()
 
   if (dup) box.append(h('div', { class: 'banner bad' }, `You already applied (${dup.kind}): ${dup.record.title} at ${dup.record.company}, ${fmtDate(dup.record.appliedAt)}. Applying twice usually hurts — check before going on.`))
   if (m.verdict === 'blocked') {
@@ -223,23 +267,79 @@ function prepare(j) {
     box.append(ta, issues, h('label', { class: 'check' }, rv, 'I read this letter; everything in it is true'))
   }
 
+  // Written answers
+  box.append(h('h3', {}, '3. Written answers (optional)'), answersStep(j, m, draft, rec, redraw))
+
   // Go
   const ready = (m.verdict !== 'blocked' || draft.acceptBlocked) && (draft.mode === 'none' || draft.reviewed)
   const resume = state.resumes.find((r) => r.id === draft.resumeId)
-  box.append(h('h3', {}, '3. Apply on the official page'))
-  box.append(h('p', { class: 'muted small' }, j.ats === 'workday' ? 'Opens the Workday posting.' : 'Opens the official application page. Click “Fill from my profile” in the panel there, answer the highlighted questions yourself, review, and press the site’s Submit button. Then click “I submitted it”.'))
+  const approved = (draft.answers ?? []).filter((a) => a.approved && a.text.trim()).map((a) => ({ question: a.question, kind: a.kind, text: a.text }))
+  const fields = () => ({ resumeVersion: resume?.label ?? null, coverLetter: draft.mode === 'letter' ? draft.text : null, prepared: approved })
+  const manual = j.ats === 'manual'
+  box.append(h('h3', {}, '4. Apply'))
+  box.append(h('p', { class: 'muted small' }, manual ? `Opens the posting on ${j.portal}. The assistant does not fill forms there — copy your approved answers in yourself, submit, then press “I submitted it” here.` : j.ats === 'workday' ? 'Opens the Workday posting (needs your Workday account; fill it yourself, then mark it applied under Applications).' : 'Opens the official application page. Click “Fill from my profile” in the panel there, then “Draft written answers” — your approved answers are offered first. Review everything, press the site’s Submit button, then click “I submitted it”.'))
   box.append(h('div', { class: 'row' },
-    h('button', { class: 'btn primary', disabled: ready ? null : '', onclick: async () => {
-      const fields = { resumeVersion: resume?.label ?? null, coverLetter: draft.mode === 'letter' ? draft.text : null }
-      await track(j, rec && ['applied', 'interviewing', 'offer'].includes(rec.status) ? rec.status : 'preparing', { fields })
+    h('button', { class: 'btn primary', disabled: ready && j.applyUrl ? null : '', onclick: async () => {
+      await track(j, rec && ['applied', 'interviewing', 'offer'].includes(rec.status) ? rec.status : 'preparing', { fields: fields() })
       const pendingApply = await get('pendingApply', {})
-      pendingApply[j.key] = { jobKey: j.key, jobId: j.id, company: j.company, title: j.title, score: j.match.score, resumeId: resume?.id ?? null, resumeLabel: resume?.label ?? null, coverLetter: fields.coverLetter, createdAt: new Date().toISOString() }
+      pendingApply[j.key] = { jobKey: j.key, jobId: j.id, company: j.company, title: j.title, score: j.match.score, resumeId: resume?.id ?? null, resumeLabel: resume?.label ?? null, coverLetter: fields().coverLetter, answers: approved, createdAt: new Date().toISOString() }
       await set('pendingApply', pendingApply)
       chrome.tabs.create({ url: j.applyUrl })
-    } }, 'Open application page ↗'),
+    } }, manual ? `Open on ${j.portal} ↗` : 'Open application page ↗'),
+    manual || j.ats === 'workday' ? h('button', { class: 'btn', disabled: ready ? null : '', onclick: async () => {
+      if (!confirm('Record this application as submitted? Only after you submitted it on the site.')) return
+      await track(j, 'applied', { resumeVersion: resume?.label, fields: { ...fields(), answers: approved.map((a) => ({ question: a.question, answer: a.text })) } })
+      toast('Recorded as applied.')
+    } }, 'I submitted it') : null,
     !ready ? h('span', { class: 'muted small' }, m.verdict === 'blocked' && !draft.acceptBlocked ? 'Confirm the blockers first.' : 'Tick that you reviewed the letter, or choose “No cover letter”.') : null,
   ))
   return box
+}
+
+/** Drafts for the common questions (and any you add), each edited and approved by you before it is used. */
+function answersStep(j, m, draft, rec, redraw) {
+  draft.answers ??= (rec?.prepared?.length ? rec.prepared.map((a) => ({ ...a, approved: true, source: 'saved', issues: [] })) : COMMON_QUESTIONS.map((q) => ({ question: q.replace('{company}', j.company), kind: classifyQuestion(q), text: '', approved: false, issues: [] })))
+  const wrap = h('div', { class: 'stack' })
+  const ctx = { profile: state.profile, job: j, match: m, settings: state.settings }
+  const draftOne = async (a) => {
+    a.busy = true
+    a.error = null
+    redraw()
+    try {
+      const d = await draftAnswer(a.question, { ...ctx, preferAi: a.preferAi })
+      Object.assign(a, { text: d.text, kind: d.kind, source: d.source, note: d.note, issues: d.issues ?? [], approved: false })
+    } catch (err) {
+      a.error = err.message
+    }
+    a.busy = false
+    redraw()
+  }
+  wrap.append(h('p', { class: 'muted small' }, 'Drafted from your verified profile and this posting. Bracketed parts are things only you can say — the answer cannot be approved until you replace them. With an Anthropic key, other questions get AI drafts too (checked the same way).'))
+  wrap.append(h('div', { class: 'row' }, h('button', { class: 'btn small', onclick: async () => { for (const a of draft.answers) if (!a.text && !a.approved) await draftOne(a) } }, 'Draft all')))
+  for (const a of draft.answers) {
+    const blocking = (a.issues ?? []).some((i) => i.blocking)
+    const ta = h('textarea', { style: 'min-height:120px', value: a.text, placeholder: a.note ?? 'Press Draft, or write your answer here.', oninput: (e) => { a.text = e.target.value; a.approved = false; a.issues = checkAnswer(a.text, state.profile); issueBox.replaceChildren(...issueNodes()); ok.checked = false } })
+    const issueNodes = () => (a.issues ?? []).map((i) => h('div', { class: `small ${i.blocking ? '' : 'muted'}`, style: i.blocking ? 'color:var(--warn)' : '' }, `• ${i.text}`))
+    const issueBox = h('div', {}, ...issueNodes())
+    const ok = h('input', { type: 'checkbox', checked: a.approved, disabled: blocking || !a.text.trim() ? '' : null, onchange: (e) => { a.approved = e.target.checked; redraw() } })
+    wrap.append(h('div', { class: 'card stack', style: 'box-shadow:none;padding:12px' },
+      h('div', { class: 'spread' }, h('b', {}, a.question), h('span', { class: 'chip' }, KINDS[a.kind] ?? 'Question')),
+      a.source ? h('div', { class: 'muted small' }, { template: 'Draft from your profile', ai: 'AI draft — check every claim', saved: 'Saved answer', none: 'Needs your answer', profile: 'From your profile' }[a.source] ?? a.source) : null,
+      ta,
+      issueBox,
+      a.error ? h('div', { class: 'banner bad small' }, a.error) : null,
+      h('div', { class: 'row' },
+        h('button', { class: 'btn small', disabled: a.busy ? '' : null, onclick: () => draftOne(a) }, a.busy ? 'Drafting…' : a.text ? 'Redraft' : 'Draft'),
+        state.settings.anthropicKey ? h('button', { class: 'btn small', disabled: a.busy ? '' : null, onclick: () => { a.preferAi = true; draftOne(a) } }, 'AI draft') : null,
+        h('button', { class: 'btn small', disabled: a.text ? null : '', onclick: async () => { await navigator.clipboard.writeText(a.text); toast('Copied.') } }, 'Copy'),
+        h('label', { class: 'check' }, ok, blocking ? 'Replace the bracketed parts first' : 'Approved — true and in my words'),
+        h('button', { class: 'btn small danger', onclick: () => { draft.answers = draft.answers.filter((x) => x !== a); redraw() } }, 'Remove'),
+      ),
+    ))
+  }
+  const q = h('input', { type: 'text', placeholder: 'Add a question from the application form, e.g. “What are your favourite AI tools?”' })
+  wrap.append(h('div', { class: 'row' }, h('div', { style: 'flex:1' }, q), h('button', { class: 'btn small', onclick: () => { if (!q.value.trim()) return; draft.answers.push({ question: q.value.trim(), kind: classifyQuestion(q.value), text: '', approved: false, issues: [] }); redraw() } }, 'Add question')))
+  return wrap
 }
 
 // ── Applications ─────────────────────────────────────────────────────────────
@@ -257,9 +357,10 @@ function renderApps() {
     state.tracker = await updateTracker((t) => ({ ...t, [key]: { ...t[key], ...patch } }))
   }
   s.append(h('div', { class: 'card', style: 'overflow:auto' }, h('table', { class: 't' },
-    h('thead', {}, h('tr', {}, ['Role', 'Status', 'Applied', 'Resume version', 'Notes', ''].map((c) => h('th', {}, c)))),
+    h('thead', {}, h('tr', {}, ['Role', 'Job site', 'Status', 'Applied', 'Resume version', 'Answers', 'Notes', ''].map((c) => h('th', {}, c)))),
     h('tbody', {}, recs.map((r) => h('tr', {},
       h('td', {}, h('b', {}, r.title), h('div', { class: 'muted small' }, `${r.company}${r.score != null ? ` · ${r.score}/100` : ''}`)),
+      h('td', { class: 'small' }, r.portal ?? portalOf(r.applyUrl ?? r.url ?? '')),
       h('td', {}, h('select', { onchange: async (e) => {
         const status = e.target.value
         if (status === 'applied' && !confirm('Mark as applied? Do this only after you submitted the application on the official page.')) return renderApps()
@@ -268,6 +369,12 @@ function renderApps() {
       } }, STATUSES.map((st) => h('option', { value: st, selected: st === r.status ? '' : null }, STATUS_LABEL[st])))),
       h('td', { class: 'small' }, fmtDate(r.appliedAt)),
       h('td', {}, h('input', { type: 'text', value: r.resumeVersion ?? '', style: 'min-width:140px', onchange: (e) => save(r.key, { resumeVersion: e.target.value || null }) })),
+      h('td', { class: 'small' }, (() => {
+        // What the company received (put in the form), else what you prepared.
+        const list = r.answers?.length ? r.answers.map((a) => ({ q: a.question, a: a.answer })) : (r.prepared ?? []).map((a) => ({ q: a.question, a: a.text }))
+        if (!list.length) return '—'
+        return h('details', {}, h('summary', {}, `${list.length} ${r.answers?.length ? 'submitted' : 'prepared'}`), ...list.map((x) => h('div', { style: 'margin:6px 0;max-width:420px' }, h('b', {}, x.q), h('div', { style: 'white-space:pre-wrap' }, x.a))))
+      })()),
       h('td', {}, h('input', { type: 'text', value: r.notes ?? '', style: 'min-width:160px', onchange: (e) => save(r.key, { notes: e.target.value }) })),
       h('td', {}, h('a', { href: r.applyUrl ?? r.url, target: '_blank', rel: 'noopener noreferrer' }, 'Open ↗')),
     ))),
@@ -314,6 +421,7 @@ chrome.storage.onChanged.addListener((changes) => {
 $('run').onclick = run
 $('rescore').onclick = rescore
 renderAll()
+if (location.hash === '#add') history.replaceState(null, '', location.pathname)
 if (location.hash === '#run') {
   history.replaceState(null, '', location.pathname)
   run()

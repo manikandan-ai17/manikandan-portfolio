@@ -1,7 +1,7 @@
 // Everything is kept in chrome.storage.local, on this computer only (never synced, never sent anywhere).
 // The storage area can be swapped for tests.
 
-import { DEFAULT_SOURCES } from './sources.js'
+import { DEFAULT_SOURCES, portalOf, sourceId } from './sources.js'
 import { userPart, withDefaults } from './profile.js'
 import { norm } from './text.js'
 
@@ -25,7 +25,13 @@ export async function saveProfile(p) {
   await set('profile', withDefaults(userPart(p)))
 }
 export const loadProfile = async () => withDefaults(await get('profileUser'))
-export const loadSources = async () => get('sources', DEFAULT_SOURCES)
+/** Your board list, with any newer default boards added (your on/off choices are kept). */
+export async function loadSources() {
+  const saved = await get('sources', null)
+  if (!saved) return DEFAULT_SOURCES
+  const have = new Set(saved.map(sourceId))
+  return [...saved, ...DEFAULT_SOURCES.filter((s) => !have.has(sourceId(s)))]
+}
 export const loadSettings = async () => ({ anthropicKey: '', model: 'claude-opus-5-5', ...(await get('settings', {})) })
 
 // ── Tracker ──────────────────────────────────────────────────────────────────
@@ -56,6 +62,8 @@ export function trackerRecord(job, match, now = new Date()) {
     title: job.title,
     url: job.url,
     applyUrl: job.applyUrl,
+    // Where you apply (Greenhouse, Ashby, LinkedIn …), from the job's apply link or what you entered.
+    portal: job.portal ?? portalOf(job.applyUrl ?? job.url ?? ''),
     locations: job.locations,
     employmentType: job.employmentType,
     score: match?.score ?? null,
@@ -65,6 +73,9 @@ export function trackerRecord(job, match, now = new Date()) {
     appliedAt: null,
     resumeVersion: null,
     coverLetter: null,
+    // Written answers: approved on the dashboard (prepared), and the ones put in the form (answers).
+    prepared: [],
+    answers: [],
     notes: '',
   }
 }
@@ -78,6 +89,33 @@ export function withStatus(rec, status, { resumeVersion, now = new Date() } = {}
     if (resumeVersion) next.resumeVersion = resumeVersion
   }
   return next
+}
+
+/**
+ * A job you found yourself (LinkedIn, Indeed, Wellfound, a referral …), entered by hand with the posting text
+ * you copied. It is scored and tracked like the rest; the assistant never reads those sites itself.
+ */
+export function manualJob({ portal, company, title, url, location, employmentType, description }, now = new Date()) {
+  const base = `${norm(company)}|${norm(title)}|${url ?? ''}`
+  let h = 0
+  for (const ch of base) h = (h * 31 + ch.charCodeAt(0)) | 0
+  return {
+    key: `manual:${(h >>> 0).toString(36)}`,
+    ats: 'manual',
+    portal: portal || portalOf(url ?? ''),
+    company: String(company).trim(),
+    id: (h >>> 0).toString(36),
+    title: String(title).trim(),
+    locations: String(location ?? '').split(/[;|]/).map((s) => s.trim()).filter(Boolean),
+    remote: /remote/i.test(location ?? '') || null,
+    employmentType: employmentType || null,
+    url: url || null,
+    applyUrl: url || null,
+    description: String(description ?? '').trim(),
+    postedAt: null,
+    compensation: null,
+    addedAt: now.toISOString(),
+  }
 }
 
 export async function updateTracker(fn) {
@@ -95,7 +133,8 @@ const csvCell = (v) => {
 }
 
 export function trackerCsv(tracker) {
-  const cols = ['company', 'title', 'status', 'appliedAt', 'resumeVersion', 'score', 'verdict', 'locations', 'employmentType', 'applyUrl', 'notes']
+  const cols = ['company', 'title', 'portal', 'status', 'appliedAt', 'resumeVersion', 'score', 'verdict', 'locations', 'employmentType', 'applyUrl', 'answers', 'notes']
   const rows = Object.values(tracker ?? {}).sort((a, b) => String(b.appliedAt ?? b.history?.[0]?.at).localeCompare(String(a.appliedAt ?? a.history?.[0]?.at)))
-  return [cols.join(','), ...rows.map((r) => cols.map((c) => csvCell(r[c])).join(','))].join('\r\n')
+  const cell = (r, c) => (c === 'answers' ? (r.answers?.length ? r.answers : r.prepared ?? []).map((a) => `Q: ${a.question}\nA: ${a.answer ?? a.text}`).join('\n\n') : c === 'portal' ? r.portal ?? portalOf(r.applyUrl ?? r.url ?? '') : r[c])
+  return [cols.join(','), ...rows.map((r) => cols.map((c) => csvCell(cell(r, c))).join(','))].join('\r\n')
 }

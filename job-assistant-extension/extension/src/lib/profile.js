@@ -24,13 +24,15 @@ export function defaultProfile() {
       currentlyEnrolled: false,
     },
     preferences: { fullTime: true, internships: true, contract: false, minScore: 40 },
+    // Your own words, used as written in answers (never rewritten into claims). All optional.
+    myWords: { aboutMe: '', lookingFor: '', proudestWhy: '', salaryExpectation: '' },
     linkedin: null,
     github: null,
   }
 }
 
 /** The fields you enter yourself; everything else always comes from the portfolio seed (so a re-sync wins). */
-export const USER_FIELDS = ['phone', 'city', 'eligibility', 'preferences', 'linkedin', 'github']
+export const USER_FIELDS = ['phone', 'city', 'eligibility', 'preferences', 'myWords', 'linkedin', 'github']
 
 /** Your saved answers on top of the current verified profile. */
 export function withDefaults(stored) {
@@ -42,6 +44,7 @@ export function withDefaults(stored) {
     city: stored.city ?? d.city,
     eligibility: { ...d.eligibility, ...(stored.eligibility ?? {}) },
     preferences: { ...d.preferences, ...(stored.preferences ?? {}) },
+    myWords: { ...d.myWords, ...(stored.myWords ?? {}) },
     linkedin: stored.linkedin ?? null,
     github: stored.github ?? null,
   }

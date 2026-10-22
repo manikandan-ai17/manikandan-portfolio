@@ -6,7 +6,15 @@
 ;(function () {
   if (window.__jobAssistLoaded) return
   window.__jobAssistLoaded = true
+  // LinkedIn, Indeed and Wellfound forbid automation in their terms (and can restrict accounts): never run there.
+  if (/(^|\.)(linkedin\.com|indeed\.[a-z.]+|wellfound\.com|angel\.co|glassdoor\.[a-z.]+)$/.test(location.hostname)) return
   const FM = globalThis.JobAssistFieldMap
+
+  const portalOf = (url) => {
+    const host = new URL(url).hostname
+    const known = [[/greenhouse\.io$/, 'Greenhouse'], [/lever\.co$/, 'Lever'], [/ashbyhq\.com$/, 'Ashby'], [/myworkdayjobs\.com$/, 'Workday'], [/workable\.com$/, 'Workable'], [/smartrecruiters\.com$/, 'SmartRecruiters']]
+    return known.find(([re]) => re.test(host))?.[1] ?? `Company site (${host.replace(/^www\./, '')})`
+  }
   const COLORS = { filled: '#10b981', sensitive: '#f59e0b', todo: '#3b82f6' }
 
   // ── Reading the form ───────────────────────────────────────────────────────
@@ -182,6 +190,36 @@
     return { filled: uniq(report.filled), left: uniq(report.left), sensitive: uniq(report.sensitive), missing: uniq(report.missing), resume, needsManualResume: Boolean(report.needsManualResume) }
   }
 
+  // ── Written questions ("Why us?", "Tell us about yourself" …) ──────────────
+
+  /** Long-answer questions on this page that the assistant can draft for you to review. */
+  function writtenQuestions() {
+    return fields()
+      .filter((f) => f.el.tagName === 'TEXTAREA' || (f.el.type === 'text' && f.desc.length > 35 && /\?$/.test(f.desc)))
+      .filter((f) => f.verdict.action !== 'sensitive' && f.verdict.key !== 'cover_letter' && f.verdict.action !== 'fill')
+      .map((f, i) => {
+        f.el.dataset.jobAssistQ = String(i)
+        return { id: String(i), el: f.el, text: f.desc, maxLength: f.el.maxLength > 0 ? f.el.maxLength : null }
+      })
+  }
+
+  /** What the page says about the job, for answers when it was not opened from the dashboard. */
+  function pageJob(pending) {
+    const title = pending?.title ?? document.title.replace(/^Job Application for /, '').split(/ at | @ | - | \| /)[0].trim()
+    const company = pending?.company ?? document.title.split(/ at | @ /).slice(1).join(' ').split(/ - | \| /)[0].trim()
+    const main = document.querySelector('main, [role=main], #content, .content') ?? document.body
+    return { title, company, description: textOf(main).slice(0, 15000) }
+  }
+
+  const inserted = new Map() // question → the answer you approved and put in the form
+
+  async function draftWritten(questions) {
+    const { pending } = await context()
+    const res = await chrome.runtime.sendMessage({ type: 'draftAnswers', jobKey: pending?.jobKey ?? null, page: pageJob(pending), approved: pending?.answers ?? [], questions: questions.map(({ id, text, maxLength }) => ({ id, text, maxLength })) })
+    if (!res?.ok) throw new Error(res?.error ?? 'The assistant did not answer.')
+    return res.drafts
+  }
+
   async function markApplied() {
     const { pending, tracker, resume } = await context()
     const now = new Date().toISOString()
@@ -196,12 +234,17 @@
       history: [],
       notes: '',
     }
+    const answers = [...inserted].map(([question, answer]) => ({ question, answer }))
     tracker[key] = {
       ...rec,
       status: 'applied',
       appliedAt: rec.appliedAt ?? now,
+      portal: rec.portal ?? portalOf(location.href),
+      applyUrl: rec.applyUrl ?? location.href,
       resumeVersion: pending?.resumeLabel ?? resume?.label ?? rec.resumeVersion ?? null,
       coverLetterUsed: Boolean(pending?.coverLetter),
+      // The answers you approved and put in this form (what the company received, unless you edited them after).
+      answers: answers.length ? answers : rec.answers ?? [],
       history: [...(rec.history ?? []), { status: 'applied', at: now, via: 'application page' }],
     }
     const { pendingApply = {} } = await chrome.storage.local.get('pendingApply')
@@ -221,7 +264,15 @@
     sh.innerHTML = `
       <style>
         :host{all:initial}
-        .box{font:13px/1.45 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#f1f5f9;background:#0f172a;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.45);width:320px;max-height:70vh;overflow:auto}
+        .box{font:13px/1.45 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#f1f5f9;background:#0f172a;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.45);width:360px;max-height:80vh;overflow:auto}
+        .card{border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px;display:grid;gap:6px;background:#111c33}
+        .q{font-weight:700}
+        .src{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}
+        textarea,input[type=text]{font:inherit;color:#f1f5f9;background:#0f172a;border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:6px;width:100%;box-sizing:border-box}
+        textarea{min-height:110px;resize:vertical}
+        label{display:flex;gap:6px;align-items:flex-start;font-size:12px}
+        button:disabled{opacity:.45;cursor:not-allowed}
+        .ok{color:#34d399;font-size:12px}
         header{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08);font-weight:700}
         header small{color:#94a3b8;font-weight:600;letter-spacing:1px;text-transform:uppercase;font-size:10px}
         .body{padding:10px 12px;display:grid;gap:8px}
@@ -241,6 +292,7 @@
           <div class="note" id="ctx"></div>
           <button class="primary" id="fill">Fill from my profile</button>
           <div id="out"></div>
+          <div id="written"></div>
           <button class="ghost" id="applied">I submitted it — record as applied</button>
           <div class="note">Review every field, answer the highlighted questions yourself, then press the site’s own Submit button.</div>
         </div>
@@ -306,6 +358,88 @@
         b.onclick = () => saveResume(r.resume)
         out.append(b)
       }
+      showWrittenButton()
+    }
+
+    // Written answers: drafted from your verified profile, shown here, put in the form only after you approve.
+    const el = (tag, cls, text) => {
+      const n = document.createElement(tag)
+      if (cls) n.className = cls
+      if (text !== undefined) n.textContent = text
+      return n
+    }
+    const SOURCE = { template: 'Draft from your profile', ai: 'AI draft — check every claim', dashboard: 'Approved on your dashboard', profile: 'From your profile', none: 'Needs your answer' }
+    function showWrittenButton() {
+      const box = $('#written')
+      box.replaceChildren()
+      const qs = writtenQuestions()
+      if (!qs.length) return
+      const b = el('button', 'ghost', `Draft written answers (${qs.length})`)
+      b.onclick = async () => {
+        b.disabled = true
+        b.textContent = 'Drafting…'
+        try {
+          const drafts = await draftWritten(qs)
+          box.replaceChildren(el('div', 'note', 'Edit each answer until it sounds like you. Nothing goes into the form until you tick it and press “Put in the form”.'))
+          for (const d of drafts) box.append(answerCard(qs.find((q) => q.id === d.id), d))
+        } catch (err) {
+          box.replaceChildren(el('div', 'warn', `Could not draft answers: ${err.message}`))
+        }
+      }
+      box.append(b)
+    }
+
+    function answerCard(q, d) {
+      const card = el('div', 'card')
+      card.append(el('div', 'q', q.text), el('div', 'src', SOURCE[d.source] ?? d.source))
+      if (d.note) card.append(el('div', d.source === 'none' ? 'warn' : 'note', d.note))
+      if (d.kind === 'sensitive') return card
+      const ta = el('textarea')
+      ta.value = d.text ?? ''
+      if (q.maxLength) ta.maxLength = q.maxLength
+      const issues = el('div')
+      const tick = el('input')
+      tick.type = 'checkbox'
+      const save = el('input')
+      save.type = 'checkbox'
+      const go = el('button', 'primary', 'Put in the form')
+      let blocking = false
+      const showIssues = (list) => {
+        blocking = list.some((i) => i.blocking)
+        issues.replaceChildren(...list.map((i) => el('div', i.blocking ? 'warn' : 'note', `• ${i.text}`)))
+        go.disabled = !tick.checked || blocking || !ta.value.trim()
+      }
+      showIssues(d.issues ?? [])
+      let t
+      ta.oninput = () => {
+        tick.checked = false
+        go.disabled = true
+        clearTimeout(t)
+        t = setTimeout(async () => {
+          const r = await chrome.runtime.sendMessage({ type: 'checkAnswer', text: ta.value, maxLength: q.maxLength })
+          showIssues(r?.issues ?? [])
+        }, 400)
+      }
+      tick.onchange = () => (go.disabled = !tick.checked || blocking || !ta.value.trim())
+      const l1 = el('label')
+      l1.append(tick, el('span', '', 'I read this; it is true and in my own words'))
+      card.append(ta, issues, l1)
+      const factField = d.kind === 'fact' ? (/notice/i.test(q.text) ? 'noticePeriod' : /start/i.test(q.text) ? 'earliestStart' : /salary|compensation|pay|ctc/i.test(q.text) ? 'salaryExpectation' : null) : null
+      if (factField && d.source === 'none') {
+        const l2 = el('label')
+        l2.append(save, el('span', '', 'Also save this to my profile'))
+        card.append(l2)
+      }
+      go.onclick = async () => {
+        setValue(q.el, ta.value)
+        mark(q.el, COLORS.filled, 'Your approved answer — check it')
+        inserted.set(q.text, ta.value)
+        if (save.checked && factField) await chrome.runtime.sendMessage({ type: 'saveFact', field: factField, value: ta.value })
+        go.textContent = 'In the form ✓'
+        go.disabled = true
+      }
+      card.append(go)
+      return card
     }
     $('#applied').onclick = async () => {
       if (!confirm('Record this application as submitted? Only do this after you pressed the site’s Submit button and saw its confirmation.')) return
@@ -316,16 +450,25 @@
     document.documentElement.append(host)
   }
 
+  // "Fill this page" from the popup shows the panel at once (top frame); otherwise it waits for a form.
+  const show = () => {
+    if (!document.getElementById('job-assist-panel')) panel()
+  }
+  window.__jobAssistShow = () => {
+    if (window === window.top || hasForm()) show()
+  }
+  if (window.__jobAssistForce && window === window.top) show()
+
   // Forms on these sites are often rendered after load: look for one for a short while.
   let tries = 0
   const timer = setInterval(() => {
     if (document.getElementById('job-assist-panel')) return clearInterval(timer)
     if (hasForm()) {
       clearInterval(timer)
-      panel()
+      show()
     } else if (++tries > 40) clearInterval(timer)
   }, 500)
 
   // For tests: the pure parts.
-  globalThis.__jobAssist = { fields, fill, describe, captcha, setValue }
+  globalThis.__jobAssist = { fields, fill, describe, captcha, setValue, writtenQuestions, pageJob, inserted, markApplied }
 })()

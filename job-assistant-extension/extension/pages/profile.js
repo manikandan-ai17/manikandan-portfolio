@@ -73,6 +73,24 @@ function renderAnswers() {
   )
 }
 
+// ── In your own words (used as written in drafted answers) ─────────────────
+
+function renderMyWords() {
+  const w = { ...profile.myWords }
+  const area = (k, label, hint, ph) => h('label', { class: 'field' }, label, h('textarea', { style: 'min-height:80px', placeholder: ph, value: w[k] ?? '', oninput: (e) => (w[k] = e.target.value) }), h('span', { class: 'muted small', style: 'font-weight:400' }, hint))
+  $('mywords').replaceChildren(
+    h('h2', {}, 'In your own words (optional)'),
+    h('p', { class: 'muted small' }, 'Drafted answers use these exactly as you write them. Where they are empty, a draft asks you in [brackets] instead of inventing anything — for example why you want a particular company.'),
+    h('div', { class: 'grid2' },
+      area('aboutMe', 'Something about you that the facts do not show', 'Added to “Tell us about yourself”.', 'e.g. what got you into building with LLMs, how you like to work'),
+      area('lookingFor', 'What you are looking for in your next role', 'Opens “Why do you want to join …?” (you still add a company-specific reason).', 'e.g. working on AI products used by real people, with strong engineers to learn from'),
+      area('proudestWhy', 'Why your proudest project mattered to you', 'Ends “What is your most impactful project?”.', 'e.g. what you learned, what was hard, what you would change'),
+      h('label', { class: 'field' }, 'Salary expectation', h('input', { type: 'text', value: w.salaryExpectation ?? '', placeholder: 'e.g. ₹8–10 LPA, or negotiable', oninput: (e) => (w.salaryExpectation = e.target.value) }), h('span', { class: 'muted small', style: 'font-weight:400' }, 'Only used when a form asks, and only after you approve that answer.')),
+    ),
+    h('div', {}, h('button', { class: 'btn primary', onclick: async () => { profile.myWords = Object.fromEntries(Object.entries(w).map(([k, v]) => [k, String(v ?? '').trim()])); await persist('Saved.') } }, 'Save')),
+  )
+}
+
 // ── Verified (read-only) ────────────────────────────────────────────────────
 
 function renderVerified() {
@@ -197,12 +215,12 @@ function renderAI() {
 
 function renderBoards() {
   const company = h('input', { type: 'text', placeholder: 'Company name' })
-  const ats = h('select', {}, ['greenhouse', 'ashby', 'lever'].map((a) => h('option', { value: a }, a[0].toUpperCase() + a.slice(1))))
-  const token = h('input', { type: 'text', placeholder: 'Board name, e.g. “anthropic” in job-boards.greenhouse.io/anthropic' })
+  const ats = h('select', {}, [['greenhouse', 'Greenhouse'], ['ashby', 'Ashby'], ['lever', 'Lever'], ['workable', 'Workable'], ['smartrecruiters', 'SmartRecruiters']].map(([a, l]) => h('option', { value: a }, l)))
+  const token = h('input', { type: 'text', placeholder: 'Board name: “anthropic” in job-boards.greenhouse.io/anthropic, “huggingface” in apply.workable.com/huggingface' })
   const saveSources = async (msg) => { await set('sources', sources); renderBoards(); if (msg) toast(msg) }
   $('boards').replaceChildren(
     h('h2', {}, 'Job boards searched'),
-    h('p', { class: 'muted small' }, 'Official public job-board feeds the companies publish themselves. Add any company that uses Greenhouse, Ashby or Lever.'),
+    h('p', { class: 'muted small' }, 'Official public job-board feeds the companies publish themselves. Add any company that uses Greenhouse, Ashby, Lever, Workable or SmartRecruiters. LinkedIn, Indeed and Wellfound have no such feed and forbid automated reading — add jobs from them by hand on the dashboard.'),
     h('div', { class: 'row' }, sources.map((s) => h('label', { class: 'check chip' }, h('input', { type: 'checkbox', checked: s.enabled !== false, onchange: (e) => { s.enabled = e.target.checked; saveSources() } }), `${s.company} · ${s.ats}`))),
     h('div', { class: 'grid2' }, company, h('div', { class: 'row' }, ats, token)),
     h('div', { class: 'row' },
@@ -241,6 +259,7 @@ function renderData() {
 
 renderMissing()
 renderAnswers()
+renderMyWords()
 renderVerified()
 renderResumes()
 renderLinkedIn()
