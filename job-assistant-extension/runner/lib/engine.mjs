@@ -7,7 +7,7 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import { FM, AQ, OUT_DIR, ensureOut, portalOf } from './shared.mjs'
+import { FM, AQ, OUT_DIR, ensureOut, portalOf, aiSettingsFromEnv } from './shared.mjs'
 import { dismissBanners, revealForm, scan, waitForForm, readOptions, act, attachResume, findSubmit, waitForConfirmation } from './browser.mjs'
 import { draftAnswer } from '../../extension/src/lib/answers.js'
 import { templateCoverLetter, checkLetter } from '../../extension/src/lib/coverLetter.js'
@@ -74,7 +74,7 @@ async function plan(page, s, job, data, { auto, coverLetter, memory, useAi, Anth
     if (saved) { actions.push({ written: w, d: { value: saved.answer }, source: 'your earlier answer' }); continue }
     let draft = null
     try {
-      draft = await draftAnswer(w.text, { profile: data.profile, job, match: job.match ?? null, settings: useAi ? { anthropicKey: process.env.ANTHROPIC_API_KEY } : {}, preferAi: Boolean(useAi), Anthropic, maxLength: w.maxLength })
+      draft = await draftAnswer(w.text, { profile: data.profile, job, match: job.match ?? null, settings: useAi ? aiSettingsFromEnv() : {}, preferAi: Boolean(useAi), Anthropic, maxLength: w.maxLength })
     } catch { /* no draft */ }
     const clear = draft?.text?.trim() && !(draft.issues ?? []).some((i) => i.blocking) && draft.kind !== 'sensitive' && !/\[[^\]]+\]/.test(draft.text)
     if (clear) actions.push({ written: w, d: { value: draft.text }, source: draft.source === 'ai' ? 'AI draft (check it)' : 'drafted from your profile and this posting' })

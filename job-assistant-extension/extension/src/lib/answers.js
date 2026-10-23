@@ -10,6 +10,7 @@
 
 import { SKILLS } from './profile.js'
 import { checkLetter } from './coverLetter.js'
+import { aiConfig, geminiGenerate } from './ai.js'
 
 // ── What kind of question is it? ────────────────────────────────────────────
 
@@ -184,7 +185,8 @@ export function templateAnswer(question, { profile, job, match }) {
 
 // ── Checks ──────────────────────────────────────────────────────────────────
 
-const STOCK_PHRASES = /\b(passionate about|leverag(e|ing)|synerg|cutting[- ]edge|thrive in fast-paced|dynamic environment|i am excited to apply|results-driven|go-getter|team player|think outside the box|deep dive|spearhead)/i
+const OUTCOME_CLAIM = /\b(directly )?(impact(s|ed|ing)?|improv(e|es|ed|ing)|reduc(e|es|ed|ing)|increas(e|es|ed|ing)|boost(s|ed|ing)?|sav(e|es|ed|ing))\b[^.]{0,50}\b(clients?|customers?|users?|business|revenue|efficiency|productivity|data quality|cost|time)\b|\b(unique|innovative|world-class|state-of-the-art|best-in-class)\b|\bensures? (accuracy|quality|reliability)\b/i
+const STOCK_PHRASES =/\b(passionate about|leverag(e|ing)|synerg|cutting[- ]edge|thrive in fast-paced|dynamic environment|i am excited to apply|results-driven|go-getter|team player|think outside the box|deep dive|spearhead)/i
 
 /** Problems a human should look at before approving an answer. `blocking` ones prevent approval. */
 export function checkAnswer(text, profile, { maxLength } = {}) {
@@ -193,6 +195,9 @@ export function checkAnswer(text, profile, { maxLength } = {}) {
   if (asks.length) issues.unshift({ text: `Replace ${asks.length === 1 ? 'the bracketed part' : `${asks.length} bracketed parts`} with your own words: ${asks.join(' ')}`, blocking: true })
   const stock = STOCK_PHRASES.exec(text)
   if (stock) issues.push({ text: `“${stock[0]}” sounds generic — say it in your own words`, blocking: false })
+  // Outcomes and superlatives are the claims a model most often adds on its own. Only keep them if your profile says so.
+  const outcome = OUTCOME_CLAIM.exec(text)
+  if (outcome) issues.push({ text: `“${outcome[0].slice(0, 60)}” claims an outcome or impact your profile does not state — remove it unless it is true and you can back it up`, blocking: false })
   if (maxLength && text.length > maxLength) issues.push({ text: `${text.length} characters; this field allows ${maxLength}`, blocking: true })
   return issues
 }
@@ -204,15 +209,14 @@ Strict rules:
 - Use only facts in PROFILE and the applicant's own words in MY_WORDS. Never invent employers, titles, dates, numbers, metrics, technologies, achievements, opinions or motivations.
 - Say a technology was used at work only if it appears in an EXPERIENCE entry; project-only technologies are "in a project"; EDUCATION notes are coursework.
 - Projects marked private, partial or reassigned must be described with that status.
+- Describe what was built and what it does, not what it achieved. Never claim impact, results, savings, improvements or benefits to clients, users or the business unless PROFILE states that exact outcome. Do not call anything "unique", "innovative" or "best".
 - If the question needs something PROFILE and MY_WORDS do not contain (a personal reason, an opinion, a story, a number), write it as a short ask in square brackets, e.g. [what drew you to this company], instead of making it up.
 - Sound like a person: first person, plain words, specific details from PROFILE, varied sentences. No buzzwords ("passionate", "leverage", "synergy", "cutting-edge", "fast-paced"), no flattery of the company, no restating the question, no sign-off.
 - Plain text only. Stay within the word limit.`
 
-/** Claude drafts one answer; returns { text, kind, source: 'ai', model }. Errors are readable. */
-export async function aiAnswer({ question, profile, job, match, apiKey, model = 'claude-opus-5-5', maxWords = 150, Anthropic }) {
-  if (!apiKey) throw new Error('Add your Anthropic API key in Profile → AI drafting to draft this one.')
-  const SDK = Anthropic ?? (await import('../vendor/anthropic-sdk.js')).Anthropic
-  const client = new SDK({ apiKey, dangerouslyAllowBrowser: true })
+/** The chosen AI (Gemini or Claude) drafts one answer; returns { text, kind, source: 'ai', model }. Errors are readable. */
+export async function aiAnswer({ question, profile, job, match, apiKey, model, provider = 'anthropic', maxWords = 150, Anthropic, fetchFn }) {
+  if (!apiKey) throw new Error('Add an AI key (Gemini or Anthropic) in Profile → AI drafting to draft this one.')
   const kind = classifyQuestion(question)
   const facts = {
     name: profile.fullName,
@@ -235,10 +239,16 @@ export async function aiAnswer({ question, profile, job, match, apiKey, model = 
     `PROFILE:\n${JSON.stringify(facts, null, 1)}`,
     `JOB DESCRIPTION:\n${job?.description ?? '(not available)'}`,
   ].join('\n\n')
+  if (provider === 'gemini') {
+    const out = await geminiGenerate({ apiKey, model, system: SYSTEM, user, fetchFn })
+    return { kind, source: 'ai', model: out.model, text: out.text }
+  }
+  const SDK = Anthropic ?? (await import('../vendor/anthropic-sdk.js')).Anthropic
+  const client = new SDK({ apiKey, dangerouslyAllowBrowser: true })
   let res
   try {
     res = await client.beta.messages.create({
-      model,
+      model: model || 'claude-opus-5-5',
       max_tokens: 16000,
       output_config: { effort: 'medium' },
       betas: ['server-side-fallback-2026-07-01'],
@@ -271,11 +281,12 @@ export async function draftAnswer(question, ctx) {
     const known = /notice/i.test(question) ? e.noticePeriod : /start/i.test(question) ? e.earliestStart : /salary|compensation|pay|ctc/i.test(question) ? ctx.profile.myWords?.salaryExpectation : null
     return known ? { ...base, text: known, source: 'profile', issues: [] } : { ...base, text: '', source: 'none', note: 'Your profile does not have this — type your answer (you can save it to your profile).', needs: true, issues: [] }
   }
-  if (kind === 'personal' && !ctx.settings?.anthropicKey) return { ...base, text: '', source: 'none', note: 'Only you can answer this one.', needs: true, issues: [] }
-  const useAi = ctx.settings?.anthropicKey && (ctx.settings.aiAnswers !== false) && (!TEMPLATE_KINDS.has(kind) || ctx.preferAi)
+  const ai = aiConfig(ctx.settings)
+  if (kind === 'personal' && !ai) return { ...base, text: '', source: 'none', note: 'Only you can answer this one.', needs: true, issues: [] }
+  const useAi = ai && (ctx.settings.aiAnswers !== false) && (!TEMPLATE_KINDS.has(kind) || ctx.preferAi)
   let draft = !useAi ? templateAnswer(question, ctx) : null
-  if (!draft && ctx.settings?.anthropicKey) draft = await aiAnswer({ question, ...ctx, apiKey: ctx.settings.anthropicKey, model: ctx.settings.model, maxWords: ctx.maxWords })
-  if (!draft) return { ...base, text: '', source: 'none', note: 'Write this in your own words (or add an Anthropic key in Profile for AI drafts).', needs: true, issues: [] }
+  if (!draft && ai) draft = await aiAnswer({ question, ...ctx, apiKey: ai.apiKey, model: ai.model, provider: ai.provider, maxWords: ctx.maxWords })
+  if (!draft) return { ...base, text: '', source: 'none', note: 'Write this in your own words (or add a Gemini or Anthropic key in Profile for AI drafts).', needs: true, issues: [] }
   return { ...base, ...draft, issues: checkAnswer(draft.text, ctx.profile, { maxLength: ctx.maxLength }) }
 }
 

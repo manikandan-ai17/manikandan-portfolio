@@ -102,7 +102,7 @@ describe('drafting routes', () => {
   })
 
   it('without a key, AI drafting says what to do', async () => {
-    await expect(aiAnswer({ question: 'x', ...ctx(), apiKey: '' })).rejects.toThrow(/Add your Anthropic API key/)
+    await expect(aiAnswer({ question: 'x', ...ctx(), apiKey: '' })).rejects.toThrow(/Add an AI key/)
     expect((await draftAnswer('What are your favourite AI tools?', ctx())).note).toMatch(/own words/)
   })
 })

@@ -21,8 +21,8 @@ site build (`tsc` on `src/` + Vite) does not include this folder.
    you are looking for, why your proudest project mattered, salary expectation).
 4. Optional: LinkedIn → Settings & Privacy → Data privacy → **Get a copy of your data** → tick Profile,
    Positions, Education, Skills, Languages. When LinkedIn emails the ZIP, select it under Profile → LinkedIn.
-5. Optional: an Anthropic API key under Profile → AI drafting (for AI cover letters and for written questions the
-   templates do not cover).
+5. Optional: a **Gemini** (or Anthropic) API key under Profile → AI drafting, for AI cover letters and for written
+   questions the templates do not cover. Use **Test Gemini key** there. The key stays in browser storage.
 
 ## Use
 

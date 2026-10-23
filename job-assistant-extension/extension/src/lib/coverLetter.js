@@ -4,6 +4,7 @@
 // Every letter is checked for skills your profile does not show and numbers it does not contain, and you
 // edit and approve it before it is used anywhere.
 
+import { geminiGenerate } from './ai.js'
 import { SKILLS, skillEvidence } from './profile.js'
 
 const firstSentence = (s) => String(s ?? '').split(/(?<=[.!?])\s/)[0].trim()
@@ -75,6 +76,7 @@ Rules — they are strict:
 - Courses (EDUCATION notes) are not work experience.
 - If the job asks for something PROFILE does not show, do not claim it. You may say the applicant is keen to learn it, at most once.
 - Projects marked private, partial or reassigned must be described with that status, as PROFILE states it.
+- Describe what was built and what it does, not what it achieved. Never claim impact, results, savings or benefits to clients, users or the business unless PROFILE states that exact outcome. Do not call anything "unique", "innovative" or "best".
 - Plain text, no markdown, at most 300 words. Start with "Dear <Company> hiring team," and end with the applicant's name and email.`
 
 function factsFor(profile) {
@@ -95,10 +97,8 @@ function factsFor(profile) {
  * Asks Claude for a draft. `apiKey` is yours and stays in this browser (chrome.storage.local); requests go
  * straight to api.anthropic.com. Returns { text, model, issues } or throws an Error with a readable message.
  */
-export async function aiCoverLetter({ profile, job, match, apiKey, model = 'claude-opus-5-5' }) {
-  if (!apiKey) throw new Error('Add your Anthropic API key in Profile → AI drafting first.')
-  const { Anthropic } = await import('../vendor/anthropic-sdk.js')
-  const client = new Anthropic({ apiKey, dangerouslyAllowBrowser: true })
+export async function aiCoverLetter({ profile, job, match, apiKey, model, provider = 'anthropic', fetchFn }) {
+  if (!apiKey) throw new Error('Add an AI key (Gemini or Anthropic) in Profile → AI drafting first.')
   const user = [
     `PROFILE:\n${JSON.stringify(factsFor(profile), null, 1)}`,
     `JOB: ${job.title} at ${job.company} (${(job.locations ?? []).join(' · ')})`,
@@ -107,10 +107,16 @@ export async function aiCoverLetter({ profile, job, match, apiKey, model = 'clau
     `JOB DESCRIPTION:\n${job.description}`,
     'Write the cover letter now.',
   ].join('\n\n')
+  if (provider === 'gemini') {
+    const out = await geminiGenerate({ apiKey, model, system: SYSTEM, user, fetchFn })
+    return { text: out.text, model: out.model, truncated: out.truncated, issues: checkLetter(out.text, profile) }
+  }
+  const { Anthropic } = await import('../vendor/anthropic-sdk.js')
+  const client = new Anthropic({ apiKey, dangerouslyAllowBrowser: true })
   let res
   try {
     res = await client.beta.messages.create({
-      model,
+      model: model || 'claude-opus-5-5',
       max_tokens: 16000,
       output_config: { effort: 'medium' },
       // If Claude declines, the API retries on Anthropic's recommended fallback model inside the same call.

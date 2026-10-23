@@ -24,7 +24,7 @@ LinkedIn export and GitHub repos you imported), answers, resumes, saved jobs. Yo
 
 `prepare` options: `--limit 3` (best matches from your saved jobs), or one job you found yourself:
 `--url <company application page> --company "Acme" --title "AI Engineer" [--jd job.txt] [--location "Remote"]`;
-`--ai` (needs `ANTHROPIC_API_KEY`) allows AI drafts for written questions, shown to you before anything is sent.
+`--ai` allows AI drafts for written questions (Gemini by default, from `GEMINI_API_KEY` in `runner/.env.local`, which is git-ignored; or `ANTHROPIC_API_KEY`). Drafts are checked for skills, numbers and outcome claims your profile does not support, and shown to you before anything is sent. Read them: a model can still phrase a true fact loosely.
 
 ## How answers are chosen (nothing is guessed)
 

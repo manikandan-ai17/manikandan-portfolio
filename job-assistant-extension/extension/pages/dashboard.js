@@ -7,6 +7,7 @@ import { runSearch } from '../src/lib/pipeline.js'
 import { scoreJob, VERDICT_LABEL } from '../src/lib/match.js'
 import { templateCoverLetter, aiCoverLetter, checkLetter } from '../src/lib/coverLetter.js'
 import { renderAutoTab, onQueueChange } from './autoapply.js'
+import { aiConfig, hasAi, providerName } from '../src/lib/ai.js'
 
 const $ = (id) => document.getElementById(id)
 const state = {
@@ -249,10 +250,11 @@ function prepare(j) {
   box.append(h('div', { class: 'row' },
     h('button', { class: 'btn small', onclick: () => { draft.mode = 'none'; draft.text = ''; draft.reviewed = false; redraw() } }, 'No cover letter'),
     h('button', { class: 'btn small', onclick: () => { draft.mode = 'letter'; draft.text = templateCoverLetter(state.profile, j, m); draft.issues = checkLetter(draft.text, state.profile); draft.reviewed = false; redraw() } }, 'Template from my profile'),
-    h('button', { class: 'btn small', disabled: draft.busy || !state.settings.anthropicKey ? '' : null, title: state.settings.anthropicKey ? `Uses ${state.settings.model} with your API key` : 'Add an Anthropic API key in Profile to use this', onclick: async () => {
+    h('button', { class: 'btn small', disabled: draft.busy || !hasAi(state.settings) ? '' : null, title: hasAi(state.settings) ? `Uses ${providerName(aiConfig(state.settings))} (${aiConfig(state.settings).model}) with your API key` : 'Add a Gemini or Anthropic API key in Profile to use this', onclick: async () => {
       draft.busy = true; draft.error = null; redraw()
       try {
-        const r = await aiCoverLetter({ profile: state.profile, job: j, match: m, apiKey: state.settings.anthropicKey, model: state.settings.model })
+        const ai = aiConfig(state.settings)
+        const r = await aiCoverLetter({ profile: state.profile, job: j, match: m, apiKey: ai.apiKey, model: ai.model, provider: ai.provider })
         Object.assign(draft, { mode: 'letter', text: r.text, issues: r.issues, reviewed: false })
         if (r.truncated) draft.error = 'The draft was cut off — edit it or try again.'
       } catch (err) { draft.error = err.message }
@@ -331,7 +333,7 @@ function answersStep(j, m, draft, rec, redraw) {
       a.error ? h('div', { class: 'banner bad small' }, a.error) : null,
       h('div', { class: 'row' },
         h('button', { class: 'btn small', disabled: a.busy ? '' : null, onclick: () => draftOne(a) }, a.busy ? 'Drafting…' : a.text ? 'Redraft' : 'Draft'),
-        state.settings.anthropicKey ? h('button', { class: 'btn small', disabled: a.busy ? '' : null, onclick: () => { a.preferAi = true; draftOne(a) } }, 'AI draft') : null,
+        hasAi(state.settings) ? h('button', { class: 'btn small', disabled: a.busy ? '' : null, onclick: () => { a.preferAi = true; draftOne(a) } }, 'AI draft') : null,
         h('button', { class: 'btn small', disabled: a.text ? null : '', onclick: async () => { await navigator.clipboard.writeText(a.text); toast('Copied.') } }, 'Copy'),
         h('label', { class: 'check' }, ok, blocking ? 'Replace the bracketed parts first' : 'Approved — true and in my words'),
         h('button', { class: 'btn small danger', onclick: () => { draft.answers = draft.answers.filter((x) => x !== a); redraw() } }, 'Remove'),

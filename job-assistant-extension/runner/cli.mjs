@@ -13,7 +13,7 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import { loadExport, demoData, loadAuto, OUT_DIR, ensureOut } from './lib/shared.mjs'
+import { loadExport, demoData, loadAuto, OUT_DIR, ensureOut, aiSettingsFromEnv } from './lib/shared.mjs'
 import { launch } from './lib/browser.mjs'
 import { processJob, record, recordApplication } from './lib/engine.mjs'
 import { terminalAsker } from './lib/ask.mjs'
@@ -177,7 +177,12 @@ async function prepare() {
   const memory = loadMemory()
   const asker = terminalAsker()
   let Anthropic
-  if (flag('ai')) { if (!process.env.ANTHROPIC_API_KEY) throw new Error('--ai needs ANTHROPIC_API_KEY in the environment.'); Anthropic = (await import('@anthropic-ai/sdk')).default ?? (await import('@anthropic-ai/sdk')).Anthropic }
+  if (flag('ai')) {
+    const ai = aiSettingsFromEnv()
+    if (!ai.geminiKey && !ai.anthropicKey) throw new Error('--ai needs GEMINI_API_KEY (or ANTHROPIC_API_KEY) in runner/.env.local or the environment.')
+    console.log(`AI drafts: ${ai.aiProvider === 'gemini' ? `Gemini (${ai.geminiModel})` : 'Claude'} — every draft is checked and shown to you before anything is sent.`)
+    if (ai.aiProvider === 'anthropic') Anthropic = (await import('@anthropic-ai/sdk')).default ?? (await import('@anthropic-ai/sdk')).Anthropic
+  }
   const { context, close } = await launch({ headed: true, userDataDir: flag('profile-dir') || null })
   try {
     for (const job of queue) {

@@ -13,6 +13,21 @@ export const ROOT = path.resolve(HERE, '../..')
 export const CONTENT_DIR = path.join(ROOT, 'extension/src/content')
 export const OUT_DIR = process.env.RUNNER_OUT ?? path.join(ROOT, 'runner/out')
 
+// runner/.env.local (git-ignored) may hold GEMINI_API_KEY / GEMINI_MODEL / ANTHROPIC_API_KEY. Real environment variables win.
+try {
+  for (const line of fs.readFileSync(path.join(ROOT, 'runner/.env.local'), 'utf8').split(/\r?\n/)) {
+    const m = /^\s*([A-Z0-9_]+)\s*=\s*(.*?)\s*$/.exec(line)
+    if (m && !(m[1] in process.env)) process.env[m[1]] = m[2].replace(/^["']|["']$/g, '')
+  }
+} catch { /* no local env file */ }
+
+/** The AI settings the shared drafting code expects, from the environment. Gemini is preferred when both exist. */
+export function aiSettingsFromEnv() {
+  const geminiKey = process.env.GEMINI_API_KEY ?? ''
+  const anthropicKey = process.env.ANTHROPIC_API_KEY ?? ''
+  return { aiProvider: geminiKey ? 'gemini' : 'anthropic', geminiKey, geminiModel: process.env.GEMINI_MODEL || 'gemini-2.5-flash', anthropicKey }
+}
+
 export const FM = globalThis.JobAssistFieldMap
 export const AQ = globalThis.JobAssistAuto
 export { DEFAULT_AUTO, loadAuto }

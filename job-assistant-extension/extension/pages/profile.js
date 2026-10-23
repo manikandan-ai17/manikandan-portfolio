@@ -2,6 +2,7 @@ import { h, toast, download, fmtDate } from './ui.js'
 import { get, set, loadProfile, saveProfile, loadSources, loadSettings } from '../src/lib/store.js'
 import { missingInfo } from '../src/lib/profile.js'
 import { DEFAULT_AUTO } from '../src/lib/autoapply.js'
+import { GEMINI_DEFAULT_MODEL, aiConfig, geminiGenerate } from '../src/lib/ai.js'
 import { SEED_PROFILE } from '../src/lib/seedProfile.js'
 import { importLinkedInZip } from '../src/lib/linkedin.js'
 import { fetchGitHubRepos, fetchPortfolioResume, bytesToBase64 } from '../src/lib/publicData.js'
@@ -92,7 +93,7 @@ function renderAutoApply() {
     check('acceptConsent', 'Tick privacy / data-processing / “my information is true” boxes for me', 'Legal agreements (arbitration, non-compete, NDA) are never accepted for you.'),
     check('neverAppliedBefore', 'I have not applied to these companies before except through this assistant', 'Used to answer “Have you applied here before?” with No. Leave it off to be asked instead.'),
     check('autoCoverLetter', 'Attach the template cover letter when a form has a cover-letter box', 'Built only from your verified profile and checked for unsupported claims.'),
-    check('allowAi', 'Allow checked AI drafts for written questions (needs your Anthropic key)', 'Off: only answers from your profile and answers you approved on the dashboard are used; other written questions stop the application.'),
+    check('allowAi', 'Allow checked AI drafts for written questions (needs a Gemini or Anthropic key)', 'Off: only answers from your profile and answers you approved on the dashboard are used; other written questions stop the application.'),
     h('div', { class: 'banner small' }, 'Assumes you were not referred. Turn auto-apply off, or apply yourself, for any job where someone referred you. Visa, relocation, notice period and salary answers come only from what you typed above.'),
     h('div', {}, h('button', { class: 'btn primary', onclick: async () => { settings = { ...settings, autoApply: a }; await set('settings', settings); toast(a.enabled ? (a.dryRun ? 'Saved. Auto-apply is on in dry-run mode.' : 'Saved. Auto-apply is LIVE.') : 'Saved. Auto-apply is off.', 4000) } }, 'Save auto-apply settings')),
   )
@@ -222,16 +223,27 @@ function renderGitHub() {
 // ── AI drafting ─────────────────────────────────────────────────────────────
 
 function renderAI() {
-  const key = h('input', { type: 'password', placeholder: settings.anthropicKey ? '•••••••• (saved)' : 'sk-ant-…', autocomplete: 'off' })
-  const model = h('input', { type: 'text', value: settings.model })
+  const provider = h('select', { onchange: (e) => (settings = { ...settings, aiProvider: e.target.value }) }, [['gemini', 'Google Gemini'], ['anthropic', 'Anthropic Claude']].map(([v, l]) => h('option', { value: v, selected: (settings.aiProvider ?? (settings.anthropicKey && !settings.geminiKey ? 'anthropic' : 'gemini')) === v ? '' : null }, l)))
+  const gKey = h('input', { type: 'password', placeholder: settings.geminiKey ? '•••••••• (saved)' : 'AIza…', autocomplete: 'off' })
+  const gModel = h('input', { type: 'text', value: settings.geminiModel || GEMINI_DEFAULT_MODEL })
+  const cKey = h('input', { type: 'password', placeholder: settings.anthropicKey ? '•••••••• (saved)' : 'sk-ant-…', autocomplete: 'off' })
+  const cModel = h('input', { type: 'text', value: settings.model })
   $('ai').replaceChildren(
-    h('h2', {}, 'AI cover-letter drafts (optional)'),
-    h('p', { class: 'small' }, 'Without a key you still get template cover letters built from your profile. With your own Anthropic API key, “AI draft” asks Claude to write one from the same verified facts; every draft is checked for skills and numbers your profile does not show, and you approve it before use.'),
-    h('p', { class: 'muted small' }, 'The key is kept in this browser’s extension storage (not synced, not in any file or repository) and is sent only to api.anthropic.com. Anyone with access to this browser profile could read it — use a key with a spending limit, and remove it here when you stop using it.'),
-    h('div', { class: 'grid2' }, h('label', { class: 'field' }, 'Anthropic API key', key), h('label', { class: 'field' }, 'Model', model)),
+    h('h2', {}, 'AI drafts (optional)'),
+    h('p', { class: 'small' }, 'Without a key you still get template answers and cover letters built from your profile. With your own key, “AI draft” writes from the same verified facts; every draft is checked for skills and numbers your profile does not show, and you approve it before use.'),
+    h('p', { class: 'muted small' }, 'Keys are kept in this browser’s extension storage (not synced, not in any file or repository) and sent only to the provider you pick (generativelanguage.googleapis.com for Gemini, api.anthropic.com for Claude). Anyone with access to this browser profile could read them — use a key with a spending limit, and remove it here when you stop using it.'),
+    h('label', { class: 'field' }, 'Use', provider),
+    h('div', { class: 'grid2' }, h('label', { class: 'field' }, 'Gemini API key', gKey), h('label', { class: 'field' }, 'Gemini model', gModel)),
+    h('div', { class: 'grid2' }, h('label', { class: 'field' }, 'Anthropic API key (optional)', cKey), h('label', { class: 'field' }, 'Claude model', cModel)),
     h('div', { class: 'row' },
-      h('button', { class: 'btn primary', onclick: async () => { settings = { ...settings, model: model.value.trim() || 'claude-opus-5-5', ...(key.value.trim() ? { anthropicKey: key.value.trim() } : {}) }; await set('settings', settings); renderAI(); toast('AI settings saved.') } }, 'Save'),
-      settings.anthropicKey ? h('button', { class: 'btn danger', onclick: async () => { settings = { ...settings, anthropicKey: '' }; await set('settings', settings); renderAI(); toast('API key removed.') } }, 'Remove key') : null,
+      h('button', { class: 'btn primary', onclick: async () => { settings = { ...settings, aiProvider: provider.value, geminiModel: gModel.value.trim() || GEMINI_DEFAULT_MODEL, model: cModel.value.trim() || 'claude-opus-5-5', ...(gKey.value.trim() ? { geminiKey: gKey.value.trim() } : {}), ...(cKey.value.trim() ? { anthropicKey: cKey.value.trim() } : {}) }; await set('settings', settings); renderAI(); toast('AI settings saved.') } }, 'Save'),
+      h('button', { class: 'btn', onclick: async () => {
+        const cfg = aiConfig({ ...settings, aiProvider: provider.value, ...(gKey.value.trim() ? { geminiKey: gKey.value.trim() } : {}) })
+        if (!cfg || cfg.provider !== 'gemini') return toast('Save a Gemini key first to test it.')
+        try { await geminiGenerate({ apiKey: cfg.apiKey, model: cfg.model, system: 'Reply with one word.', user: 'Say ok.', maxOutputTokens: 20 }); toast('Gemini key works.') } catch (err) { toast(err.message, 5000) }
+      } }, 'Test Gemini key'),
+      settings.geminiKey ? h('button', { class: 'btn danger', onclick: async () => { settings = { ...settings, geminiKey: '' }; await set('settings', settings); renderAI(); toast('Gemini key removed.') } }, 'Remove Gemini key') : null,
+      settings.anthropicKey ? h('button', { class: 'btn danger', onclick: async () => { settings = { ...settings, anthropicKey: '' }; await set('settings', settings); renderAI(); toast('Anthropic key removed.') } }, 'Remove Anthropic key') : null,
     ),
   )
 }
@@ -274,7 +286,7 @@ function renderData() {
     h('div', { class: 'row' },
       h('button', { class: 'btn', onclick: async () => {
         const all = await chrome.storage.local.get(null)
-        if (all.settings) all.settings = { ...all.settings, anthropicKey: all.settings.anthropicKey ? '(removed from export)' : '' }
+        if (all.settings) all.settings = { ...all.settings, anthropicKey: all.settings.anthropicKey ? '(removed from export)' : '', geminiKey: all.settings.geminiKey ? '(removed from export)' : '' }
         download(`job-assistant-backup-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(all, null, 1), 'application/json')
       } }, 'Export everything (JSON)'),
       h('button', { class: 'btn danger', onclick: async () => { if (confirm('Delete ALL assistant data in this browser: answers, resumes, tracked applications, saved jobs and the API key?')) { await chrome.storage.local.clear(); location.reload() } } }, 'Delete all data'),

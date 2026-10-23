@@ -21,7 +21,8 @@
     "https://*.myworkdayjobs.com/*",
     "https://api.github.com/*",
     "https://manikandan-portfolio-delta.vercel.app/*",
-    "https://api.anthropic.com/*"
+    "https://api.anthropic.com/*",
+    "https://generativelanguage.googleapis.com/*"
   ],
   "content_scripts": [
     {

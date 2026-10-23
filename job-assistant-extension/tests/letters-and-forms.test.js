@@ -54,7 +54,7 @@ describe('cover letters', () => {
   })
 
   it('AI draft: no key, a refusal, or a bad key give clear messages', async () => {
-    await expect(aiCoverLetter({ profile, job, match, apiKey: '' })).rejects.toThrow(/Add your Anthropic API key/)
+    await expect(aiCoverLetter({ profile, job, match, apiKey: '' })).rejects.toThrow(/Add an AI key/)
     reply = { stop_reason: 'refusal', content: [] }
     await expect(aiCoverLetter({ profile, job, match, apiKey: 'k' })).rejects.toThrow(/declined/)
     const { Anthropic } = await import('../extension/src/vendor/anthropic-sdk.js')
