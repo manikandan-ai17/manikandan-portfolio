@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Job Application Assistant</title>
+    <link rel="stylesheet" href="ui.css" />
+    <style>
+      body { width: 340px; }
+      .wrap { padding: 16px; }
+      .heading { font-size: 1.2rem; }
+      .subheading { margin-bottom: 12px; letter-spacing: 1.5px; }
+      .stat { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; font-size: 13px; }
+      .stat b { text-align: right; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap stack">
+      <div>
+        <div class="heading">Job Assistant</div>
+        <div class="subheading" id="who">Loading…</div>
+      </div>
+      <div id="missing"></div>
+      <div class="card stat" id="stats"></div>
+      <button class="btn primary" id="run" style="justify-content:center">▶ Run — find matching jobs</button>
+      <button class="btn" id="here" style="justify-content:center">Fill this page (application form on this tab)</button>
+      <div id="hereMsg"></div>
+      <div class="row">
+        <button class="btn" id="dash" style="flex:1;justify-content:center">Dashboard</button>
+        <button class="btn" id="profile" style="flex:1;justify-content:center">Profile</button>
+      </div>
+      <p class="muted small">Searches official company job boards. With auto-apply on, Run applies to up to 5 different companies that fit, keeps the dashboard tab open while it works, and stops to ask you when an answer is not in your profile. It never automates LinkedIn, Indeed or Wellfound.</p>
+    </div>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

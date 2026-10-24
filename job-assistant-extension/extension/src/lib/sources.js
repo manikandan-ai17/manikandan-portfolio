@@ -1,0 +1,340 @@
+// Official, public job-board feeds. Each company publishes these itself for its careers page, so nothing is
+// scraped and no login is used. Every adapter returns the same normalized job shape:
+//   { key, ats, company, id, title, locations[], remote, employmentType, url, applyUrl, description, postedAt, compensation }
+
+import { htmlToText } from './text.js'
+
+export const DEFAULT_SOURCES = [
+  { company: 'Anthropic', ats: 'greenhouse', token: 'anthropic', enabled: true },
+  { company: 'OpenAI', ats: 'ashby', token: 'openai', enabled: true },
+  { company: 'Mistral AI', ats: 'ashby', token: 'mistral.ai', enabled: true },
+  { company: 'ElevenLabs', ats: 'ashby', token: 'elevenlabs', enabled: true },
+  { company: 'NVIDIA', ats: 'workday', host: 'nvidia.wd5.myworkdayjobs.com', tenant: 'nvidia', site: 'NVIDIAExternalCareerSite', enabled: true },
+  { company: 'Cohere', ats: 'ashby', token: 'cohere', enabled: true },
+  { company: 'Perplexity', ats: 'ashby', token: 'perplexity', enabled: true },
+  { company: 'LangChain', ats: 'ashby', token: 'langchain', enabled: true },
+  { company: 'Scale AI', ats: 'greenhouse', token: 'scaleai', enabled: true },
+  { company: 'xAI', ats: 'greenhouse', token: 'xai', enabled: true },
+  { company: 'Together AI', ats: 'greenhouse', token: 'togetherai', enabled: true },
+  { company: 'Pinecone', ats: 'ashby', token: 'pinecone', enabled: true },
+  { company: 'Runway', ats: 'ashby', token: 'runway', enabled: true },
+  { company: 'Stability AI', ats: 'greenhouse', token: 'stabilityai', enabled: true },
+  // Added Oct 2026 — each checked live to have an open, official board. India-based first.
+  { company: 'Sarvam AI', ats: 'ashby', token: 'sarvam', enabled: true },
+  { company: 'Freshworks', ats: 'smartrecruiters', token: 'Freshworks', enabled: true },
+  { company: 'Hugging Face', ats: 'workable', token: 'huggingface', enabled: true },
+  { company: 'Cursor (Anysphere)', ats: 'ashby', token: 'cursor', enabled: true },
+  { company: 'Databricks', ats: 'greenhouse', token: 'databricks', enabled: true },
+  { company: 'Glean', ats: 'greenhouse', token: 'gleanwork', enabled: true },
+  { company: 'Harvey', ats: 'ashby', token: 'harvey', enabled: true },
+  { company: 'Sierra', ats: 'ashby', token: 'sierra', enabled: true },
+  { company: 'Decagon', ats: 'ashby', token: 'decagon', enabled: true },
+  { company: 'Cognition', ats: 'ashby', token: 'cognition', enabled: true },
+  { company: 'Baseten', ats: 'ashby', token: 'baseten', enabled: true },
+  { company: 'Modal', ats: 'ashby', token: 'modal', enabled: true },
+  { company: 'Deepgram', ats: 'ashby', token: 'deepgram', enabled: true },
+  { company: 'Writer', ats: 'ashby', token: 'writer', enabled: true },
+  { company: 'AssemblyAI', ats: 'greenhouse', token: 'assemblyai', enabled: true },
+  { company: 'Figure AI', ats: 'greenhouse', token: 'figureai', enabled: true },
+  { company: 'SambaNova', ats: 'greenhouse', token: 'sambanovasystems', enabled: true },
+  { company: 'Character.AI', ats: 'ashby', token: 'character', enabled: true },
+  { company: 'Lovable', ats: 'ashby', token: 'lovable', enabled: true },
+  // Added 23 Oct 2026 — each checked live to have non-senior engineering roles in India or open to remote.
+  { company: 'MongoDB', ats: 'greenhouse', token: 'mongodb', enabled: true },
+  { company: 'Stripe', ats: 'greenhouse', token: 'stripe', enabled: true },
+  { company: 'Okta', ats: 'greenhouse', token: 'okta', enabled: true },
+  { company: 'Twilio', ats: 'greenhouse', token: 'twilio', enabled: true },
+  { company: 'GitLab', ats: 'greenhouse', token: 'gitlab', enabled: true },
+  { company: 'Elastic', ats: 'greenhouse', token: 'elastic', enabled: true },
+  { company: 'Rubrik', ats: 'greenhouse', token: 'rubrik', enabled: true },
+  { company: 'HackerRank', ats: 'greenhouse', token: 'hackerrank', enabled: true },
+  { company: 'HighRadius', ats: 'greenhouse', token: 'highradius', enabled: true },
+  { company: 'Turing', ats: 'greenhouse', token: 'turing', enabled: true },
+  { company: 'Druva', ats: 'greenhouse', token: 'druva', enabled: true },
+  { company: 'Observe.AI', ats: 'greenhouse', token: 'observeai', enabled: true },
+  { company: 'Meesho', ats: 'lever', token: 'meesho', enabled: true },
+  { company: 'FamPay', ats: 'lever', token: 'fampay', enabled: true },
+  { company: 'Zeta', ats: 'lever', token: 'zeta', enabled: true },
+  { company: 'Notion', ats: 'ashby', token: 'notion', enabled: true },
+  { company: 'Supabase', ats: 'ashby', token: 'supabase', enabled: true },
+  { company: 'PostHog', ats: 'ashby', token: 'posthog', enabled: true },
+]
+
+/** The job site a URL belongs to, for the tracker. */
+export function portalOf(url) {
+  const host = (() => {
+    try {
+      return new URL(url).hostname
+    } catch {
+      return ''
+    }
+  })()
+  const map = [
+    [/greenhouse\.io$/, 'Greenhouse'],
+    [/lever\.co$/, 'Lever'],
+    [/ashbyhq\.com$/, 'Ashby'],
+    [/myworkdayjobs\.com$/, 'Workday'],
+    [/workable\.com$/, 'Workable'],
+    [/smartrecruiters\.com$/, 'SmartRecruiters'],
+    [/linkedin\.com$/, 'LinkedIn'],
+    [/indeed\./, 'Indeed'],
+    [/wellfound\.com$|angel\.co$/, 'Wellfound'],
+  ]
+  return map.find(([re]) => re.test(host))?.[1] ?? (host ? `Company site (${host.replace(/^www\./, '')})` : 'Unknown')
+}
+
+export const sourceId = (s) => (s.ats === 'workday' ? `workday:${s.tenant}` : `${s.ats}:${s.token}`)
+
+// ── Workable ─────────────────────────────────────────────────────────────────
+
+export function parseWorkable(json, src) {
+  return (json?.jobs ?? []).map((j) => {
+    const locations = (j.locations?.length ? j.locations.map((l) => [l.city, l.region, l.country].filter(Boolean).join(', ')) : [[j.city, j.state, j.country].filter(Boolean).join(', ')]).filter(Boolean)
+    return {
+      key: `workable:${src.token}:${j.shortcode}`,
+      ats: 'workable',
+      company: src.company,
+      id: String(j.shortcode),
+      title: String(j.title ?? '').trim(),
+      locations: j.telecommuting ? [...locations, 'Remote'] : locations,
+      remote: j.telecommuting === true || null,
+      employmentType: employmentTypeOf(j.employment_type, j.title),
+      url: j.url,
+      applyUrl: j.application_url ?? j.url,
+      description: htmlToText(j.description),
+      postedAt: j.published_on || j.created_at ? new Date(j.published_on || j.created_at).toISOString() : null,
+      compensation: null,
+    }
+  })
+}
+
+// ── SmartRecruiters: a list, then one detail call per job ───────────────────
+
+export function parseSmartRecruitersDetail(d, src) {
+  const sections = d?.jobAd?.sections ?? {}
+  const loc = d?.location ?? {}
+  const where = [loc.city, loc.region, loc.country?.toUpperCase?.() === 'IN' ? 'India' : loc.country].filter(Boolean).join(', ')
+  return {
+    key: `smartrecruiters:${src.token}:${d.id}`,
+    ats: 'smartrecruiters',
+    company: src.company,
+    id: String(d.id),
+    title: String(d.name ?? '').trim(),
+    locations: [loc.fullLocation?.replace(/,\s*,/g, ',') || where, loc.remote ? 'Remote' : null].filter(Boolean),
+    remote: loc.remote === true || null,
+    employmentType: employmentTypeOf(d.typeOfEmployment?.label, d.name),
+    url: d.postingUrl,
+    applyUrl: d.applyUrl ?? d.postingUrl,
+    description: ['jobDescription', 'qualifications', 'additionalInformation'].map((k) => (sections[k]?.text ? `${sections[k].title ?? ''}\n${htmlToText(sections[k].text)}` : '')).filter(Boolean).join('\n\n'),
+    postedAt: d.releasedDate ? new Date(d.releasedDate).toISOString() : null,
+    compensation: null,
+  }
+}
+
+const INTERN_RE = /\bintern(s|ship|ships)?\b|\bco-?op\b|\bapprentice(ship)?\b/i
+
+/** 'FullTime' / 'Full time' / 'Intern' … → full_time | internship | contract | part_time | null. */
+export function employmentTypeOf(raw, title = '') {
+  const s = String(raw ?? '').toLowerCase().replace(/[\s_-]+/g, '')
+  if (INTERN_RE.test(title) || s.includes('intern')) return 'internship'
+  if (s.includes('fulltime') || s === 'permanent' || s === 'regular') return 'full_time'
+  if (s.includes('parttime')) return 'part_time'
+  if (s.includes('contract') || s.includes('temporary') || s.includes('temp')) return 'contract'
+  return null
+}
+
+const iso = (v) => {
+  if (!v) return null
+  const d = new Date(v)
+  return Number.isNaN(d.getTime()) ? null : d.toISOString()
+}
+const splitLocations = (s) =>
+  String(s ?? '')
+    .split(/\s*[|;]\s*|\s+or\s+|\s*\/\s*(?=[A-Z])/)
+    .map((x) => x.trim())
+    .filter(Boolean)
+const isRemoteText = (s) => /\bremote\b|\banywhere\b|\bdistributed\b/i.test(s)
+
+// ── Greenhouse ───────────────────────────────────────────────────────────────
+
+// Many companies (MongoDB, Stripe, Okta, Elastic, Databricks …) link their Greenhouse jobs to their own careers
+// site, where the form sits in an iframe the assistant cannot drive. Greenhouse serves that same form on its own
+// domain, so the application link points there.
+const GREENHOUSE_HOST = /^(job-boards|boards)(\.eu)?\.greenhouse\.io$/
+export function greenhouseApplyUrl(j, src) {
+  let host = ''
+  try { host = new URL(j.absolute_url).hostname } catch { /* no link */ }
+  if (GREENHOUSE_HOST.test(host)) return j.absolute_url
+  return `https://job-boards.greenhouse.io/embed/job_app?for=${encodeURIComponent(src.token)}&token=${encodeURIComponent(j.id)}`
+}
+
+export function parseGreenhouse(json, src) {
+  return (json?.jobs ?? []).map((j) => {
+    const locations = splitLocations(j.location?.name)
+    const locType = (j.metadata ?? []).find((m) => /location type|workplace/i.test(m?.name ?? ''))?.value
+    return {
+      key: `greenhouse:${src.token}:${j.id}`,
+      ats: 'greenhouse',
+      company: src.company,
+      id: String(j.id),
+      title: String(j.title ?? '').trim(),
+      locations,
+      remote: /remote/i.test(String(locType ?? '')) || locations.some(isRemoteText) || null,
+      employmentType: employmentTypeOf(null, j.title),
+      url: j.absolute_url,
+      applyUrl: greenhouseApplyUrl(j, src),
+      description: htmlToText(j.content),
+      postedAt: iso(j.first_published ?? j.updated_at),
+      compensation: null,
+    }
+  })
+}
+
+// ── Ashby ────────────────────────────────────────────────────────────────────
+
+export function parseAshby(json, src) {
+  return (json?.jobs ?? [])
+    .filter((j) => j.isListed !== false)
+    .map((j) => {
+      const locations = [j.location, ...(j.secondaryLocations ?? []).map((l) => l?.location)].filter(Boolean).map(String)
+      return {
+        key: `ashby:${src.token}:${j.id}`,
+        ats: 'ashby',
+        company: src.company,
+        id: String(j.id),
+        title: String(j.title ?? '').trim(),
+        locations,
+        remote: j.isRemote === true || locations.some(isRemoteText) || (j.isRemote === false ? false : null),
+        employmentType: employmentTypeOf(j.employmentType, j.title),
+        url: j.jobUrl,
+        applyUrl: j.applyUrl ?? j.jobUrl,
+        description: j.descriptionPlain ? String(j.descriptionPlain).trim() : htmlToText(j.descriptionHtml),
+        postedAt: iso(j.publishedAt),
+        compensation: j.compensation?.compensationTierSummary ?? null,
+      }
+    })
+}
+
+// ── Lever (for companies you add yourself) ──────────────────────────────────
+
+export function parseLever(json, src) {
+  return (Array.isArray(json) ? json : []).map((j) => {
+    const lists = (j.lists ?? []).map((l) => `${l.text}\n${htmlToText(l.content)}`).join('\n\n')
+    const locations = [j.categories?.location, ...(j.categories?.allLocations ?? [])].filter(Boolean).map(String)
+    return {
+      key: `lever:${src.token}:${j.id}`,
+      ats: 'lever',
+      company: src.company,
+      id: String(j.id),
+      title: String(j.text ?? '').trim(),
+      locations: [...new Set(locations)],
+      remote: j.workplaceType === 'remote' || locations.some(isRemoteText) || null,
+      employmentType: employmentTypeOf(j.categories?.commitment, j.text),
+      url: j.hostedUrl,
+      applyUrl: j.applyUrl ?? j.hostedUrl,
+      description: [j.descriptionPlain, lists, j.additionalPlain].filter(Boolean).join('\n\n').trim(),
+      postedAt: iso(j.createdAt),
+      compensation: j.salaryRange ? `${j.salaryRange.min}–${j.salaryRange.max} ${j.salaryRange.currency ?? ''}`.trim() : null,
+    }
+  })
+}
+
+// ── Workday (NVIDIA): a search list, then one detail call per job ───────────
+
+export function parseWorkdayListItem(item) {
+  return { title: String(item.title ?? '').trim(), path: item.externalPath, locationsText: item.locationsText ?? '' }
+}
+
+export function parseWorkdayDetail(json, src) {
+  const i = json?.jobPostingInfo ?? {}
+  const locations = [i.location, ...(i.additionalLocations ?? [])].filter(Boolean).map(String)
+  return {
+    key: `workday:${src.tenant}:${i.jobReqId ?? i.id}`,
+    ats: 'workday',
+    company: src.company,
+    id: String(i.jobReqId ?? i.id),
+    title: String(i.title ?? '').trim(),
+    locations,
+    remote: locations.some(isRemoteText) || null,
+    employmentType: employmentTypeOf(i.timeType, i.title),
+    url: i.externalUrl,
+    applyUrl: i.externalUrl,
+    description: htmlToText(i.jobDescription),
+    postedAt: iso(i.startDate),
+    compensation: null,
+  }
+}
+
+// Workday has no "all jobs" call; these searches cover the roles this assistant looks for.
+export const WORKDAY_QUERIES = ['AI engineer', 'software engineer', 'python', 'machine learning', 'intern', 'new college grad', 'computer vision', 'LLM']
+
+// ── Fetching ─────────────────────────────────────────────────────────────────
+
+async function getJson(fetchFn, url, init) {
+  const res = await fetchFn(url, init)
+  if (!res.ok) throw new Error(`${url} answered HTTP ${res.status}`)
+  return res.json()
+}
+
+/**
+ * All jobs of one source. `keepTitle(title)` decides which Workday / SmartRecruiters jobs are worth a detail
+ * call (the other feeds return descriptions in one response).
+ */
+export async function fetchSource(src, { fetchFn = fetch, keepTitle = () => true, maxWorkdayDetails = 80 } = {}) {
+  if (src.ats === 'greenhouse') {
+    return parseGreenhouse(await getJson(fetchFn, `https://boards-api.greenhouse.io/v1/boards/${encodeURIComponent(src.token)}/jobs?content=true`), src)
+  }
+  if (src.ats === 'ashby') {
+    return parseAshby(await getJson(fetchFn, `https://api.ashbyhq.com/posting-api/job-board/${encodeURIComponent(src.token)}?includeCompensation=true`), src)
+  }
+  if (src.ats === 'lever') {
+    return parseLever(await getJson(fetchFn, `https://api.lever.co/v0/postings/${encodeURIComponent(src.token)}?mode=json`), src)
+  }
+  if (src.ats === 'workable') {
+    return parseWorkable(await getJson(fetchFn, `https://apply.workable.com/api/v1/widget/accounts/${encodeURIComponent(src.token)}?details=true`), src)
+  }
+  if (src.ats === 'smartrecruiters') {
+    const base = `https://api.smartrecruiters.com/v1/companies/${encodeURIComponent(src.token)}/postings`
+    const items = []
+    for (let offset = 0; offset < 1000; offset += 100) {
+      const page = await getJson(fetchFn, `${base}?limit=100&offset=${offset}`)
+      items.push(...(page.content ?? []))
+      if ((page.content ?? []).length < 100 || items.length >= (page.totalFound ?? 0)) break
+    }
+    const wanted = items.filter((p) => keepTitle(String(p.name ?? ''))).slice(0, maxWorkdayDetails)
+    const jobs = []
+    for (let i = 0; i < wanted.length; i += 6) {
+      const batch = await Promise.allSettled(wanted.slice(i, i + 6).map((p) => getJson(fetchFn, `${base}/${encodeURIComponent(p.id)}`)))
+      for (const r of batch) if (r.status === 'fulfilled') jobs.push(parseSmartRecruitersDetail(r.value, src))
+    }
+    return jobs
+  }
+  if (src.ats === 'workday') {
+    const base = `https://${src.host}/wday/cxs/${src.tenant}/${src.site}`
+    const paths = new Map()
+    // The searches run side by side; each pages through its own results.
+    await Promise.all(
+      WORKDAY_QUERIES.map(async (q) => {
+        for (let offset = 0; offset < 100; offset += 20) {
+          const page = await getJson(fetchFn, `${base}/jobs`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({ appliedFacets: {}, limit: 20, offset, searchText: q }),
+          })
+          const items = (page.jobPostings ?? []).map((it) => parseWorkdayListItem(it))
+          for (const it of items) if (it.path && keepTitle(it.title)) paths.set(it.path, it)
+          if (items.length < 20) break
+        }
+      }),
+    )
+    // Detail calls six at a time: polite to the server, and much faster than one by one.
+    const wanted = [...paths.values()].slice(0, maxWorkdayDetails)
+    const jobs = []
+    for (let i = 0; i < wanted.length; i += 6) {
+      const batch = await Promise.allSettled(wanted.slice(i, i + 6).map((it) => getJson(fetchFn, `${base}${it.path}`, { headers: { Accept: 'application/json' } })))
+      for (const r of batch) if (r.status === 'fulfilled') jobs.push(parseWorkdayDetail(r.value, src)) // a missing posting does not stop the rest
+    }
+    return jobs
+  }
+  throw new Error(`Unknown job board type "${src.ats}"`)
+}

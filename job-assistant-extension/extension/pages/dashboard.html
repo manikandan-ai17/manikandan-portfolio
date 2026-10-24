@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Job Assistant — Dashboard</title>
+    <link rel="stylesheet" href="ui.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="spread">
+        <div>
+          <div class="heading">Job Application Assistant</div>
+          <div class="subheading" id="who">Roles that match your verified experience</div>
+        </div>
+        <div class="row">
+          <button class="btn primary" id="run">▶ Run search</button>
+          <button class="btn" id="rescore" title="Re-check the saved jobs against your current profile, without downloading again">Re-check</button>
+          <a class="btn" href="profile.html">Profile</a>
+        </div>
+      </div>
+      <div id="banners" class="stack"></div>
+      <div id="progress" class="card stack" hidden>
+        <div class="spread"><b id="progressText">Searching…</b><span class="muted small" id="progressCount"></span></div>
+        <div class="progress"><div id="progressBar" style="width:0"></div></div>
+      </div>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="matches" role="tab">Matches</button>
+        <button class="tab" data-tab="auto" role="tab">Auto-apply</button>
+        <button class="tab" data-tab="apps" role="tab">Applications</button>
+        <button class="tab" data-tab="sources" role="tab">Last run</button>
+      </div>
+      <section id="matches"></section>
+      <section id="auto" hidden class="stack"></section>
+      <section id="apps" hidden></section>
+      <section id="sources" hidden></section>
+    </div>
+    <script type="module" src="dashboard.js"></script>
+  </body>
+</html>
