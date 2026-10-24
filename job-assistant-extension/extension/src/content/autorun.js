@@ -16,7 +16,25 @@
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
   const clean = (s) => String(s ?? '').replace(/[_*]+/g, ' ').replace(/\s+/g, ' ').trim()
   const textOf = (n) => (n ? n.innerText ?? n.textContent ?? '' : '')
-  const CONFIRM_RE = /thank you for (applying|your application|your interest in)|application (has been |was )?(successfully )?(submitted|received|sent)|we('ve| have) received your application|successfully submitted|your application (was|has been) (sent|submitted|received)/i
+  // Saved answers ("Questions for you"): the same keys as src/lib/answerBank.js.
+  const normQ = (s) => String(s ?? '').toLowerCase().replace(/[*✱]/g, ' ').replace(/\(.*?\)/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim()
+  const normCo = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '')
+  const bankKey = (label, company, scope) => (scope === 'company' ? `${normCo(company)}|${normQ(label)}` : normQ(label))
+  const fromBank = (bank, label, company) => bank[bankKey(label, company, 'company')] ?? bank[bankKey(label, company, 'all')] ?? null
+  /** A saved answer as a decision for this kind of control, or null when it does not fit this form's options. */
+  function toDecision(kind, answer, options) {
+    const a = clean(answer)
+    if (['select', 'radio', 'combobox', 'yesno'].includes(kind)) {
+      const exact = options.find((o) => clean(o).toLowerCase() === a.toLowerCase())
+      const yn = /^(yes|no)$/i.test(a) ? AQ.yesNoOption(options, /^yes$/i.test(a)) : null
+      return exact || yn ? { action: 'set', option: exact ?? yn } : kind === 'combobox' && !options.length ? { action: 'set', value: a } : null
+    }
+    if (kind === 'checkbox') return { action: 'set', checked: /^(yes|true|y|ticked)$/i.test(a) }
+    if (kind === 'text' || kind === 'textarea') return { action: 'set', value: a }
+    return null
+  }
+
+  const CONFIRM_RE =/thank you for (applying|your application|your interest in)|application (has been |was )?(successfully )?(submitted|received|sent)|we('ve| have) received your application|successfully submitted|your application (was|has been) (sent|submitted|received)/i
   const CONFIRM_URL = /\/(confirmation|thanks?|thank-you|submitted|success|complete)(\/|\?|$)/i
 
   let run = null
@@ -96,7 +114,8 @@
           radioDone.add(`cb:${el.name}`)
           out.push({ kind: 'checkgroup', el, label: groupLabel(el, same.map(optionLabel)), options: same.map(optionLabel), required: same.some((c) => c.required), done: same.some((c) => c.checked), f })
         } else {
-          const label = [own, groupLabel(el, [own])].filter(Boolean).join(' ')
+          // A box with its own wording ("I agree to …") is that question; only a bare box borrows the nearby label.
+          const label = own.length >= 15 ? own : [own, groupLabel(el, [own])].filter(Boolean).join(' ')
           out.push({ kind: 'checkbox', el, label, options: [], required: isRequired(el, label), done: el.checked, f })
         }
       } else if (el.tagName === 'SELECT') {
@@ -276,7 +295,8 @@
     const { profile, pending, tracker } = await A.context()
     if (!profile) return report({ status: 'failed', reason: 'The assistant has no profile yet. Open Profile once.' })
     const settings = (await store.get('settings')).settings ?? {}
-    const auto = { ...(settings.autoApply ?? {}) }
+    // The dashboard puts the full settings (with defaults for anything you never saved) on the run.
+    const auto = { ...(run.auto ?? settings.autoApply ?? {}) }
     const job = run.job ?? { company: run.company, title: run.title, locations: [], remote: null }
     const needs = []
     const notes = []
@@ -285,29 +305,59 @@
     if (filled.error) return report({ status: 'failed', reason: filled.error })
     for (const m of filled.missing) needs.push(`Not in your profile: ${m}`)
 
-    // Questions the profile can answer (visa, relocation, consent, demographics …)
+    // Order of trust for every other question: (1) an answer you saved in "Questions for you", (2) the rules
+    // that read your profile (visa, relocation, consent, demographics …), (3) a Gemini answer that quotes your
+    // profile — checked in the background — and only then (4) ask you. Nothing is guessed.
+    const { answerBank = {} } = await store.get('answerBank')
+    const questions = []
+    const ask = (label, kind, options, why, scope = 'all') => {
+      if (/Legal agreement|CAPTCHA|could not set/i.test(why)) return
+      questions.push({ key: bankKey(label, job.company, scope), label: clean(label).slice(0, 300), kind, options: (options ?? []).slice(0, 30), why, company: job.company, scope })
+    }
     const handled = new Set()
     const written = new Set(A.writtenQuestions().map((q) => q.el))
     for (const c of collect()) {
       if (c.done || written.has(c.el) || c.f.verdict.action === 'fill') continue
       let options = c.options
       if (c.kind === 'combobox') options = await readComboOptions(c.el)
-      const d = AQ.decide({ label: c.label, kind: c.kind === 'checkgroup' ? 'checkbox' : c.kind === 'yesno' ? 'radio' : c.kind, options, required: c.required }, { profile, job, settings: auto, tracker })
-      if (c.kind === 'checkgroup' && d.action === 'set') { needs.push(`Pick yourself: ${c.label}`); continue }
+      const kind = c.kind === 'checkgroup' ? 'checkbox' : c.kind === 'yesno' ? 'radio' : c.kind
+      const saved = fromBank(answerBank, c.label, job.company)
+      let d = saved ? toDecision(c.kind, saved.answer, options) : null
+      let source = d ? 'your saved answer' : ''
+      if (!d) {
+        d = AQ.decide({ label: c.label, kind, options, required: c.required }, { profile, job, settings: auto, tracker })
+        source = 'profile rules'
+      }
+      if (c.kind === 'checkgroup' && d.action === 'set') { needs.push(`Pick yourself: ${c.label}`); ask(c.label, 'checkgroup', options, 'Several boxes can apply'); continue }
       if (d.action === 'leave') continue
-      if (d.action === 'needs_you') { needs.push(`${clean(c.label).slice(0, 90)} — ${d.why}`); continue }
+      if (d.action === 'needs_you' && auto.allowAi && options.length && ['select', 'radio', 'combobox', 'yesno'].includes(c.kind)) {
+        const r = await chrome.runtime.sendMessage({ type: 'aiChoice', question: c.label, options, job }).catch(() => null)
+        if (r?.result) { d = { action: 'set', option: r.result.answer }; source = `AI, from your profile: “${String(r.result.evidence).slice(0, 60)}”` }
+      }
+      if (d.action === 'needs_you') { needs.push(`${clean(c.label).slice(0, 90)} — ${d.why}`); ask(c.label, c.kind, options, d.why); continue }
       if (await apply(c, d)) {
         handled.add(c.el)
-        notes.push(`${clean(c.label).slice(0, 70)} → ${d.option ?? d.value ?? (d.checked ? 'ticked' : 'unticked')}`)
+        notes.push(`${clean(c.label).slice(0, 70)} → ${d.option ?? d.value ?? (d.checked ? 'ticked' : 'unticked')} (${source})`)
       } else needs.push(`${clean(c.label).slice(0, 90)} — could not set the answer on this form`)
     }
 
-    // Written questions: only answers that came from your profile, your approved answers, or (if allowed) a checked AI draft.
+    // Written questions: your saved answer for this company, otherwise a draft from your profile / approved answers,
+    // or (if allowed) a checked AI draft. Drafts with [brackets] or unsupported claims are never used.
     const qs = A.writtenQuestions()
-    if (qs.length) {
+    const toDraft = []
+    for (const q of qs) {
+      const saved = fromBank(answerBank, q.text, job.company)
+      if (saved?.answer) {
+        A.setValue(q.el, saved.answer)
+        A.inserted.set(q.text, saved.answer)
+        handled.add(q.el)
+        notes.push(`${clean(q.text).slice(0, 70)} → your saved answer`)
+      } else toDraft.push(q)
+    }
+    if (toDraft.length) {
       try {
-        const drafts = await A.draftWritten(qs, { preferAi: Boolean(auto.allowAi) })
-        for (const q of qs) {
+        const drafts = await A.draftWritten(toDraft, { preferAi: Boolean(auto.allowAi) })
+        for (const q of toDraft) {
           const d = drafts.find((x) => x.id === q.id)
           const required = isRequired(q.el, q.text)
           const blocking = (d?.issues ?? []).some((i) => i.blocking)
@@ -317,10 +367,13 @@
             A.inserted.set(q.text, d.text)
             handled.add(q.el)
             notes.push(`${clean(q.text).slice(0, 70)} → written answer (${d.source})`)
-          } else if (required) needs.push(`${clean(q.text).slice(0, 90)} — ${d?.note ?? 'needs your own answer'}`)
+          } else if (required) {
+            needs.push(`${clean(q.text).slice(0, 90)} — ${d?.note ?? 'needs your own answer'}`)
+            ask(q.text, 'written', [], d?.text ? `A draft is ready but needs you: ${(d.issues ?? []).map((i) => i.text).join('; ').slice(0, 160)}` : d?.note ?? 'Needs your own words', 'company')
+          }
         }
       } catch (err) {
-        for (const q of qs) if (isRequired(q.el, q.text)) needs.push(`${clean(q.text).slice(0, 90)} — drafting failed: ${err.message}`)
+        for (const q of toDraft) if (isRequired(q.el, q.text)) needs.push(`${clean(q.text).slice(0, 90)} — drafting failed: ${err.message}`)
       }
     }
 
@@ -338,7 +391,7 @@
     const unique = [...new Set(needs)]
     const cap = A.captcha()
     if (cap.challenge) unique.push('A CAPTCHA challenge is showing — complete it yourself')
-    if (unique.length) return report({ status: 'needs_you', reasons: unique.slice(0, 12), filled: filled.filled, notes })
+    if (unique.length) return report({ status: 'needs_you', reasons: unique.slice(0, 12), filled: filled.filled, notes, questions })
 
     if (run.dryRun) return report({ status: 'dry_run', filled: filled.filled, notes })
 

@@ -44,28 +44,64 @@ site build (`tsc` on `src/` + Vite) does not include this folder.
 
 ## Auto-apply (optional)
 
-Profile → **Auto-apply** → tick *Turn on auto-apply*. Leave **Dry run** ticked at first. Then Dashboard →
-**Auto-apply** tab → **▶ Dry-run N jobs**.
+Profile → **Auto-apply** → tick *Turn on auto-apply*. Leave **Dry run** ticked at first. Add your Gemini key under
+**AI drafting** and write **What you are looking for** under *In your own words* (it answers "Why do you want to
+join …?"). Then click **▶ Run** in the popup (or on the Dashboard's **Auto-apply** tab).
 
-What it does, per job, in a background tab it opens itself:
+### One-click Run
+
+One Run, in the dashboard tab it opens (keep that tab open until it says *Run finished*):
+
+1. Reads every enabled company job board again and scores each engineering role against your profile.
+2. Picks the best Strong/Good job **per company**, skipping: companies you already applied to (tracker or an earlier
+   Run), jobs a Run already finished, roles whose location does not fit (*Where* setting: countries you may work in
+   or remote, by default), and a second job at a company whose first form is still waiting for you.
+3. Asks **Gemini** whether the job really fits (years, degree, language, location, seniority — only from your
+   profile facts and the posting). A *skip* is recorded with its reason and never retried. If the check itself fails,
+   the job is skipped for this Run only.
+4. Applies (steps below) until **5 applications** went through (setting: *Applications per Run*), or 12 forms were
+   tried, or the suitable jobs ran out. Fewer than 5 is normal: it never applies to an unsuitable job to reach 5.
+5. Records every job in **Job history** (applied, needs you, failed, poor fit), shows a notification with the
+   totals, and lists form questions your profile could not answer under **Questions for you**. Answer one there and
+   the next Run retries the jobs that asked it; written answers are kept per company, factual ones reused everywhere.
+
+Failed forms are retried once on a later Run; *Applied* and *Check the tab* (Submit clicked, no confirmation seen)
+are never retried. A dry run is not counted as applied, so the same jobs are tried again once you go live.
+
+Every few hours (setting, default 6; 0 = off) the extension also checks the boards in the background and notifies
+you once about new Strong/Good jobs at companies you have not applied to. It does not apply on its own; Run does.
+
+### What happens on each form
+
+In a background tab it opens itself:
 
 1. Fills your details and attaches your resume (and the template cover letter, if the form has a box).
 2. Answers the other required questions **only from what you typed in Profile**: work authorization and visa
    sponsorship (from your countries and your yes/no answers), relocation, notice period, "how did you hear" (company
    careers page), consent/privacy boxes (if allowed), diversity questions (**"prefer not to say"**, never a guess), and
-   written questions from your approved answers or profile-built drafts (AI drafts only if you allow them).
+   written questions from your saved answers, approved answers, checked AI drafts or profile-built drafts.
+   An unusual multiple-choice question ("Do you have experience with X?") is answered by Gemini **only** when it
+   quotes the profile text that proves the answer and that quote really is in your profile; otherwise you are asked.
 3. Checks every required field is filled. If **anything** is missing, a CAPTCHA appears, a legal agreement
    (arbitration, non-compete, NDA) is required, or no rule covers a question, it **stops without submitting** and
    lists exactly why under *Results* — the tab stays open so you can finish it yourself.
 4. Dry run: stops here and leaves the filled tab open for you to check. Live: clicks the site's own Submit, waits for its
    confirmation, and records the application (Applications tab, marked *via auto-apply*).
 
+Greenhouse jobs that a company lists on its own careers site (MongoDB, Stripe, Okta, Elastic, Databricks …) are
+applied to through Greenhouse's own copy of the same form (`job-boards.greenhouse.io/embed/job_app?…`), because the
+careers-site version sits in a frame the assistant cannot drive.
+
 Guard rails: only Greenhouse, Lever and Ashby company pages (never LinkedIn, Indeed, Wellfound); minimum match (Good
 or Strong); a daily limit (default 10 live) and a pause between applications; no duplicates (the tracker); needs a
 resume and your Profile answers (phone, city, countries, visa, relocation). It assumes you were **not referred** —
 turn it off for a referred job. Keep the dashboard tab open while the queue runs; **Stop** ends it after the current job.
 
-**Verified so far:** the answer rules and the whole fill → submit → confirm flow on test forms (`npm test`);
+**Verified so far:** the answer rules and the whole fill → submit → confirm flow on test forms (`npm test`); the
+whole one-click Run in a real Chromium with the real extension loaded, against local copies of the boards, forms and
+Gemini (`npm run e2e`: 3 suitable companies applied to, one job per company, a previously applied company, a US-only
+remote role and a poor AI fit skipped, nothing applied on the second Run); Greenhouse's embedded form page loads with
+the full application form for MongoDB, Stripe, Okta, Elastic and Twilio jobs (opened, nothing submitted);
 form detection, dropdown opening/reading/selection (react-select) and Yes/No answers on a **real** Anthropic
 Greenhouse application page (nothing submitted); Ashby's Yes/No button groups detected on a real Cohere page
 (detection only: Ashby saves answers as they are typed). **Not verified:** a real submission and the real
@@ -130,9 +166,10 @@ engineering roles all ask for 3+ years or are Staff level.
 - The assistant never opens LinkedIn, Indeed or Wellfound pages; LinkedIn data comes from LinkedIn's own export.
   It stores no passwords and logs in nowhere — you sign in to job sites yourself.
 - Job data comes from the companies' own public job-board APIs.
-- Your API key (optional) is kept in extension storage and sent only to `api.anthropic.com`. Anyone with access
+- Your API keys (optional) are kept in extension storage and sent only to their provider (`api.anthropic.com` or
+  `generativelanguage.googleapis.com`, in a header, never in a URL). Anyone with access
   to this browser profile could read it: use a key with a spending limit and remove it when not in use.
-- **Auto-apply submits applications in your name.** Every answer it gives comes from your Profile; check a dry run first and keep the daily limit low. Nothing is sent anywhere except the company's own form (and your Anthropic key's requests to api.anthropic.com if you allow AI drafts).
+- **Auto-apply submits applications in your name.** Every answer it gives comes from your Profile; check a dry run first and keep the daily limit low. Nothing is sent anywhere except the company's own form (and your AI provider, for fit checks and drafts).
 - **Filling a form sends data to the company before you submit, on some sites.** Seen in testing: Ashby (OpenAI,
   ElevenLabs, Mistral …) saves each answer as it is filled, and both Greenhouse and Ashby upload an attached
   resume immediately — exactly as when you attach it yourself. The panel warns on Ashby pages. Fill (and put
@@ -153,7 +190,9 @@ engineering roles all ask for 3+ years or are Staff level.
 
 ```bash
 npm install
-npm test               # 66 tests (matcher, feeds, tracker, LinkedIn import, letters, answers, form filling, auto-apply)
+npm test               # 87 tests (matcher, feeds, tracker, LinkedIn import, letters, answers, form filling, auto-apply, one-click Run)
+npm run e2e            # one-click Run in real Chromium with the extension loaded; all network is local fakes
+                       # (needs: npx playwright-core install chromium, and openssl on PATH)
 npm run sync-profile   # after editing ../src/data/portfolio.ts: regenerate the verified profile
 npm run vendor         # rebuild the bundled Anthropic SDK (extension/src/vendor)
 npm run icons

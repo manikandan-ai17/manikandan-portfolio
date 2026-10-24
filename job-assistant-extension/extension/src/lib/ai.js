@@ -20,7 +20,7 @@ export const hasAi = (settings) => Boolean(aiConfig(settings))
 export const providerName = (cfg) => (cfg?.provider === 'gemini' ? 'Gemini' : 'Claude')
 
 /** One Gemini call. Returns { text, model, truncated }. Throws an Error with a readable message. */
-export async function geminiGenerate({ apiKey, model = GEMINI_DEFAULT_MODEL, system, user, maxOutputTokens = 4096, temperature = 0.4, fetchFn = fetch }) {
+export async function geminiGenerate({ apiKey, model = GEMINI_DEFAULT_MODEL, system, user, maxOutputTokens = 4096, temperature = 0.4, schema = null, fetchFn = fetch }) {
   if (!apiKey) throw new Error('Add your Gemini API key in Profile → AI drafting first.')
   let res
   try {
@@ -31,7 +31,7 @@ export async function geminiGenerate({ apiKey, model = GEMINI_DEFAULT_MODEL, sys
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: system }] },
         contents: [{ role: 'user', parts: [{ text: user }] }],
-        generationConfig: { maxOutputTokens, temperature },
+        generationConfig: { maxOutputTokens, temperature, ...(schema ? { responseMimeType: 'application/json', responseSchema: schema } : {}) },
       }),
     })
   } catch (err) {

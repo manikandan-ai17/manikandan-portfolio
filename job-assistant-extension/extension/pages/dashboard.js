@@ -6,7 +6,7 @@ import { missingInfo, skillEvidence } from '../src/lib/profile.js'
 import { runSearch } from '../src/lib/pipeline.js'
 import { scoreJob, VERDICT_LABEL } from '../src/lib/match.js'
 import { templateCoverLetter, aiCoverLetter, checkLetter } from '../src/lib/coverLetter.js'
-import { renderAutoTab, onQueueChange } from './autoapply.js'
+import { renderAutoTab, onQueueChange, oneClickRun } from './autoapply.js'
 import { aiConfig, hasAi, providerName } from '../src/lib/ai.js'
 
 const $ = (id) => document.getElementById(id)
@@ -407,7 +407,8 @@ for (const t of document.querySelectorAll('.tab')) {
   }
 }
 
-const renderAuto = () => renderAutoTab($('auto'), state, allJobs)
+const renderAuto = () => renderAutoTab($('auto'), state, allJobs, { search: run })
+const showTab = (name) => document.querySelector(`.tab[data-tab="${name}"]`)?.click()
 onQueueChange(renderAuto)
 
 function renderAll() {
@@ -419,7 +420,7 @@ function renderAll() {
 }
 
 chrome.storage.onChanged.addListener((changes) => {
-  if (changes.autoApplyLog || changes.autoApplyRun || changes.settings) renderAuto()
+  if (changes.autoApplyLog || changes.autoApplyRun || changes.settings || changes.processedJobs || changes.pendingQuestions || changes.lastRun) renderAuto()
   if (changes.tracker) {
     state.tracker = changes.tracker.newValue ?? {}
     renderApps()
@@ -434,4 +435,14 @@ if (location.hash === '#add') history.replaceState(null, '', location.pathname)
 if (location.hash === '#run') {
   history.replaceState(null, '', location.pathname)
   run()
+}
+if (location.hash === '#auto') {
+  history.replaceState(null, '', location.pathname)
+  showTab('auto')
+}
+// The popup's Run: search, then apply to up to N suitable companies. Keep this tab open until it finishes.
+if (location.hash === '#autorun') {
+  history.replaceState(null, '', location.pathname)
+  showTab('auto')
+  oneClickRun(state, { search: run, allJobs })
 }

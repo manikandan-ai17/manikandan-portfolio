@@ -17,6 +17,11 @@ describe('job-board feeds', () => {
     expect(j).toMatchObject({ key: 'greenhouse:acme:5456619008', title: 'AI Engineer, New Grad', locations: ['San Francisco, CA', 'Remote'], remote: true, applyUrl: GH.jobs[0].absolute_url })
     expect(j.description).toBe('Build with Python & LLMs.\n• FastAPI')
   })
+  it('Greenhouse: a job listed on the company’s own careers site is applied to through Greenhouse’s own form page', () => {
+    const [j] = parseGreenhouse({ jobs: [{ ...GH.jobs[0], id: 8209134, absolute_url: 'https://www.mongodb.com/careers/job/?gh_jid=8209134' }] }, { company: 'MongoDB', token: 'mongodb' })
+    expect(j.url).toBe('https://www.mongodb.com/careers/job/?gh_jid=8209134')
+    expect(j.applyUrl).toBe('https://job-boards.greenhouse.io/embed/job_app?for=mongodb&token=8209134')
+  })
   it('Ashby: skips unlisted jobs and keeps the application URL', () => {
     const jobs = parseAshby(ASHBY, { company: 'ElevenLabs', token: 'elevenlabs' })
     expect(jobs).toHaveLength(1)

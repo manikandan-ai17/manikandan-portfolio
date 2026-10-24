@@ -1,12 +1,12 @@
 import { h, fmtDate } from './ui.js'
-import { get, loadProfile } from '../src/lib/store.js'
+import { get, loadProfile, loadSettings } from '../src/lib/store.js'
+import { loadAuto } from '../src/lib/autoapply.js'
 import { missingInfo } from '../src/lib/profile.js'
 
 const open = (page) => {
   chrome.tabs.create({ url: chrome.runtime.getURL(`pages/${page}`) })
   window.close()
 }
-document.getElementById('run').onclick = () => open('dashboard.html#run')
 document.getElementById('dash').onclick = () => open('dashboard.html')
 document.getElementById('profile').onclick = () => open('profile.html')
 
@@ -50,6 +50,12 @@ if (missing.length) {
   )
 }
 
+const auto = loadAuto(await loadSettings())
+const runBtn = document.getElementById('run')
+runBtn.textContent = auto.enabled ? `▶ Run — find jobs and ${auto.dryRun ? 'dry-run' : 'apply to'} up to ${auto.targetPerRun}` : '▶ Run — find matching jobs'
+runBtn.onclick = () => open(auto.enabled ? 'dashboard.html#autorun' : 'dashboard.html#run')
+const lastRun = await get('lastRun')
+
 const recs = Object.values(tracker)
 const c = meta?.counts ?? {}
 document.getElementById('stats').append(
@@ -57,4 +63,8 @@ document.getElementById('stats').append(
   h('span', { class: 'muted' }, 'Strong / good matches'), h('b', {}, meta ? `${c.strong ?? 0} / ${c.good ?? 0}` : '—'),
   h('span', { class: 'muted' }, 'Applied'), h('b', {}, recs.filter((r) => ['applied', 'interviewing', 'offer'].includes(r.status)).length),
   h('span', { class: 'muted' }, 'Being prepared'), h('b', {}, recs.filter((r) => ['shortlisted', 'preparing'].includes(r.status)).length),
+  h('span', { class: 'muted' }, 'Auto-apply'), h('b', {}, auto.enabled ? (auto.dryRun ? 'DRY RUN' : 'LIVE') : 'OFF'),
+  ...(lastRun ? [h('span', { class: 'muted' }, `Last Run (${fmtDate(lastRun.at)})`), h('b', {}, `${lastRun.applied.length} ${lastRun.dryRun ? 'filled' : 'applied'} · ${lastRun.needsYou.length} need you`)] : []),
 )
+const pendingQs = Object.keys(await get('pendingQuestions', {})).length
+if (pendingQs) document.getElementById('missing').append(h('div', { class: 'banner small' }, `${pendingQs} question${pendingQs === 1 ? '' : 's'} from application forms need your answer. `, h('a', { href: '#', onclick: (e) => (e.preventDefault(), open('dashboard.html#auto')) }, 'Answer them')))

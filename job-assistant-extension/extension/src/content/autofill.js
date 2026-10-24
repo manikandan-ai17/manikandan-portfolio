@@ -106,6 +106,9 @@
     el.dispatchEvent(new Event('input', { bubbles: true }))
     el.dispatchEvent(new Event('change', { bubbles: true }))
     const name = (resume.fileName || '').toLowerCase()
+    // A plain upload field in a form that posts files: the browser itself sends the attached file on Submit.
+    const form = el.closest('form')
+    if (el.files?.[0]?.name === (resume.fileName || 'resume.pdf') && form && /multipart\/form-data/i.test(form.enctype) && !el.closest('[class*="upload" i], [class*="dropzone" i]')) return true
     for (let i = 0; i < 27; i++) {
       await new Promise((r) => setTimeout(r, 300))
       if (!el.isConnected || (name && textOf(document.body).toLowerCase().includes(name))) return true

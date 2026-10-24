@@ -39,6 +39,25 @@ export const DEFAULT_SOURCES = [
   { company: 'SambaNova', ats: 'greenhouse', token: 'sambanovasystems', enabled: true },
   { company: 'Character.AI', ats: 'ashby', token: 'character', enabled: true },
   { company: 'Lovable', ats: 'ashby', token: 'lovable', enabled: true },
+  // Added 23 Oct 2026 — each checked live to have non-senior engineering roles in India or open to remote.
+  { company: 'MongoDB', ats: 'greenhouse', token: 'mongodb', enabled: true },
+  { company: 'Stripe', ats: 'greenhouse', token: 'stripe', enabled: true },
+  { company: 'Okta', ats: 'greenhouse', token: 'okta', enabled: true },
+  { company: 'Twilio', ats: 'greenhouse', token: 'twilio', enabled: true },
+  { company: 'GitLab', ats: 'greenhouse', token: 'gitlab', enabled: true },
+  { company: 'Elastic', ats: 'greenhouse', token: 'elastic', enabled: true },
+  { company: 'Rubrik', ats: 'greenhouse', token: 'rubrik', enabled: true },
+  { company: 'HackerRank', ats: 'greenhouse', token: 'hackerrank', enabled: true },
+  { company: 'HighRadius', ats: 'greenhouse', token: 'highradius', enabled: true },
+  { company: 'Turing', ats: 'greenhouse', token: 'turing', enabled: true },
+  { company: 'Druva', ats: 'greenhouse', token: 'druva', enabled: true },
+  { company: 'Observe.AI', ats: 'greenhouse', token: 'observeai', enabled: true },
+  { company: 'Meesho', ats: 'lever', token: 'meesho', enabled: true },
+  { company: 'FamPay', ats: 'lever', token: 'fampay', enabled: true },
+  { company: 'Zeta', ats: 'lever', token: 'zeta', enabled: true },
+  { company: 'Notion', ats: 'ashby', token: 'notion', enabled: true },
+  { company: 'Supabase', ats: 'ashby', token: 'supabase', enabled: true },
+  { company: 'PostHog', ats: 'ashby', token: 'posthog', enabled: true },
 ]
 
 /** The job site a URL belongs to, for the tracker. */
@@ -138,6 +157,17 @@ const isRemoteText = (s) => /\bremote\b|\banywhere\b|\bdistributed\b/i.test(s)
 
 // ── Greenhouse ───────────────────────────────────────────────────────────────
 
+// Many companies (MongoDB, Stripe, Okta, Elastic, Databricks …) link their Greenhouse jobs to their own careers
+// site, where the form sits in an iframe the assistant cannot drive. Greenhouse serves that same form on its own
+// domain, so the application link points there.
+const GREENHOUSE_HOST = /^(job-boards|boards)(\.eu)?\.greenhouse\.io$/
+export function greenhouseApplyUrl(j, src) {
+  let host = ''
+  try { host = new URL(j.absolute_url).hostname } catch { /* no link */ }
+  if (GREENHOUSE_HOST.test(host)) return j.absolute_url
+  return `https://job-boards.greenhouse.io/embed/job_app?for=${encodeURIComponent(src.token)}&token=${encodeURIComponent(j.id)}`
+}
+
 export function parseGreenhouse(json, src) {
   return (json?.jobs ?? []).map((j) => {
     const locations = splitLocations(j.location?.name)
@@ -152,7 +182,7 @@ export function parseGreenhouse(json, src) {
       remote: /remote/i.test(String(locType ?? '')) || locations.some(isRemoteText) || null,
       employmentType: employmentTypeOf(null, j.title),
       url: j.absolute_url,
-      applyUrl: j.absolute_url,
+      applyUrl: greenhouseApplyUrl(j, src),
       description: htmlToText(j.content),
       postedAt: iso(j.first_published ?? j.updated_at),
       compensation: null,

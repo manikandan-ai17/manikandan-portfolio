@@ -38,7 +38,7 @@ export function classifyQuestion(q) {
   if (/tell (us|me) (a bit |a little )?about (yourself|you)\b|introduce yourself|^about (you|yourself)|your background|describe yourself|who are you/i.test(s)) return 'about_you'
   if (/(most |a )?(impactful|proud|significant|meaningful|interesting|favou?rite|best) (project|work|thing you('ve| have) built)|project (you are|you're) (most )?proud|tell us about (a|one) project|something you('ve| have) built/i.test(s)) return 'impactful_project'
   if (/(good|great|strong|right) fit|why (should we|would we) hire|what makes you (qualified|a good|the right)|why (this|the) role|why are you (interested in|applying (for|to)) (this|the) (role|position)|relevant experience|qualif/i.test(s)) return 'why_role'
-  if (/why .*(join|work (at|for|with)|interested in|excite|apply(ing)? (to|at))|why (us|[A-Z][\w.&-]+\??$)|what (draws|attracts|excites) you|motivat/i.test(s)) return 'why_company'
+  if (/why .*(join|work (at|for|with|here)|interested in|excite|apply(ing)? (to|at))|why (us|[A-Z][\w.&-]+\??$)|what (draws|attracts|excites) you|motivat/i.test(s)) return 'why_company'
   if (/technical (problem|challenge)|hard(est)? (bug|problem)|difficult (problem|technical)|debug|challenge you (faced|solved)/i.test(s)) return 'technical_example'
   if (/ai tools?|llm|copilot|chatgpt|claude|cursor|how do you use ai|ai workflow/i.test(s)) return 'ai_usage'
   return 'open'
@@ -162,10 +162,14 @@ export function templateAnswer(question, { profile, job, match }) {
 
   if (kind === 'why_company') {
     const duties = matchingDuties(job, match, 1)
+    // With your own words about what you want, the answer connects them to this posting's own text — no invented
+    // admiration for the company. Without them, it asks you.
     text = [
       mine.lookingFor ? mine.lookingFor.trim() : '',
-      ASK(`your own reason for wanting to work at ${company} — something specific you know or care about`),
-      duties.length ? `The role also matches what I've been doing: “${duties[0]}” is close to my work on the ${projects[0]?.name ?? 'projects in my portfolio'}.` : '',
+      mine.lookingFor && duties.length ? `That is why this ${role} role at ${company} stands out to me: the posting asks for “${duties[0]}”, which is close to my work on the ${projects[0]?.name ?? 'projects in my portfolio'}.` : '',
+      mine.lookingFor && !duties.length ? `This ${role} role at ${company} is the kind of work I want to grow in.` : '',
+      mine.lookingFor ? '' : ASK(`your own reason for wanting to work at ${company} — something specific you know or care about`),
+      !mine.lookingFor && duties.length ? `The role also matches what I've been doing: “${duties[0]}” is close to my work on the ${projects[0]?.name ?? 'projects in my portfolio'}.` : '',
     ].filter(Boolean).join(' ')
   }
 
@@ -210,6 +214,7 @@ Strict rules:
 - Say a technology was used at work only if it appears in an EXPERIENCE entry; project-only technologies are "in a project"; EDUCATION notes are coursework.
 - Projects marked private, partial or reassigned must be described with that status.
 - Describe what was built and what it does, not what it achieved. Never claim impact, results, savings, improvements or benefits to clients, users or the business unless PROFILE states that exact outcome. Do not call anything "unique", "innovative" or "best".
+- "Why this company / role" questions: when MY_WORDS.lookingFor is set, use it as the reason and connect it to concrete items quoted from the JOB DESCRIPTION and matching PROFILE facts. Do not claim knowledge of, or admiration for, the company beyond what the JOB DESCRIPTION says.
 - If the question needs something PROFILE and MY_WORDS do not contain (a personal reason, an opinion, a story, a number), write it as a short ask in square brackets, e.g. [what drew you to this company], instead of making it up.
 - Sound like a person: first person, plain words, specific details from PROFILE, varied sentences. No buzzwords ("passionate", "leverage", "synergy", "cutting-edge", "fast-paced"), no flattery of the company, no restating the question, no sign-off.
 - Plain text only. Stay within the word limit.`
@@ -285,7 +290,15 @@ export async function draftAnswer(question, ctx) {
   if (kind === 'personal' && !ai) return { ...base, text: '', source: 'none', note: 'Only you can answer this one.', needs: true, issues: [] }
   const useAi = ai && (ctx.settings.aiAnswers !== false) && (!TEMPLATE_KINDS.has(kind) || ctx.preferAi)
   let draft = !useAi ? templateAnswer(question, ctx) : null
-  if (!draft && ai) draft = await aiAnswer({ question, ...ctx, apiKey: ai.apiKey, model: ai.model, provider: ai.provider, maxWords: ctx.maxWords })
+  if (!draft && ai) {
+    try {
+      draft = await aiAnswer({ question, ...ctx, apiKey: ai.apiKey, model: ai.model, provider: ai.provider, maxWords: ctx.maxWords })
+    } catch (err) {
+      // The AI is unreachable or refused (rate limit, outage): the answer built from your profile still stands.
+      draft = TEMPLATE_KINDS.has(kind) ? templateAnswer(question, ctx) : null
+      if (!draft) throw err
+    }
+  }
   if (!draft) return { ...base, text: '', source: 'none', note: 'Write this in your own words (or add a Gemini or Anthropic key in Profile for AI drafts).', needs: true, issues: [] }
   return { ...base, ...draft, issues: checkAnswer(draft.text, ctx.profile, { maxLength: ctx.maxLength }) }
 }

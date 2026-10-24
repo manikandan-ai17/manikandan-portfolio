@@ -3,12 +3,13 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Chrome extension: finds AI roles that match your verified profile and helps you apply. Never submits for you.",
+  "description": "Chrome extension: finds AI roles that match your verified profile and helps you apply; auto-apply (opt-in, dry-run first) submits on company job boards.",
   "scripts": {
     "sync-profile": "node scripts/sync-profile.mjs",
     "vendor": "esbuild scripts/anthropic-entry.js --bundle --format=esm --platform=browser --target=chrome120 --minify --legal-comments=eof --outfile=extension/src/vendor/anthropic-sdk.js",
     "icons": "python scripts/make-icons.py",
     "test": "vitest run",
+    "e2e": "node scripts/e2e-run.mjs",
     "runner:selftest": "node runner/cli.mjs selftest",
     "runner:survey": "node runner/cli.mjs survey",
     "runner:apply": "node runner/cli.mjs apply"
