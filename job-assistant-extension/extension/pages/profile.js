@@ -1,6 +1,7 @@
 import { h, toast, download, fmtDate } from './ui.js'
 import { get, set, loadProfile, saveProfile, loadSources, loadSettings } from '../src/lib/store.js'
-import { missingInfo } from '../src/lib/profile.js'
+import { missingInfo, isBlankEdition } from '../src/lib/profile.js'
+import { parseEducation, parseExperience, parseProjects, parseSkills, formatEducation, formatExperience, formatProjects, formatSkills } from '../src/lib/identity.js'
 import { DEFAULT_AUTO } from '../src/lib/autoapply.js'
 import { GEMINI_DEFAULT_MODEL, aiConfig, geminiGenerate } from '../src/lib/ai.js'
 import { SEED_PROFILE } from '../src/lib/seedProfile.js'
@@ -129,7 +130,46 @@ function renderMyWords() {
 
 // ── Verified (read-only) ────────────────────────────────────────────────────
 
+/** Public edition: there is no portfolio to read, so these are the facts you type. Nothing is pre-filled or guessed. */
+function renderDetails() {
+  const id = profile.identity ?? {}
+  const d = {
+    fullName: profile.fullName, email: profile.email, headline: profile.headline, summary: profile.summary, country: profile.country,
+    portfolio: profile.links?.portfolio ?? '', github: profile.links?.github ?? '', linkedin: profile.links?.linkedin ?? '',
+    education: formatEducation(profile.education), experience: formatExperience(profile.experience), projects: formatProjects(profile.projects), skills: formatSkills(profile.skillGroups),
+  }
+  const input = (k, label, ph = '', type = 'text') => h('label', { class: 'field' }, label, h('input', { type, value: d[k] ?? '', placeholder: ph, oninput: (e) => (d[k] = e.target.value) }))
+  const area = (k, label, hint, ph) => h('label', { class: 'field' }, label, h('textarea', { style: 'min-height:84px', placeholder: ph, value: d[k] ?? '', oninput: (e) => (d[k] = e.target.value) }), h('span', { class: 'muted small', style: 'font-weight:400' }, hint))
+  $('verified').replaceChildren(
+    h('h2', {}, 'Your details'),
+    h('p', { class: 'muted small' }, 'Type only what is true: job matching and every answer are built from these lines, and a skill you do not list is never claimed. One entry per line; the parts are separated by “ | ”.'),
+    h('div', { class: 'grid2' }, input('fullName', 'Full name', 'Your name'), input('email', 'Email', 'you@example.com', 'email')),
+    h('div', { class: 'grid2' }, input('headline', 'Headline', 'e.g. Software Engineer'), input('country', 'Country you live in', 'e.g. India')),
+    h('label', { class: 'field' }, 'Short summary', h('textarea', { style: 'min-height:60px', placeholder: 'Two sentences about what you build', value: d.summary ?? '', oninput: (e) => (d.summary = e.target.value) })),
+    h('div', { class: 'grid2' }, input('portfolio', 'Portfolio link (optional)', 'https://…', 'url'), input('github', 'GitHub profile (optional)', 'https://github.com/you', 'url')),
+    input('linkedin', 'LinkedIn profile link (optional; the assistant never opens it)', 'https://www.linkedin.com/in/you', 'url'),
+    area('education', 'Education', 'School | Degree | 2022–2025 | CGPA 7.1 (CGPA optional)', 'Example College | B.Sc. Computer Science | 2021–2024 | CGPA 8.2'),
+    area('experience', 'Work experience (leave empty if none)', 'Title | Company | Dates | What you did | tech, tech', 'Software Engineer Intern | Acme | Jun–Dec 2024 | Built internal APIs | Python, FastAPI'),
+    area('projects', 'Projects', 'Name | What it does | tech, tech | Status (optional) | GitHub link (optional)', 'Job Tracker | Tracks applications in a local database | Python, SQLite | Finished | https://github.com/you/job-tracker'),
+    area('skills', 'Skills you can back up', 'Group: skill, skill (one group per line)', 'Languages: Python, TypeScript, SQL'),
+    h('div', {}, h('button', { class: 'btn primary', onclick: async () => {
+      profile.identity = {
+        ...id,
+        fullName: d.fullName, email: d.email, headline: d.headline, summary: d.summary, country: d.country,
+        links: { portfolio: d.portfolio.trim(), github: d.github.trim(), linkedin: d.linkedin.trim() },
+        education: parseEducation(d.education), experience: parseExperience(d.experience), projects: parseProjects(d.projects), skillGroups: parseSkills(d.skills),
+      }
+      await saveProfile(profile)
+      profile = await loadProfile()
+      await persist('Saved. Press “Re-check” on the dashboard to score the saved jobs with your details.')
+      renderDetails()
+      renderGitHub()
+    } }, 'Save my details')),
+  )
+}
+
 function renderVerified() {
+  if (isBlankEdition()) return renderDetails()
   $('verified').replaceChildren(
     h('h2', {}, 'Verified — from your portfolio'),
     h('p', { class: 'muted small' }, 'Read-only here, so the assistant cannot drift from what your site says. To change it, edit src/data/portfolio.ts, run “npm run sync-profile” in job-assistant-extension, and reload the extension.'),
@@ -162,7 +202,7 @@ function renderResumes() {
           h('td', {}, h('button', { class: 'btn small danger', onclick: () => { if (confirm(`Remove “${r.label}”?`)) { resumes = resumes.filter((x) => x.id !== r.id); saveResumes('Removed.') } } }, 'Remove')),
         ))))
       : h('p', {}, 'None yet.'),
-    h('div', { class: 'row' }, h('button', { class: 'btn', onclick: async (ev) => {
+    SEED_PROFILE.resumeUrl ? h('div', { class: 'row' }, h('button', { class: 'btn', onclick: async (ev) => {
       ev.target.disabled = true
       try {
         const r = await fetchPortfolioResume(SEED_PROFILE.resumeUrl)
@@ -170,7 +210,7 @@ function renderResumes() {
         await saveResumes('Loaded the resume from your portfolio.')
       } catch (err) { toast(err.message, 5000) }
       ev.target.disabled = false
-    } }, 'Load resume from my portfolio')),
+    } }, 'Load resume from my portfolio')) : null,
     h('div', { class: 'grid2' }, label, file),
     h('div', {}, h('button', { class: 'btn', onclick: async () => {
       const f = file.files?.[0]
@@ -221,9 +261,9 @@ function renderGitHub() {
   const g = profile.github
   $('github').replaceChildren(
     h('h2', {}, 'GitHub'),
-    h('p', { class: 'muted small' }, `Public repositories of ${profile.links.github}. Their languages and topics count as project evidence.`),
+    h('p', { class: 'muted small' }, profile.links.github ? `Public repositories of ${profile.links.github}. Their languages and topics count as project evidence.` : 'Add your GitHub profile link under Your details to load your public repositories as project evidence.'),
     g ? h('ul', { class: 'list small' }, g.repos.map((r) => h('li', {}, h('a', { href: r.url, target: '_blank' }, r.name), ` — ${r.language ?? 'no language'}${r.description ? `: ${r.description}` : ''}`))) : h('p', {}, 'Not loaded yet.'),
-    h('div', {}, h('button', { class: 'btn', onclick: async (ev) => {
+    !profile.links.github ? null : h('div', {}, h('button', { class: 'btn', onclick: async (ev) => {
       ev.target.disabled = true
       try { profile.github = await fetchGitHubRepos(profile.links.github); await persist(`Loaded ${profile.github.repos.length} repositories.`); renderGitHub() } catch (err) { toast(err.message, 5000); ev.target.disabled = false }
     } }, g ? 'Refresh from GitHub' : 'Load from GitHub')),

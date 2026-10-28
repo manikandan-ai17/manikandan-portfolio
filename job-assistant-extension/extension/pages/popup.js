@@ -41,7 +41,7 @@ document.getElementById('here').onclick = async () => {
 const profile = await loadProfile()
 const meta = await get('runMeta')
 const tracker = await get('tracker', {})
-document.getElementById('who').textContent = `${profile.fullName} · ${profile.headline}`
+document.getElementById('who').textContent = profile.fullName ? [profile.fullName, profile.headline].filter(Boolean).join(' · ') : 'Set up your profile to begin'
 
 const missing = missingInfo(profile)
 if (missing.length) {

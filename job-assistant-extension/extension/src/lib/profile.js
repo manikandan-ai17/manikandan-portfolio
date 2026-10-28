@@ -3,6 +3,10 @@
 // of you and stays empty until you fill it in: the assistant never guesses it.
 
 import { SEED_PROFILE } from './seedProfile.js'
+import { applyIdentity, missingIdentity } from './identity.js'
+
+/** The public edition ships without anyone's details; the portfolio edition reads them from the portfolio. */
+export const isBlankEdition = () => SEED_PROFILE.source === 'blank'
 
 export function defaultProfile() {
   const graduationYear = Number(SEED_PROFILE.education?.[0]?.end) || null
@@ -19,7 +23,7 @@ export function defaultProfile() {
       earliestStart: '',
       noticePeriod: '',
       // You stated about one year of experience and a B.Sc. completed in 2025.
-      yearsExperience: 1,
+      yearsExperience: SEED_PROFILE.source === 'blank' ? 0 : 1,
       graduationYear,
       currentlyEnrolled: false,
     },
@@ -32,17 +36,21 @@ export function defaultProfile() {
 }
 
 /** The fields you enter yourself; everything else always comes from the portfolio seed (so a re-sync wins). */
-export const USER_FIELDS = ['phone', 'city', 'eligibility', 'preferences', 'myWords', 'linkedin', 'github']
+export const USER_FIELDS = ['identity', 'phone', 'city', 'eligibility', 'preferences', 'myWords', 'linkedin', 'github']
 
 /** Your saved answers on top of the current verified profile. */
 export function withDefaults(stored) {
-  const d = defaultProfile()
+  const d = applyIdentity(defaultProfile(), stored?.identity)
   if (!stored) return d
+  const eligibility = { ...d.eligibility, ...(stored.eligibility ?? {}) }
+  // Your typed education decides the graduation year, whatever an earlier save held.
+  if (stored.identity?.education?.length) eligibility.graduationYear = Number(stored.identity.education[0].end) || eligibility.graduationYear
   return {
     ...d,
+    identity: stored.identity ?? null,
     phone: stored.phone ?? d.phone,
     city: stored.city ?? d.city,
-    eligibility: { ...d.eligibility, ...(stored.eligibility ?? {}) },
+    eligibility,
     preferences: { ...d.preferences, ...(stored.preferences ?? {}) },
     myWords: { ...d.myWords, ...(stored.myWords ?? {}) },
     linkedin: stored.linkedin ?? null,
@@ -58,6 +66,7 @@ export function missingInfo(p) {
   const e = p.eligibility ?? {}
   const out = []
   const need = (field, label, why) => out.push({ field, label, why })
+  if (isBlankEdition()) out.push(...missingIdentity(p))
   if (!p.phone) need('phone', 'Phone number', 'Most application forms ask for it; it is left empty until you add it.')
   if (!p.city) need('city', 'City you live in', 'Needed for "Location" questions on forms.')
   if (!e.authorizedCountries?.length) need('authorizedCountries', 'Countries you are authorized to work in', 'Used to flag roles that need a visa.')

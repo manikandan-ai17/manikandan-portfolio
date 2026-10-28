@@ -27,7 +27,7 @@ const state = {
 }
 // The application-page script reads the merged profile: keep it current.
 await saveProfile(state.profile)
-$('who').textContent = `${state.profile.fullName} · roles that match your verified experience`
+$('who').textContent = state.profile.fullName ? `${state.profile.fullName} · roles that match your verified experience` : 'Add your details in Profile to see roles that match you'
 
 // ── Banners ──────────────────────────────────────────────────────────────────
 

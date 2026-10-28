@@ -68,7 +68,7 @@ const short = (summary) => {
   }
   return /^[A-Z][a-z]+s\b/.test(s) ? `which ${lcFirst(s)}` : `${article(s)} ${lcFirst(s)}`
 }
-/** "Designing, building … at AltiusNxt." → "I'm designing, building …" (the company is said separately). */
+/** "Designing, building … at Acme." → "I'm designing, building …" (the company is said separately). */
 const doing = (e) => {
   const s = firstSentence(e.summary).replace(new RegExp(`\\s+at ${e.company.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`), '')
   return /^[A-Z][a-z]+ing\b/.test(s) ? `I'm ${lcFirst(s)}` : `I work on ${lcFirst(s)}`

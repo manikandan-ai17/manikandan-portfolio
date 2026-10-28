@@ -226,6 +226,22 @@ export const portfolioData = {
       image: '/images/p-dtlp-extension.svg',
       tech: ['JavaScript', 'Chrome MV3', 'Perplexity API', 'Gemini API', 'PDF.js'],
     },
+    {
+      id: 'job-assistant',
+      role: 'Job Application Assistant',
+      company: 'Personal project · free download',
+      date: '2026',
+      desc: 'Chrome extension that finds engineering roles on official company job boards, checks each against your own details, and fills application forms for you to review.',
+      descBullets: [
+        'Reads the public job boards of 51 companies; fills Greenhouse, Lever and Ashby forms',
+        'Dry run by default; stops and asks when an answer is not in your profile',
+        'Never runs on LinkedIn, Indeed or Wellfound',
+      ],
+      color: '#0f766e',
+      icon: '🧭',
+      image: '/images/p-job-assistant.svg',
+      tech: ['JavaScript', 'Chrome MV3', 'Gemini API', 'Playwright', 'Vitest'],
+    },
   ],
 
   openSource: [
@@ -296,6 +312,19 @@ export const portfolioData = {
       link: '#',
       color: 'from-sky-500 to-blue-600',
       image: '/images/p-dtlp-extension.svg',
+    },
+    {
+      id: 'job-assistant',
+      name: 'Job Application Assistant',
+      desc: 'Chrome extension you can install: it reads official company job boards, scores each role against your own details, optionally asks Gemini whether you really fit, and fills application forms. Dry run first; it stops and asks when it is unsure.',
+      problem: 'Finding suitable roles and re-typing the same details into every form takes hours.',
+      llm: 'Gemini API (optional)',
+      status: 'Free download · runs unpacked in Chrome',
+      metrics: ['Manifest V3', '92 automated tests', 'Never on LinkedIn'],
+      link: '/downloads/job-assistant-extension.zip',
+      color: 'from-teal-500 to-emerald-700',
+      image: '/images/p-job-assistant.svg',
+      github: 'https://github.com/manikandan-ai17/manikandan-portfolio/tree/main/job-assistant-extension',
     },
   ],
 

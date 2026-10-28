@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, ExternalLink } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Download } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { GithubIcon } from '@/components/ui/SocialIcons'
 
@@ -52,6 +52,7 @@ interface ProjectData {
   gradient: string
   image?: string
   github?: string
+  download?: { url: string; label: string }
   demo: string
   tech: string[]
 }
@@ -580,6 +581,113 @@ Results ──► JSON copied to clipboard, CSV download`,
       'Requests access to all URLs, as on-page extraction requires.',
     ],
   },
+
+  'job-assistant': {
+    name: 'Job Application Assistant',
+    tagline: 'A Chrome extension you can install: it finds engineering roles on official company job boards, checks each against your own details, and fills the application forms for you to review.',
+    gradient: 'linear-gradient(135deg, #0f766e 0%, #047857 100%)',
+    image: '/images/p-job-assistant.svg',
+    status: 'Free download · runs unpacked in Chrome',
+    statusTone: 'good',
+    llm: 'Gemini API (optional)',
+    github: 'https://github.com/manikandan-ai17/manikandan-portfolio/tree/main/job-assistant-extension',
+    download: { url: '/downloads/job-assistant-extension.zip', label: 'Download the extension (ZIP)' },
+    demo: '#',
+    tech: ['JavaScript', 'Chrome Extension (MV3)', 'Gemini API', 'Playwright', 'Vitest'],
+
+    executiveSummary:
+      'A personal project, built to make my own job search faster and then packaged so anyone can use it. It reads the public job boards that companies publish themselves, scores each engineering role against the details you type in (a skill only counts if your own details back it), explains the match, and can fill and submit application forms on Greenhouse, Lever and Ashby pages. Everything runs in your browser and stays there. Auto-apply is off by default and starts as a dry run that fills a form but does not submit it. It never runs on LinkedIn, Indeed or Wellfound.',
+
+    problem:
+      'Finding suitable roles and typing the same details into every application form takes hours, and tools that apply on your behalf tend to guess answers. This one answers only from what you told it and stops to ask when it cannot.',
+
+    architectureDiagram:
+`Popup / Dashboard / Profile (extension pages)
+   │  Run
+   ▼
+Search ──► public job-board APIs (Greenhouse, Lever, Ashby, Workable, SmartRecruiters, Workday)
+   ▼
+Match (explainable rules) ──► optional Gemini fit check
+   ▼
+Application tab ──► content script fills the form
+   │  a question your profile cannot answer?
+   └──► "Questions for you" (saved, reused on later forms)
+
+Service worker ──► new-job alerts (alarms + notifications)
+chrome.storage.local ──► details, resumes, history (stays in your browser)`,
+
+    systemFlow: [
+      'Type your details once (name, education, work, projects, skills) and add your resume PDF.',
+      'Run reads the public job boards of 51 companies and scores each engineering role against your details.',
+      'Roles you do not qualify for are blocked and the reason is shown, for example a senior title or more required years than you have.',
+      'Optionally, Gemini checks the fit of each candidate; its decision and reasons are recorded.',
+      'With auto-apply on (dry run first), the extension opens one application page per company, fills your details, attaches the resume and answers the questions it can from your profile.',
+      'Questions it cannot answer are listed under “Questions for you”. Answers you save are reused on later forms.',
+      'You review the filled form. In live mode it clicks the site’s own Submit and records the application only after the site shows a confirmation.',
+    ],
+
+    techStack: [
+      { name: 'JavaScript (ES modules)', purpose: 'The whole extension, with no build step.' },
+      { name: 'Manifest V3', purpose: 'Service worker, content scripts, alarms and notifications.' },
+      { name: 'chrome.storage.local', purpose: 'Your details, resumes, application history and saved answers, kept in the browser.' },
+      { name: 'Gemini API (optional)', purpose: 'Fit check, multiple-choice answers backed by a quote from your profile, and written-answer drafts.' },
+      { name: 'Playwright', purpose: 'A companion command-line runner and the browser-level end-to-end test.' },
+      { name: 'Vitest + jsdom', purpose: 'Unit tests, including the form-filling engine on test pages.' },
+    ],
+
+    aiModels: [
+      { name: 'Gemini 2.5 Flash (default)', purpose: 'Fit check, multiple-choice answers and written drafts, with your own key. Claude can be used instead.' },
+    ],
+    apis: [
+      { name: 'Public job-board APIs', purpose: 'Greenhouse, Lever, Ashby, Workable, SmartRecruiters and Workday job listings, read without a login.' },
+      { name: 'Google Gemini API', purpose: 'Called with your own key, sent in a request header and never in a URL.' },
+      { name: 'GitHub public API (optional)', purpose: 'Loads your public repositories as project evidence if you add your GitHub link.' },
+    ],
+    database: { name: 'chrome.storage.local', purpose: 'Everything is stored in your browser. Nothing is sent to a server of mine.' },
+
+    features: [
+      'Explainable match for every role: matched skills, gaps and blockers, each with the reason.',
+      'One-click Run: search, pick the best role at each company, check the fit, apply to up to 5 different companies. It applies to fewer when fewer qualify.',
+      'Never the same job or company twice; every outcome is kept in a history (applied, needs you, failed, poor fit).',
+      '“Questions for you”: anything your profile cannot answer is asked once and reused.',
+      'A multiple-choice question is answered by the AI only when it can quote the line in your profile that proves the answer.',
+      'Alerts about new matching jobs, once each.',
+      'Dry run by default, a daily limit and a pause between applications.',
+    ],
+
+    installation: [
+      'Download the ZIP with the button below and unzip it.',
+      'Open `chrome://extensions`, switch on Developer mode and choose Load unpacked, then select the unzipped `job-assistant-extension` folder.',
+      'Open the extension, then Profile. Fill in Your details, Answers only you can give, and add your resume (PDF).',
+      'Optional: paste your own Gemini or Claude key under AI drafts for the fit check and drafted answers.',
+      'Run it with Auto-apply off to see matches first. If you turn Auto-apply on, keep Dry run ticked until you have checked a few filled forms.',
+    ],
+
+    performance: [],
+    security: [
+      'API keys are entered by you and kept in this browser’s extension storage.',
+      'It never opens or reads LinkedIn, Indeed or Wellfound, stores no passwords and logs in nowhere.',
+      'CAPTCHAs are never solved and legal agreements (arbitration, non-compete) are never accepted: the run stops instead.',
+      'Demographic, disability, veteran and similar questions are never answered by the AI.',
+    ],
+    scalability: [],
+
+    testing:
+      '92 automated tests (Vitest) cover matching, job-board parsing, answer rules, form filling, the one-click Run and the editable profile. A separate script runs a whole Run in real Chromium with the extension loaded, against local copies of the job boards, forms and Gemini, and all 10 of its checks pass. The companion runner’s 17-check self-test passes.',
+
+    results: [
+      'In that browser run, a Run applied to the 3 suitable companies (one job per company), skipped a company already applied to, a US-only remote role and a role the AI judged a poor fit, and a second Run applied to nobody.',
+      'Form detection, dropdown handling and Yes/No answers were checked on a real Greenhouse application page, with nothing submitted.',
+    ],
+
+    limitations: [
+      'During development no application was submitted to a real company. Run it in dry-run mode first and watch the first live run.',
+      'Only Greenhouse, Lever and Ashby forms are filled. Workday, SmartRecruiters and Workable roles are searched but not automated.',
+      'LinkedIn, Indeed and Wellfound are not supported on purpose: their terms forbid it and accounts can be restricted.',
+      'Role matching reads keywords in the posting, so read the posting before you apply. Ashby saves answers as they are typed, and sites upload an attached resume immediately.',
+      'It loads unpacked in Chrome; it is not in the Chrome Web Store.',
+    ],
+  },
 }
 
 // ──────────────────────────────────────────────────────────
@@ -1081,6 +1189,18 @@ export const ProjectDetail = () => {
                 whileTap={{ scale: 0.97 }}
               >
                 <GithubIcon size={16} /> Source on GitHub
+              </motion.span>
+            </a>
+          )}
+          {project.download && (
+            <a href={project.download.url} download style={{ textDecoration: 'none' }}>
+              <motion.span
+                className="btn-primary"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '0.88rem', padding: '11px 24px', cursor: 'pointer' }}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <Download size={15} /> {project.download.label}
               </motion.span>
             </a>
           )}
