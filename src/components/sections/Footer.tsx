@@ -1,42 +1,38 @@
 import { portfolioData } from '@/data/portfolio'
 import { GithubIcon, LinkedinIcon } from '@/components/ui/SocialIcons'
-import { Mail } from 'lucide-react'
+import { Marquee } from '@/components/ui/Marquee'
+import { NAV_LINKS } from '@/data/nav'
+import { ArrowUp, Mail } from 'lucide-react'
 
 export const Footer = () => {
-  const { githubLink, linkedinLink, contactEmail } = portfolioData
+  const { githubLink, linkedinLink, contactEmail, name, roleLabel, resumeLink } = portfolioData
   const year = new Date().getFullYear()
 
   return (
-    <footer style={{ borderTop: '1px solid var(--border)', background: 'var(--bg)', padding: '2.5rem 2rem' }}>
-      <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
-
-        {/* Left: name + role */}
+    <footer className="footer">
+      <Marquee speed={60} gap={60} className="footer__marquee">
+        <span className="display footer__big">{name}</span>
+        <span className="script footer__sig" aria-hidden="true">{name.split(' ')[0]}</span>
+      </Marquee>
+      <div className="container footer__row">
         <div>
-          <span style={{ display: 'block', fontWeight: 700, fontSize: '0.9rem', color: 'var(--text)', letterSpacing: '-0.01em' }}>
-            Manikandan Santhosh
-          </span>
-          <span style={{ display: 'block', fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '2px', fontFamily: '"JetBrains Mono", monospace', letterSpacing: '0.5px' }}>
-            AI Systems Engineer
-          </span>
+          <span className="footer__name">{name}</span>
+          <span className="label">{roleLabel}</span>
         </div>
-
-        {/* Center: social icons */}
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <a href={githubLink} target="_blank" rel="noopener noreferrer" className="social-btn" style={{ background: '#181717', width: '36px', height: '36px' }} aria-label="GitHub">
-            <GithubIcon size={16} />
-          </a>
-          <a href={linkedinLink} target="_blank" rel="noopener noreferrer" className="social-btn" style={{ background: '#0077B5', width: '36px', height: '36px' }} aria-label="LinkedIn">
-            <LinkedinIcon size={16} />
-          </a>
-          <a href={`mailto:${contactEmail}`} className="social-btn" style={{ background: '#D44638', width: '36px', height: '36px' }} aria-label="Email">
-            <Mail size={16} />
-          </a>
+        <nav aria-label="Footer" className="footer__nav">
+          {NAV_LINKS.map((l) => <a key={l.href} href={l.href} className="link-underline">{l.label}</a>)}
+          <a href={resumeLink} target="_blank" rel="noopener noreferrer" className="link-underline">Resume</a>
+        </nav>
+        <div className="footer__social">
+          <a href={githubLink} target="_blank" rel="noopener noreferrer" aria-label="GitHub"><GithubIcon size={17} /></a>
+          <a href={linkedinLink} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><LinkedinIcon size={17} /></a>
+          <a href={`mailto:${contactEmail}`} aria-label="Email"><Mail size={17} /></a>
+          <a href="#top" aria-label="Back to top" className="footer__top"><ArrowUp size={17} /></a>
         </div>
-
-        {/* Right: copyright */}
-        <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
-          © {year} Manikandan Santhosh
-        </span>
+      </div>
+      <div className="container footer__legal">
+        <span>© {year} {name}</span>
+        <span className="mono">Built with React, TypeScript, Vite, Tailwind CSS and Framer Motion</span>
       </div>
     </footer>
   )

@@ -696,17 +696,17 @@ chrome.storage.local ──► details, resumes, history (stays in your browser)
 const SectionHeading = ({ label, title }: { label: string; title: string }) => (
   <div style={{ marginBottom: '1.25rem' }}>
     <div style={{
-      fontFamily: "'JetBrains Mono', monospace",
+      fontFamily: 'var(--font-mono)',
       fontSize: '0.68rem', fontWeight: 700,
-      color: '#2563eb', textTransform: 'uppercase',
+      color: 'var(--accent)', textTransform: 'uppercase',
       letterSpacing: '1.5px', marginBottom: '4px',
     }}>
       {label}
     </div>
     <h2 style={{
-      fontSize: '1.2rem', fontWeight: 800,
+      fontSize: 'clamp(1.35rem, 2.4vw, 1.85rem)', fontWeight: 800, letterSpacing: '-0.025em',
       color: 'var(--text)',
-      borderBottom: '1px solid rgba(128,128,128,0.15)',
+      borderBottom: '1px solid var(--line)',
       paddingBottom: '0.6rem',
     }}>
       {title}
@@ -718,7 +718,7 @@ const CodeBlock = ({ children, label }: { children: string; label?: string }) =>
   <div style={{ marginTop: label ? '0.5rem' : '0' }}>
     {label && (
       <div style={{
-        fontFamily: "'JetBrains Mono', monospace",
+        fontFamily: 'var(--font-mono)',
         fontSize: '0.68rem', fontWeight: 700,
         color: 'var(--text-secondary)', marginBottom: '6px',
         textTransform: 'uppercase', letterSpacing: '0.5px',
@@ -733,7 +733,7 @@ const CodeBlock = ({ children, label }: { children: string; label?: string }) =>
       fontSize: '0.78rem',
       lineHeight: 1.7,
       color: '#c9d1d9',
-      fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+      fontFamily: 'var(--font-mono)',
       margin: 0,
     }}>
       {children}
@@ -766,7 +766,7 @@ export const ProjectDetail = () => {
         <h2 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Project not found</h2>
         <button
           onClick={() => navigate('/')}
-          style={{ padding: '10px 24px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
+          style={{ padding: '10px 24px', background: 'var(--accent)', color: 'var(--on-accent)', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
         >
           Back to Portfolio
         </button>
@@ -792,92 +792,51 @@ export const ProjectDetail = () => {
   const listStyle = { margin: 0, paddingLeft: '1.25rem', display: 'flex' as const, flexDirection: 'column' as const, gap: '8px' }
   const liStyle = { color: 'var(--text-secondary)', lineHeight: 1.7, fontSize: '0.93rem' }
 
-  const statusStyle = project.statusTone === 'partial'
-    ? { background: 'rgba(245,158,11,0.25)', color: '#fcd34d', border: '1px solid rgba(245,158,11,0.4)' }
-    : { background: 'rgba(16,185,129,0.25)', color: '#6ee7b7', border: '1px solid rgba(16,185,129,0.35)' }
-
   const hasQuality = project.performance.length + project.security.length + project.scalability.length > 0
   const hasInteg = project.aiModels.length + project.apis.length > 0 || project.database
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)', color: 'var(--text)' }}>
 
-      {/* ── Hero Banner ── */}
-      <div style={{ background: project.gradient }}>
-        <div style={{ maxWidth: '960px', margin: '0 auto', padding: '2rem 2rem 0' }}>
-          <button
-            onClick={() => navigate(-1)}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '6px',
-              background: 'rgba(255,255,255,0.15)', color: '#fff',
-              border: '1px solid rgba(255,255,255,0.25)', borderRadius: '8px',
-              padding: '8px 16px', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem',
-            }}
-          >
+      {/* ── Hero: editorial header in the site's palette ── */}
+      <header className="pd-hero">
+        <div className="pd-hero__grid" aria-hidden="true">{Array.from({ length: 4 }, (_, i) => <i key={i} />)}</div>
+        <div className="pd-hero__inner">
+          <button type="button" onClick={() => navigate(-1)} className="btn pd-hero__back">
             <ArrowLeft size={15} /> Back
           </button>
-        </div>
-        <div style={{ maxWidth: '960px', margin: '0 auto', padding: '2rem 2rem 3rem' }}>
-          {/* Status + LLM badges */}
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '1rem', flexWrap: 'wrap' }}>
-            <span style={{
-              ...statusStyle,
-              borderRadius: '100px', padding: '3px 12px',
-              fontSize: '0.7rem', fontWeight: 700,
-              fontFamily: "'JetBrains Mono', monospace",
-              textTransform: 'uppercase', letterSpacing: '0.5px',
-            }}>
-              {project.status}
-            </span>
-            <span style={{
-              background: 'rgba(96,165,250,0.2)', color: '#93c5fd',
-              border: '1px solid rgba(96,165,250,0.3)',
-              borderRadius: '100px', padding: '3px 12px',
-              fontSize: '0.7rem', fontWeight: 700,
-              fontFamily: "'JetBrains Mono', monospace",
-              letterSpacing: '0.5px',
-            }}>
-              {project.llm}
-            </span>
+          <div style={{ display: 'flex', gap: '8px', margin: '2.5rem 0 1.5rem', flexWrap: 'wrap' }}>
+            <span className={`chip ${project.statusTone === 'partial' ? 'chip--warn' : 'chip--accent'}`}>{project.status}</span>
+            <span className="chip">{project.llm}</span>
           </div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 900, color: '#fff', marginBottom: '1rem', lineHeight: 1.2 }}
-          >
-            {project.name}
-          </motion.h1>
+          <h1 className="pd-hero__title display" aria-label={project.name}>
+            {project.name.split(' ').map((w, i) => (
+              <span key={i} className="word-mask">
+                <motion.span style={{ display: 'inline-block' }} initial={{ y: '105%' }} animate={{ y: '0%' }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.05 * i }}>{w}</motion.span>
+                {' '}
+              </span>
+            ))}
+          </h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.85)', lineHeight: 1.7, maxWidth: '700px' }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="lede"
+            style={{ maxWidth: '62ch', color: 'var(--text-2)' }}
           >
             {project.tagline}
           </motion.p>
-
-          {/* Tech pills */}
-          <motion.div
+          <motion.ul
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '1.5rem' }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '1.75rem', listStyle: 'none' }}
+            aria-label="Technologies"
           >
-            {project.tech.map(t => (
-              <span key={t} style={{
-                background: 'rgba(255,255,255,0.18)', color: '#fff',
-                border: '1px solid rgba(255,255,255,0.3)',
-                borderRadius: '100px', padding: '4px 14px',
-                fontSize: '0.78rem', fontWeight: 600,
-              }}>
-                {t}
-              </span>
-            ))}
-          </motion.div>
+            {project.tech.map(t => <li key={t} className="chip">{t}</li>)}
+          </motion.ul>
         </div>
-      </div>
+      </header>
 
       {/* ── Content ── */}
       <div style={{ maxWidth: '960px', margin: '0 auto', padding: '3rem 2rem 6rem' }}>
@@ -889,10 +848,10 @@ export const ProjectDetail = () => {
             style={{ marginBottom: '3rem' }}
           >
             <div style={{ marginBottom: '1.25rem' }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', fontWeight: 700, color: '#2563eb', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '4px' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '4px' }}>
                 00 — Visual
               </div>
-              <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text)', borderBottom: '1px solid rgba(128,128,128,0.15)', paddingBottom: '0.6rem' }}>
+              <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text)', borderBottom: '1px solid var(--line)', paddingBottom: '0.6rem' }}>
                 Project Overview
               </h2>
             </div>
@@ -912,7 +871,7 @@ export const ProjectDetail = () => {
               <div style={{
                 padding: '8px 14px',
                 background: 'rgba(0,0,0,0.4)',
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: 'var(--font-mono)',
                 fontSize: '0.72rem',
                 color: 'rgba(255,255,255,0.45)',
                 fontWeight: 600,
@@ -929,7 +888,7 @@ export const ProjectDetail = () => {
           <div style={{
             background: 'var(--bg-secondary)',
             borderRadius: '12px', padding: '1.5rem 1.75rem',
-            borderLeft: '4px solid #2563eb',
+            borderLeft: '3px solid var(--accent)',
           }}>
             <p style={textStyle}>{project.executiveSummary}</p>
           </div>
@@ -976,12 +935,12 @@ export const ProjectDetail = () => {
                 padding: '12px 16px',
                 background: 'var(--bg-secondary)',
                 borderRadius: '10px',
-                border: '1px solid rgba(255,255,255,0.05)',
+                border: '1px solid var(--line)',
               }}>
                 <div style={{
-                  fontFamily: "'JetBrains Mono', monospace",
+                  fontFamily: 'var(--font-mono)',
                   fontSize: '0.82rem', fontWeight: 700,
-                  color: '#60a5fa', minWidth: '160px', flexShrink: 0, paddingTop: '2px',
+                  color: 'var(--accent)', minWidth: '160px', flexShrink: 0, paddingTop: '2px',
                 }}>
                   {t.name}
                 </div>
@@ -998,8 +957,8 @@ export const ProjectDetail = () => {
           <Section label={nextLabel('AI & Integrations')} title="AI Models, APIs & Database">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
               {project.aiModels.length > 0 && (
-                <div style={{ background: 'var(--bg-secondary)', borderRadius: '12px', padding: '1.25rem', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#a78bfa', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px', fontFamily: "'JetBrains Mono', monospace" }}>AI Models</div>
+                <div style={{ background: 'var(--bg-secondary)', borderRadius: '12px', padding: '1.25rem', border: '1px solid var(--line)' }}>
+                  <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#a78bfa', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px', fontFamily: 'var(--font-mono)' }}>AI Models</div>
                   {project.aiModels.map((m, i) => (
                     <div key={i} style={{ marginBottom: '12px' }}>
                       <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: '0.85rem', marginBottom: '2px' }}>{m.name}</div>
@@ -1009,8 +968,8 @@ export const ProjectDetail = () => {
                 </div>
               )}
               {project.apis.length > 0 && (
-                <div style={{ background: 'var(--bg-secondary)', borderRadius: '12px', padding: '1.25rem', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#34d399', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px', fontFamily: "'JetBrains Mono', monospace" }}>External APIs</div>
+                <div style={{ background: 'var(--bg-secondary)', borderRadius: '12px', padding: '1.25rem', border: '1px solid var(--line)' }}>
+                  <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#34d399', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px', fontFamily: 'var(--font-mono)' }}>External APIs</div>
                   {project.apis.map((a, i) => (
                     <div key={i} style={{ marginBottom: '12px' }}>
                       <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: '0.85rem', marginBottom: '2px' }}>{a.name}</div>
@@ -1020,8 +979,8 @@ export const ProjectDetail = () => {
                 </div>
               )}
               {project.database && (
-                <div style={{ background: 'var(--bg-secondary)', borderRadius: '12px', padding: '1.25rem', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#fb923c', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px', fontFamily: "'JetBrains Mono', monospace" }}>Storage</div>
+                <div style={{ background: 'var(--bg-secondary)', borderRadius: '12px', padding: '1.25rem', border: '1px solid var(--line)' }}>
+                  <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#fb923c', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px', fontFamily: 'var(--font-mono)' }}>Storage</div>
                   <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: '0.85rem', marginBottom: '4px' }}>{project.database.name}</div>
                   <div style={{ color: 'var(--text-secondary)', fontSize: '0.82rem', lineHeight: 1.6 }}>{project.database.purpose}</div>
                 </div>
@@ -1055,7 +1014,7 @@ export const ProjectDetail = () => {
                   {step.split('`').map((part, j) =>
                     j % 2 === 0
                       ? <span key={j}>{part}</span>
-                      : <code key={j} style={{ background: 'rgba(37,99,235,0.12)', color: '#60a5fa', borderRadius: '4px', padding: '1px 6px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85em' }}>{part}</code>
+                      : <code key={j} style={{ background: 'var(--accent-soft)', color: 'var(--accent)', borderRadius: '4px', padding: '1px 6px', fontFamily: 'var(--font-mono)', fontSize: '0.85em' }}>{part}</code>
                   )}
                 </li>
               ))}
@@ -1071,16 +1030,16 @@ export const ProjectDetail = () => {
                 <thead>
                   <tr style={{ background: 'var(--bg-secondary)' }}>
                     {['Variable', 'Description', 'Example'].map(h => (
-                      <th key={h} style={{ padding: '10px 14px', textAlign: 'left', color: 'var(--text-secondary)', fontWeight: 700, borderBottom: '1px solid rgba(255,255,255,0.08)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{h}</th>
+                      <th key={h} style={{ padding: '10px 14px', textAlign: 'left', color: 'var(--text-secondary)', fontWeight: 700, borderBottom: '1px solid rgba(255,255,255,0.08)', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {project.envVars.map((v, i) => (
-                    <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                      <td style={{ padding: '10px 14px', fontFamily: "'JetBrains Mono', monospace", color: '#60a5fa', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>{v.name}</td>
+                    <tr key={i} style={{ borderBottom: '1px solid var(--line)' }}>
+                      <td style={{ padding: '10px 14px', fontFamily: 'var(--font-mono)', color: 'var(--accent)', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>{v.name}</td>
                       <td style={{ padding: '10px 14px', color: 'var(--text-secondary)', lineHeight: 1.5 }}>{v.description}</td>
-                      <td style={{ padding: '10px 14px', fontFamily: "'JetBrains Mono', monospace", color: '#94a3b8', fontSize: '0.78rem', whiteSpace: 'nowrap' }}>{v.example}</td>
+                      <td style={{ padding: '10px 14px', fontFamily: 'var(--font-mono)', color: 'var(--text-2)', fontSize: '0.78rem', whiteSpace: 'nowrap' }}>{v.example}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1097,19 +1056,19 @@ export const ProjectDetail = () => {
                 <div key={i} style={{
                   background: 'var(--bg-secondary)',
                   borderRadius: '12px', padding: '1.5rem',
-                  border: '1px solid rgba(37,99,235,0.15)',
-                  borderTop: '3px solid #2563eb',
+                  border: '1px solid var(--line)',
+                  borderTop: '2px solid var(--accent)',
                 }}>
                   <div style={{ fontWeight: 800, color: 'var(--text)', fontSize: '0.95rem', marginBottom: '12px' }}>
                     {d.decision}
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                     <div>
-                      <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#4ade80', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px', fontFamily: "'JetBrains Mono', monospace" }}>Rationale</div>
+                      <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#4ade80', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px', fontFamily: 'var(--font-mono)' }}>Rationale</div>
                       <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', lineHeight: 1.6, margin: 0 }}>{d.rationale}</p>
                     </div>
                     <div>
-                      <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#f59e0b', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px', fontFamily: "'JetBrains Mono', monospace" }}>Trade-off</div>
+                      <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#f59e0b', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px', fontFamily: 'var(--font-mono)' }}>Trade-off</div>
                       <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', lineHeight: 1.6, margin: 0 }}>{d.tradeoff}</p>
                     </div>
                   </div>
@@ -1126,10 +1085,10 @@ export const ProjectDetail = () => {
               {[
                 { title: 'Performance', color: '#34d399', items: project.performance },
                 { title: 'Security', color: '#f87171', items: project.security },
-                { title: 'Scalability', color: '#60a5fa', items: project.scalability },
+                { title: 'Scalability', color: 'var(--accent-2)', items: project.scalability },
               ].filter(g => g.items.length > 0).map(({ title, color, items }) => (
                 <div key={title} style={{ background: 'var(--bg-secondary)', borderRadius: '12px', padding: '1.25rem', border: `1px solid ${color}20`, borderTop: `3px solid ${color}` }}>
-                  <div style={{ fontSize: '0.72rem', fontWeight: 700, color, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px', fontFamily: "'JetBrains Mono', monospace" }}>{title}</div>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 700, color, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px', fontFamily: 'var(--font-mono)' }}>{title}</div>
                   <ul style={{ margin: 0, paddingLeft: '1rem', display: 'flex', flexDirection: 'column', gap: '7px' }}>
                     {items.map((item, i) => (
                       <li key={i} style={{ color: 'var(--text-secondary)', fontSize: '0.83rem', lineHeight: 1.6 }}>{item}</li>
@@ -1172,7 +1131,7 @@ export const ProjectDetail = () => {
           custom={motionIdx} variants={fadeUp} initial="hidden" animate="visible"
           style={{
             display: 'flex', gap: '12px', flexWrap: 'wrap',
-            paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.08)',
+            paddingTop: '1rem', borderTop: '1px solid var(--line)',
           }}
         >
           {project.github && (
@@ -1210,8 +1169,8 @@ export const ProjectDetail = () => {
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: '7px',
                   padding: '11px 24px', borderRadius: '10px', cursor: 'pointer',
-                  background: 'rgba(255,255,255,0.07)',
-                  border: '1px solid rgba(255,255,255,0.14)',
+                  background: 'transparent',
+                  border: '1px solid var(--line-strong)',
                   color: 'var(--text)', fontSize: '0.88rem', fontWeight: 700,
                 }}
                 whileHover={{ scale: 1.04 }}
@@ -1226,7 +1185,7 @@ export const ProjectDetail = () => {
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '8px',
               background: 'transparent', color: 'var(--text-secondary)',
-              border: '1px solid rgba(255,255,255,0.12)', borderRadius: '10px',
+              border: '1px solid var(--line-strong)', borderRadius: '999px',
               padding: '11px 24px', cursor: 'pointer',
               fontWeight: 600, fontSize: '0.88rem',
             }}

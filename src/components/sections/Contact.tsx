@@ -1,110 +1,82 @@
+import { useState, type FormEvent } from 'react'
 import { portfolioData } from '@/data/portfolio'
-import { motion } from 'framer-motion'
+import { RevealText, Reveal } from '@/components/ui/Reveal'
 import { GithubIcon, LinkedinIcon } from '@/components/ui/SocialIcons'
-import { Mail, MapPin } from 'lucide-react'
+import { ArrowUpRight, FileText, Mail, MapPin, Send } from 'lucide-react'
 
+// The site has no server, so the form does not pretend to send anything: it opens your email app with the
+// message filled in, addressed to the published contact email.
 export const Contact = () => {
-  const { socialLinks, location, openToOpportunities, contactEmail } = portfolioData
+  const { contactEmail, linkedinLink, githubLink, location, resumeLink, contactBlurb, sections, openToOpportunities } = portfolioData
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
+
+  const submit = (e: FormEvent) => {
+    e.preventDefault()
+    const subject = `Portfolio enquiry from ${form.name || 'a visitor'}`
+    const body = `${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ''}`
+    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  }
+
+  const rows = [
+    { icon: <Mail size={18} />, k: 'Email me', v: contactEmail, href: `mailto:${contactEmail}` },
+    { icon: <LinkedinIcon size={18} />, k: 'Connect', v: 'LinkedIn', href: linkedinLink, ext: true },
+    { icon: <GithubIcon size={18} />, k: 'Code', v: 'GitHub', href: githubLink, ext: true },
+    { icon: <FileText size={18} />, k: 'Resume', v: 'View resume', href: resumeLink, ext: true },
+    { icon: <MapPin size={18} />, k: 'Based in', v: location },
+  ]
 
   return (
-    <section id="contact" style={{ padding: '80px 0', background: 'var(--bg)' }}>
-      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem' }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          style={{ marginBottom: '3rem' }}
-        >
-          <h2 className="section-heading">Let's Connect</h2>
-          <p className="section-subheading">AI ENGINEER · LLM SYSTEMS · BACKEND ENGINEERING</p>
-        </motion.div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'start' }} className="max-md:grid-cols-1">
-
-          {/* Left: info */}
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.75, marginBottom: '2rem' }}>
-              I'm a software engineer building LLM-integrated applications with Python and TypeScript, from prompt design and API integration to review screens and deployment of internal tools. Open to AI Engineer, Software Engineer and Backend roles, including remote and international. If you're building with LLM APIs and want someone who keeps people in the loop and tests what they build, let's talk.
-            </p>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '2rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <MapPin size={15} style={{ color: 'var(--text-secondary)', flexShrink: 0 }} />
-                <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>{location}</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <Mail size={15} style={{ color: 'var(--text-secondary)', flexShrink: 0 }} />
-                <a
-                  href={`mailto:${contactEmail}`}
-                  style={{ color: 'var(--primary)', fontSize: '0.9rem', textDecoration: 'none', fontWeight: 500 }}
-                  onMouseEnter={e => (e.currentTarget.style.textDecoration = 'underline')}
-                  onMouseLeave={e => (e.currentTarget.style.textDecoration = 'none')}
-                >
-                  {contactEmail}
-                </a>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span style={{ width: '15px', height: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: openToOpportunities ? '#22c55e' : '#ef4444', display: 'block' }} />
-                </span>
-                <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-                  {openToOpportunities ? 'Open to opportunities' : 'Currently unavailable'}
-                </span>
-              </div>
-            </div>
-
-            {/* Social links */}
-            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-              {socialLinks.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-btn"
-                  style={{ background: s.bg }}
-                  title={s.label}
-                  aria-label={s.label}
-                >
-                  {s.icon === 'github' && <GithubIcon size={18} />}
-                  {s.icon === 'linkedin' && <LinkedinIcon size={18} />}
-                  {s.icon === 'mail' && <Mail size={18} />}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Right: profile photo */}
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
-            style={{ display: 'flex', justifyContent: 'center' }}
-            className="max-md:hidden"
-          >
-            <div style={{ position: 'relative' }}>
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-                style={{ position: 'absolute', inset: '-5px', borderRadius: '50%', background: 'conic-gradient(from 0deg, var(--primary), #60a5fa, #818cf8, #38bdf8, var(--primary))' }}
-              />
-              <div style={{ position: 'absolute', inset: '-2px', borderRadius: '50%', background: 'var(--bg)' }} />
-              <div style={{ position: 'relative', zIndex: 2, width: '180px', height: '180px', borderRadius: '50%', overflow: 'hidden', boxShadow: '0 12px 40px rgba(37,99,235,0.2)' }}>
-                <img
-                  src="/manikandan.jpeg"
-                  alt="Manikandan Santhosh"
-                  loading="lazy"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
-                />
-              </div>
-            </div>
-          </motion.div>
+    <section id="contact" className="section contact" tabIndex={-1}>
+      <div className="container contact__grid">
+        <div>
+          <Reveal><span className="eyebrow"><b>08</b> Contact</span></Reveal>
+          <h2 className="contact__title">
+            <RevealText as="span" text={sections.contact.title.split(' ')[0]} className="title-xl" />
+            <RevealText as="span" text={sections.contact.title.split(' ').slice(1).join(' ') + '.'} className="title-xl accent" delay={0.1} />
+          </h2>
+          <Reveal delay={0.1}><p className="label" style={{ marginBottom: 20 }}>{sections.contact.subtitle}</p></Reveal>
+          <Reveal delay={0.15}><p className="body">{contactBlurb}</p></Reveal>
+          <Reveal delay={0.2}>
+            <p className="contact__status mono"><span className="pulse" aria-hidden="true" /> {openToOpportunities ? 'Open to opportunities' : 'Currently unavailable'}</p>
+          </Reveal>
+          <ul className="contact__rows">
+            {rows.map((r, i) => (
+              <Reveal as="li" key={r.k} delay={0.05 * i}>
+                {r.href ? (
+                  <a className="contact__row" href={r.href} {...(r.ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                    <span className="contact__icon">{r.icon}</span>
+                    <span><span className="label">{r.k}</span><span className="contact__v">{r.v}</span></span>
+                    <ArrowUpRight className="contact__go" size={18} aria-hidden="true" />
+                  </a>
+                ) : (
+                  <div className="contact__row">
+                    <span className="contact__icon">{r.icon}</span>
+                    <span><span className="label">{r.k}</span><span className="contact__v">{r.v}</span></span>
+                  </div>
+                )}
+              </Reveal>
+            ))}
+          </ul>
         </div>
+
+        <Reveal delay={0.15}>
+          <form className="contact__form" onSubmit={submit}>
+            <label>
+              <span className="label">Name</span>
+              <input name="name" autoComplete="name" required placeholder="Your name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+            </label>
+            <label>
+              <span className="label">Email</span>
+              <input name="email" type="email" autoComplete="email" placeholder="you@example.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+            </label>
+            <label>
+              <span className="label">Message</span>
+              <textarea name="message" required rows={6} placeholder="What would you like to talk about?" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
+            </label>
+            <button type="submit" className="btn btn--solid contact__send">Write the email <Send size={15} /></button>
+            <p className="contact__note">Opens your email app with this message addressed to {contactEmail}. Nothing is sent from this page.</p>
+          </form>
+        </Reveal>
       </div>
     </section>
   )

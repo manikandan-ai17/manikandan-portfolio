@@ -328,6 +328,41 @@ export const portfolioData = {
     },
   ],
 
+  // Section headings and copy that used to live inside the components, kept word for word.
+  sections: {
+    expertise: { title: 'What I Build', subtitle: 'LLM-INTEGRATED APPLICATIONS, DOCUMENT PROCESSING, AND DATA WORKFLOWS' },
+    skills: { title: 'Technical Stack', subtitle: 'TECHNOLOGIES I BUILD WITH IN PRODUCTION' },
+    education: { title: 'Education', subtitle: 'ACADEMIC BACKGROUND' },
+    experience: { title: 'Experience', subtitle: 'EMPLOYMENT HISTORY & PROJECTS WITH THEIR REAL STATUS' },
+    openSource: { title: 'Open Source', subtitle: 'PUBLIC REPOSITORIES ON GITHUB' },
+    github: { title: 'GitHub Profile', subtitle: 'OPEN SOURCE ACTIVITY & DEVELOPER OVERVIEW' },
+    highlights: { title: 'Engineering Highlights', subtitle: 'DESIGN DECISIONS AND MEASURED RESULTS' },
+    contact: { title: "Let's Connect", subtitle: 'AI ENGINEER · LLM SYSTEMS · BACKEND ENGINEERING' },
+  },
+
+  contactBlurb:
+    "I'm a software engineer building LLM-integrated applications with Python and TypeScript, from prompt design and API integration to review screens and deployment of internal tools. Open to AI Engineer, Software Engineer and Backend roles, including remote and international. If you're building with LLM APIs and want someone who keeps people in the loop and tests what they build, let's talk.",
+
+  // The CAD agent facts shown beside its code sample
+  codeSampleFacts: [
+    { label: 'Tests', value: '329 pass' },
+    { label: 'Status', value: 'Runs locally' },
+    { label: 'Source', value: 'Public repo' },
+  ],
+
+  github: {
+    username: 'manikandan-ai17',
+    bullets: [
+      ['🔭', 'Currently building:', 'LLM-integrated applications: outreach pipelines, spreadsheet audits, document analysis'],
+      ['🌱', 'Currently learning:', 'Retrieval-augmented generation and LLM evaluation'],
+      ['💬', 'Ask me about:', 'Python, FastAPI, TypeScript, Gemini API integration, Chrome Extensions (MV3)'],
+      ['🚀', 'Built:', 'An AI-assisted outreach platform, a spreadsheet audit tool and a CAD drawing analysis agent'],
+      ['⚡', 'Fun fact:', 'My drawing agent never lets the vision model see the PDF text layer, so the two readings stay independent'],
+    ] as [string, string, string][],
+    languagesAndTools: ['Python', 'FastAPI', 'React', 'TypeScript', 'JavaScript', 'PostgreSQL', 'MongoDB', 'Flask', 'Node.js', 'LLM APIs', 'Gemini', 'PyMuPDF', 'Git'],
+    publicRepos: 3,
+  },
+
   achievements: [
     {
       title: 'Two-Source Cross-Validation',
